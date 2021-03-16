@@ -5,7 +5,7 @@
 - Project: Smartphones-shop
 
 
-## Raw UI Designs:
+## Raw UI Designs
 - On web: https://www.figma.com/file/pzoNRTQR6uNtwYtmLfoiaX/web
 - On mobile: https://www.figma.com/file/qmX8siclnNqxAcFuY12ghQ/mobile?node-id=23%3A0
 - check the comment tab for detailed comments
