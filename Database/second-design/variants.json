@@ -1,0 +1,47 @@
+{
+    "brands": {
+        "apple": "Apple",
+        "samsung": "Samsung",
+        "nokia": "Nokia",
+        "google": "Google",
+        "vivo": "Vivo"
+    },
+    "models": {
+        "ip6": "Iphone 6",
+        "ip7": "Iphone 7",
+        "ipX": "Iphone X",
+        "galaxyEdge": "Galaxy Edge",
+        "galaxyFold": "Galaxy Fold",
+        "galaxyS10": "Galaxy S10",
+        "galaxyA21": "Galaxy A21",
+        "pixel4": "Pixel 4",
+        "pixel4A": "Pixel 4A",
+        "pixel5": "Pixel 5",
+        "g10": "G10",
+        "x12": "X12",
+        "y31": "Y31",
+        "y20": "Y20"
+    },
+    "memories" : {
+        "GB16": "16GB",
+        "GB32": "32GB",
+        "GB64": "64GB",
+        "GB126": "126GB"
+    },
+    "colors": {
+        "red": "Red",
+        "black" : "Black",
+        "pink": "Pink",
+        "rose": "Rose",
+        "white": "White",
+        "blue": "Blue",
+        "silver": "Silver"
+    },
+    "operatingSystems": {
+        "ios10": "IOS 10",
+        "ios13" : "IOS 13",
+        "ios14": "IOS 14",
+        "android9": "Android 9",
+        "android10": "Android 10"
+    }
+}
