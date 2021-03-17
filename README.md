@@ -12,5 +12,5 @@
 
 ## Database Design
 - Script file is located in "Database" folder
-An overview look with this diagram
+- An overview look with this diagram
 <img width="924" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111422985-2edff880-8722-11eb-89cb-bf89f3a4a841.png">
