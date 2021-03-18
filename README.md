@@ -11,6 +11,11 @@
 - check the comment tab for detailed comments
 
 ## Database Design
-- Script file is located in "Database" folder
-- An overview look with this diagram
+- First approach design
 <img width="924" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111422985-2edff880-8722-11eb-89cb-bf89f3a4a841.png">
+
+- Simplied version with a support JSON stored in the Front-end side
+<img width="533" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111566612-10383b00-87d0-11eb-973c-9a86b113cbfc.png">
+<img width="558" alt="variants-json-structure" src="https://user-images.githubusercontent.com/43056724/111566621-15958580-87d0-11eb-9fad-96161716d9a9.png">
+
+- Detail files can be found in the "Database" folder
