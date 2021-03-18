@@ -16,8 +16,8 @@
 
 - Simplied version with a support JSON stored in the Front-end side
 <p float="left">
-  <img width="300" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111566612-10383b00-87d0-11eb-973c-9a86b113cbfc.png">
-  <img width="300" alt="variants-json-structure" src="https://user-images.githubusercontent.com/43056724/111566621-15958580-87d0-11eb-9fad-96161716d9a9.png">
+  <img width="500" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111566612-10383b00-87d0-11eb-973c-9a86b113cbfc.png">
+  <img width="500" alt="variants-json-structure" src="https://user-images.githubusercontent.com/43056724/111566621-15958580-87d0-11eb-9fad-96161716d9a9.png">
 </p>
 
 
