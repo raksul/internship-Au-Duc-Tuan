@@ -24,12 +24,13 @@ DROP TABLE IF EXISTS `images`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `images` (
   `id` varchar(36) COLLATE utf8_bin NOT NULL,
-  `productId` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `src` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `createdAt` varchar(45) COLLATE utf8_bin DEFAULT 'CURRENT_TIMESTAMP',
+  `product_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
+  `src` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `productId` (`productId`),
-  CONSTRAINT `images_ibfk_1` FOREIGN KEY (`productId`) REFERENCES `products` (`id`)
+  KEY `images_ibfk_1` (`product_id`),
+  CONSTRAINT `images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,18 +52,18 @@ DROP TABLE IF EXISTS `products`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
   `id` varchar(36) COLLATE utf8_bin NOT NULL,
-  `brand` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `model` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `memory` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `color` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `os` varchar(36) COLLATE utf8_bin DEFAULT NULL,
+  `brand` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `model` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `memory` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `color` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `os` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `year` int DEFAULT NULL,
-  `price` double DEFAULT NULL,
-  `isPublished` tinyint DEFAULT '0',
-  `isSold` tinyint DEFAULT '0',
-  `isDeleted` tinyint DEFAULT '0',
-  `createdAt` varchar(45) COLLATE utf8_bin DEFAULT 'CURRENT_TIMESTAMP',
-  `updatedAt` varchar(45) COLLATE utf8_bin DEFAULT 'ON UPDATE CURRENT_TIMESTAMP',
+  `price` decimal(19,4) DEFAULT NULL,
+  `is_published` tinyint DEFAULT '0',
+  `is_sold` tinyint DEFAULT '0',
+  `is_deleted` tinyint DEFAULT '0',
+  `created_at` varchar(45) COLLATE utf8_bin DEFAULT 'CURRENT_TIMESTAMP',
+  `updated_at` varchar(45) COLLATE utf8_bin DEFAULT 'ON UPDATE CURRENT_TIMESTAMP',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -85,4 +86,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-17 14:30:31
+-- Dump completed on 2021-03-19 16:53:34

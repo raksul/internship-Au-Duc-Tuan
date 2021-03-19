@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: smartphones-shop
+-- Host: localhost    Database: smartphones-shop-old
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -23,9 +23,8 @@ DROP TABLE IF EXISTS `brands`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `brands` (
-  `brand_id` varchar(36) COLLATE utf8_bin NOT NULL,
-  `brand_name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `is_disabled` tinyint(1) NOT NULL DEFAULT '0',
+  `brand_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `brand_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`brand_id`)
@@ -51,7 +50,6 @@ DROP TABLE IF EXISTS `colors`;
 CREATE TABLE `colors` (
   `color_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `color_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `is_disabled` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`color_id`)
@@ -76,14 +74,13 @@ DROP TABLE IF EXISTS `images`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `images` (
   `image_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `image_link` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `product_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `is_disabled` tinyint(1) NOT NULL DEFAULT '0',
+  `src` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `option_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`image_id`),
-  KEY `product_id` (`product_id`),
-  CONSTRAINT `images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+  KEY `option_id` (`option_id`),
+  CONSTRAINT `images_ibfk_1` FOREIGN KEY (`option_id`) REFERENCES `options` (`option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -97,16 +94,15 @@ LOCK TABLES `images` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `memory_sizes`
+-- Table structure for table `memories`
 --
 
-DROP TABLE IF EXISTS `memory_sizes`;
+DROP TABLE IF EXISTS `memories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `memory_sizes` (
+CREATE TABLE `memories` (
   `memory_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `memory_size` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `is_disabled` tinyint(1) NOT NULL DEFAULT '0',
+  `memory` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`memory_id`)
@@ -114,12 +110,12 @@ CREATE TABLE `memory_sizes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `memory_sizes`
+-- Dumping data for table `memories`
 --
 
-LOCK TABLES `memory_sizes` WRITE;
-/*!40000 ALTER TABLE `memory_sizes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `memory_sizes` ENABLE KEYS */;
+LOCK TABLES `memories` WRITE;
+/*!40000 ALTER TABLE `memories` DISABLE KEYS */;
+/*!40000 ALTER TABLE `memories` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -132,10 +128,12 @@ DROP TABLE IF EXISTS `models`;
 CREATE TABLE `models` (
   `model_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `model_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `is_disabled` tinyint(1) NOT NULL DEFAULT '0',
+  `brand_id` varchar(36) COLLATE utf8_bin NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`model_id`)
+  PRIMARY KEY (`model_id`),
+  KEY `brand_id` (`brand_id`),
+  CONSTRAINT `models_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`brand_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -149,6 +147,43 @@ LOCK TABLES `models` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `options`
+--
+
+DROP TABLE IF EXISTS `options`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `options` (
+  `option_id` varchar(36) COLLATE utf8_bin NOT NULL,
+  `model_id` varchar(36) COLLATE utf8_bin NOT NULL,
+  `memory_id` varchar(36) COLLATE utf8_bin NOT NULL,
+  `os_id` varchar(36) COLLATE utf8_bin NOT NULL,
+  `color_id` varchar(36) COLLATE utf8_bin NOT NULL,
+  `year` int NOT NULL,
+  `created_at` varchar(45) COLLATE utf8_bin DEFAULT 'CURRENT_TIMESTAMP',
+  `updated_at` varchar(45) COLLATE utf8_bin DEFAULT 'ON UPDATE CURRENT_TIMESTAMP',
+  PRIMARY KEY (`option_id`),
+  KEY `model_id` (`model_id`),
+  KEY `color_id` (`color_id`),
+  KEY `os_id` (`os_id`),
+  KEY `memory_id` (`memory_id`),
+  CONSTRAINT `options_ibfk_1` FOREIGN KEY (`model_id`) REFERENCES `models` (`model_id`),
+  CONSTRAINT `options_ibfk_2` FOREIGN KEY (`color_id`) REFERENCES `colors` (`color_id`),
+  CONSTRAINT `options_ibfk_3` FOREIGN KEY (`os_id`) REFERENCES `os_versions` (`os_id`),
+  CONSTRAINT `options_ibfk_4` FOREIGN KEY (`memory_id`) REFERENCES `memories` (`memory_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `options`
+--
+
+LOCK TABLES `options` WRITE;
+/*!40000 ALTER TABLE `options` DISABLE KEYS */;
+/*!40000 ALTER TABLE `options` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `os_versions`
 --
 
@@ -158,7 +193,6 @@ DROP TABLE IF EXISTS `os_versions`;
 CREATE TABLE `os_versions` (
   `os_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `os_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `is_disabled` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`os_id`)
@@ -182,28 +216,17 @@ DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
-  `product_id` varchar(36) COLLATE utf8_bin NOT NULL,
-  `brand_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `model_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `memory_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `color_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `os_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `year` int DEFAULT NULL,
-  `price` double DEFAULT NULL,
-  `is_disabled` tinyint DEFAULT '0',
+  `product_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `option_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `price` decimal(19,4) DEFAULT NULL,
+  `is_sold` tinyint DEFAULT '0',
+  `is_published` tinyint DEFAULT '1',
+  `is_deleted` tinyint DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`product_id`),
-  KEY `brand_id` (`brand_id`),
-  KEY `model_id` (`model_id`),
-  KEY `memory_id` (`memory_id`),
-  KEY `color_id` (`color_id`),
-  KEY `os_id` (`os_id`),
-  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`brand_id`),
-  CONSTRAINT `products_ibfk_2` FOREIGN KEY (`model_id`) REFERENCES `models` (`model_id`),
-  CONSTRAINT `products_ibfk_3` FOREIGN KEY (`memory_id`) REFERENCES `memory_sizes` (`memory_id`),
-  CONSTRAINT `products_ibfk_4` FOREIGN KEY (`color_id`) REFERENCES `colors` (`color_id`),
-  CONSTRAINT `products_ibfk_5` FOREIGN KEY (`os_id`) REFERENCES `os_versions` (`os_id`)
+  KEY `option_id_idx` (`option_id`),
+  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`option_id`) REFERENCES `options` (`option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -225,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-17 12:00:40
+-- Dump completed on 2021-03-19 16:43:26
