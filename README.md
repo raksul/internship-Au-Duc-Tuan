@@ -17,7 +17,7 @@
 - However, the project will use the simplified version of database desgin and supported by variants.json file (which can be found with details in 'Database/third-design')
 <img width="449" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111940637-d170f080-8b01-11eb-99be-84f49f1dbd29.png">
 
-### Installation
+## Installation
 ```bash
 cd smartphones-shop
 # install dependencies
