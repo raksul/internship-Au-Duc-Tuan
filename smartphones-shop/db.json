@@ -1,0 +1,72 @@
+{
+    "products": [
+        {
+            "id": "p001",
+            "brand": "apple",
+            "model": "ipX",
+            "memory": "GB128",
+            "color": "black",
+            "os": "ios13",
+            "year": 2018,
+            "price": 999.9900,
+            "is_published": true,
+            "is_sold": false,
+            "is_deleted": false,
+            "created_at": "Mon Mar 22 2021",
+            "updated_at": "Mon Mar 22 2021"
+        },
+        {
+            "id": "p002",
+            "brand": "samsung",
+            "model": "galaxyS10",
+            "memory": "GB256",
+            "color": "white",
+            "os": "android10",
+            "year": 2018,
+            "price": 999.9900,
+            "is_published": true,
+            "is_sold": false,
+            "is_deleted": false,
+            "created_at": "Mon Mar 22 2021",
+            "updated_at": "Mon Mar 22 2021"
+        },
+        {
+            "id": "p003",
+            "brand": "vivo",
+            "model": "y30i",
+            "memory": "GB128",
+            "color": "navy",
+            "os": "android9",
+            "year": 2018,
+            "price": 999.9900,
+            "is_published": true,
+            "is_sold": false,
+            "is_deleted": false,
+            "created_at": "Mon Mar 22 2021",
+            "updated_at": "Mon Mar 22 2021"
+        }
+    ],
+    "images": [
+        {
+            "id": "i001",
+            "product_id": "p001",
+            "src": "",
+            "created_at": "Mon Mar 22 2021",
+            "updated_at": "Mon Mar 22 2021"
+        },
+        {
+            "id": "i002",
+            "product_id": "p002",
+            "src": "",
+            "created_at": "Mon Mar 22 2021",
+            "updated_at": "Mon Mar 22 2021"
+        },
+        {
+            "id": "i003",
+            "product_id": "p003",
+            "src": "",
+            "created_at": "Mon Mar 22 2021",
+            "updated_at": "Mon Mar 22 2021"
+        }
+    ]
+}
