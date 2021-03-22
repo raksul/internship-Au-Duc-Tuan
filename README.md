@@ -1,7 +1,7 @@
 ## Internship Project
 
-- Intern: Au Duc Tuan
-- Mentor: Danh Luong
+- Intern: [Au Duc Tuan](https://github.com/ibenrique2510)
+- Mentor: [Danh Luong](https://github.com/azltdanh)
 - Project: Smartphones-shop
 
 
