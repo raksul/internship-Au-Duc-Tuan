@@ -1,96 +1,164 @@
 {   
-    "os": {
-        "ios": {
-            "version:": {
-                "ios10": "iOS 10",
-                "ios13": "iOS 13",
-                "ios14": "iOS 14"
-            },
-            "brands": {
-                "apple": {
-                    "name": "Apple",
-                    "models": {
-                        "ip6": "iPhone 6",
-                        "ip7": "iPhone 7",
-                        "ipX": "iPhone X"
-                    }
-                }
-            }
-        },
-        "android": {
-            "version": {
-                "android9": "Android 9",
-                "android10": "Android 10",
-                "android11": "Android 11"
-            },
-            "brands": {
-                "samsung": {
-                    "name": "Samsung",
-                    "models": {
-                        "galaxyNote20": "Galaxy Note 20",
-                        "galaxyS10": "Galaxy S10",
-                        "galaxyA21": "Galaxy A21"
-                    }
+    "os": [
+        {
+            "id": "ios",
+            "versions": [
+                {
+                    "id": "ios10",
+                    "version": "iOS 10"
                 },
-                "vivo": {
-                    "name": "Vivo",
-                    "models": {
-                        "y30i": "Y30i",
-                        "v20": "V20"
-                    }
+                {
+                    "id": "ios13",
+                    "version": "iOS 13"
+                },
+                {
+                    "id": "ios14",
+                    "version": "iOS 14"
                 }
-            }
+            ],
+            "brands": [
+                {
+                    "id": "apple",
+                    "brand": "Apple",
+                    "models": [
+                        {
+                            "id": "ip6",
+                            "model": "iPhone 6"
+                        },
+                        {
+                            "id": "ip7",
+                            "model": "iPhone 7"
+                        },
+                        {
+                            "id": "ipX",
+                            "model": "iPhone X"
+                        }
+                    ]
+                }
+            ]
         },
-        "windows": {
-            "version:": {
-                "w75": "Windows Phone 7.5",
-                "w8": "Windows Phone 8"
-            },
-            "brands": {
-                "window": {
-                    "name": "Windows Phone",
-                    "models": {
-                        "lumia650": "Lumia 650",
-                        "lumia950": "Lumia 950"
-                    }
+        {
+            "id": "android",
+            "versions": [
+                {
+                    "id": "android9",
+                    "version": "Android 9"
+                },
+                {
+                    "id": "android10",
+                    "version": "Android 10"
+                },
+                {
+                    "id": "android11",
+                    "version": "Android 11"
                 }
-            }
-        },
-        "symbian": {
-            "versions": {
-                "s93": "Symbian 9.3",
-                "s80": "Symbian 8.0"
-            },
-            "brands": {
-                "nokia": {
-                    "name": "Nokia",
-                    "models": {
-                        "n95": "N95",
-                        "e71": "E71"
-                    }
+            ],
+            "brands": [
+                {
+                    "id": "samsung",
+                    "brand": "Samsung",
+                    "models": [
+                        {
+                            "id": "galaxyNote20",
+                            "model": "Galaxy Note 20"
+                        },
+                        {
+                            "id": "galaxyS10",
+                            "model": "Galaxy S10"
+                        },
+                        {
+                            "id": "galaxyA21",
+                            "model": "Galaxy A21"
+                        }
+                    ]
+                },
+                {
+                    "id": "vivo",
+                    "brand": "Vivo",
+                    "models": [
+                        {
+                            "id": "y30i",
+                            "model": "Y30i"
+                        },
+                        {
+                            "id": "v20",
+                            "model": "V20"
+                        }
+                    ]
                 }
-            }
+            ]
         }
-    },
-    "memories" : {
-        "GB16": "16GB",
-        "GB32": "32GB",
-        "GB64": "64GB",
-        "GB128": "128GB",
-        "GB256": "256GB",
-        "GB512": "512GB",
-        "TB1": "1TB"
-    },
-    "colors": {
-        "red": "Red",
-        "black" : "Black",
-        "pink": "Pink",
-        "gold": "Gold",
-        "rose": "Rose",
-        "white": "White",
-        "blue": "Blue",
-        "navy": "Navy",
-        "silver": "Silver",
-        "purple": "Purple"
-    }
+    ],
+    "memories": [
+        {
+            "id": "GB16",
+            "memory": "16GB"
+        },
+        {
+            "id": "GB32",
+            "memory": "32GB"
+        },
+        {
+            "id": "GB64",
+            "memory": "64GB"
+        },
+        {
+            "id": "GB128",
+            "memory": "128GB"
+        },
+        {
+            "id": "GB256",
+            "memory": "256GB"
+        },
+        {
+            "id": "GB512",
+            "memory": "512GB"
+        },
+        {
+            "id": "TB1",
+            "memory": "1TB"
+        }
+    ],
+    "colors": [
+        {
+            "id": "red",
+            "color": "Red"
+        },
+        {
+            "id": "black",
+            "color": "Black"
+        },
+        {
+            "id": "pink",
+            "color": "Pink"
+        },
+        {
+            "id": "gold",
+            "color": "Gold"
+        },
+        {
+            "id": "rose",
+            "color": "Rose"
+        },
+        {
+            "id": "white",
+            "color": "White"
+        },
+        {
+            "id": "blue",
+            "color": "Blue"
+        },
+        {
+            "id": "navy",
+            "color": "Navy"
+        },
+        {
+            "id": "silver",
+            "color": "Silver"
+        },
+        {
+            "id": "purple",
+            "color": "Purple"
+        }
+    ]
 }

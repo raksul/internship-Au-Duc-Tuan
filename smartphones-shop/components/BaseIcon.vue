@@ -1,11 +1,12 @@
 <template>
-  <p>{{ message }}</p>
+  <p>This is BaseIcon component</p>
 </template>
 
 <script>
 export default {
   props: {
-    message: {
+    name: String,
+    size: {
       type: [String, Number],
       default: '',
     },

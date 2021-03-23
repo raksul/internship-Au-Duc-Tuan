@@ -1,7 +1,12 @@
 <template>
-  <div>
-    <h2>This is Header component</h2>
-    <BaseIcon message="This is BaseIcon component" />
+  <div class="gradient">
+    <div class="header">
+      <div></div>
+      <nuxt-link to="/"
+        ><img src="@/assets/smartphone.png" alt="logo" class="logo" />
+      </nuxt-link>
+      <fa icon="cog" class="setting-icon" />
+    </div>
   </div>
 </template>
 
@@ -9,4 +14,29 @@
 export default {}
 </script>
 
-<style></style>
+<style>
+.header {
+  width: 95%;
+  margin: auto;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding: 7px 10px;
+}
+.logo {
+  width: 57px;
+  height: 57px;
+  transition: all 0.6s linear;
+}
+.logo:hover {
+  transform: scale(1.15);
+}
+.setting-icon {
+  font-size: 33px;
+  color: rgb(0, 0, 0);
+}
+.setting-icon:hover {
+  cursor: pointer;
+}
+</style>

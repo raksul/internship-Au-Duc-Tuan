@@ -1,4 +1,4 @@
-import * as variants from '@/variants-temp.json'
+import * as variants from '@/variants.json'
 
 export default {
   getOS() {
@@ -45,15 +45,17 @@ export default {
     return brands
   },
   getBrandByKey(key) {
-    variants.os.forEach((os) => {
-      for (let i = 0; i < os.brands.length; i++) {
-        if (os.brands[i].id === key) {
-          return os.brands[i]
+    let brand = {}
+    for (let i = 0; i < variants.os.length; i++) {
+      for (let j = 0; j < variants.os[i].brands.length; j++) {
+        if (variants.os[i].brands[j].id === key) {
+          brand = variants.os[i].brands[j]
         }
       }
-    })
+    }
+    return brand
   },
-  getModelsByKey(key) {
+  getModelsByBrandKey(key) {
     const models = []
     variants.os.forEach((os) => {
       os.brands.forEach((brand) => {
@@ -65,5 +67,18 @@ export default {
       })
     })
     return models
+  },
+  getModelByKey(key) {
+    let model = {}
+    for (let x = 0; x < variants.os.length; x++) {
+      for (let y = 0; y < variants.os[x].brands.length; y++) {
+        for (let z = 0; z < variants.os[x].brands[y].models.length; z++) {
+          if (variants.os[x].brands[y].models[z].id === key) {
+            model = variants.os[x].brands[y].models[z]
+          }
+        }
+      }
+    }
+    return model
   },
 }

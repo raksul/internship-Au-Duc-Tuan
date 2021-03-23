@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1>{{ message }}</h1>
     <p v-if="statusCode === 404">
       <nuxt-link to="/"> Return to homepage </nuxt-link>
@@ -28,3 +28,21 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.container {
+  margin: auto;
+  text-align: center;
+}
+</style>
