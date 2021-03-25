@@ -16,7 +16,7 @@ export default {}
 
 <style>
 .header {
-  width: 95%;
+  width: 90%;
   margin: auto;
   justify-content: space-between;
   align-items: center;

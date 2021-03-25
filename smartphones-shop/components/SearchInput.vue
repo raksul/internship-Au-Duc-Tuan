@@ -1,26 +1,35 @@
 <template>
   <div class="search -shadow">
-    <input type="text" placeholder="Search..." />
+    <input type="text" placeholder="Search..." @input="updateValue" />
     <fa icon="search" class="search-icon" />
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    updateValue(event) {
+      this.$emit('input', event.target.value)
+    },
+  },
+}
 </script>
 
 <style>
 .search {
   border: 1.5px solid black;
   border-radius: 10px;
-  height: 33px;
+  box-shadow: 0 8px 20px -6px grey;
+  height: 37px;
+  width: 170px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 0 10px;
 }
 .search input[type='text'] {
   border: none;
+  font-size: 14.9px;
 }
 .search input[type='text']:focus {
   outline: none;

@@ -24,11 +24,11 @@ body {
   line-height: 1.5;
 }
 .container {
-  width: 95%;
+  width: 90%;
   margin: auto;
 }
 .gradient {
-  background: linear-gradient(to right, #16c0b0, #84cf6a);
+  background: linear-gradient(to bottom right, #a8fff6, #16c0b0);
   box-shadow: 0 8px 20px -6px grey;
 }
 .-shadow {
@@ -40,6 +40,42 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin: 15px 0;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.info-column1 {
+  width: 10%;
+}
+.info-column2 {
+  width: 20%;
+}
+.info-column3 {
+  width: 30%;
+}
+
+/* For responsive */
+@media screen and (max-width: 710px) {
+  .product-card-img {
+    display: none;
+  }
+  .product-card {
+    justify-content: center;
+  }
+  .product-card-info {
+    width: 100%;
+    margin-bottom: 17px;
+  }
+  .side-label {
+    display: none;
+  }
+  .info-column3 {
+    width: 40%;
+  }
+  .info-column1 {
+    width: 20%;
+  }
+  .header-container > div {
+    display: none;
+  }
 }
 </style>

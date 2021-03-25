@@ -15,6 +15,8 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
+  // Customize the progress-bar color
+  loading: { color: '#e91e63', height: '5px' },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],

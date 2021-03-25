@@ -13,4 +13,7 @@ export default {
   getImage(productId) {
     return apiClient.get('/images/' + productId)
   },
+  addImage(image) {
+    return apiClient.post('/images', image)
+  },
 }
