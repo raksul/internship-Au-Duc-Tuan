@@ -4,13 +4,13 @@ export default {
   getOS() {
     return variants.os
   },
-  getOSVersionsByKey(key) {
-    const versions = []
+  getOSVersionsByBrand(key) {
+    let versions = []
     variants.os.forEach((os) => {
-      if (os.id === key) {
-        os.versions.forEach((version) => {
-          versions.push(version)
-        })
+      for (let i = 0; i < os.brands.length; i++) {
+        if (os.brands[i].id === key) {
+          versions = os.versions
+        }
       }
     })
     return versions

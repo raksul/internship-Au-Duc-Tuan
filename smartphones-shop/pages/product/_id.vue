@@ -8,26 +8,26 @@
       <span>General</span>
       <div>
         <label>Brand</label>
-        <input type="text" :value="brand.brand" />
+        <input type="text" :value="brand.value" />
       </div>
       <div>
         <label>Model</label>
-        <input type="text" :value="model.model" />
+        <input type="text" :value="model.value" />
       </div>
     </div>
     <div>
       <span>Varians</span>
       <div>
         <label>Memory Size</label>
-        <input type="text" :value="memory.memory" />
+        <input type="text" :value="memory.value" />
       </div>
       <div>
         <label>Color</label>
-        <input type="text" :value="color.color" />
+        <input type="text" :value="color.value" />
       </div>
       <div>
         <label>OS Version</label>
-        <input type="text" :value="os.version" />
+        <input type="text" :value="os.value" />
       </div>
       <div>
         <label>Year</label>
@@ -57,29 +57,33 @@ export default {
     }
   },
   async fetch() {
+    // calling action to get product info along with it's image(s) from $store
     await this.$store.dispatch('products/fetchProduct', this.$route.params.id)
     await ImageService.getImageByProductId(this.$route.params.id).then(
       (res) => {
         this.images = res.data
       }
     )
-    // async fetch({ store, error, params }) {
-    // try {
-    //     await store.dispatch('products/fetchProduct', params.id)
-    //     await ImageService.getImageByProductId(params.id).then((res) => {
-    //     this.data.images = res.data
-    //     })
-    // } catch (e) {
-    //     error({
-    //     statusCode: 503,
-    //     message: e.message,
-    //     })
-    // }
+    //   async fetch({ store, error, params }) {
+    //     try {
+    //       await store.dispatch('products/fetchProduct', params.id)
+    //       await ImageService.getImageByProductId(params.id).then((res) => {
+    //         this.data.images = res.data
+    //       })
+    //     } catch (e) {
+    //       error({
+    //         statusCode: 503,
+    //         message: e.message,
+    //       })
+    //     }
   },
   computed: {
     ...mapState({
+      // map products in $store with the page after fetch() life cycle above
       product: (state) => state.products.product,
     }),
+
+    // get data from variants.json file according to product's info
     brand() {
       return VariantsUtil.getBrandByKey(this.product.brand)
     },

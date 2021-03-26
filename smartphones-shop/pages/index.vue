@@ -34,6 +34,7 @@ export default {
     }
   },
   async fetch({ store, error }) {
+    // calling action from $store, fetch product data
     try {
       await store.dispatch('products/fetchProducts')
     } catch (e) {
@@ -44,20 +45,21 @@ export default {
     }
   },
   computed: {
+    // filter products in $store using user's search input to display
     filteredProducts() {
       return this.products.filter((product) => {
         const brand = VariantsUtil.getBrandByKey(
           product.brand
-        ).brand.toLowerCase()
+        ).value.toLowerCase()
         const model = VariantsUtil.getModelByKey(
           product.model
-        ).model.toLowerCase()
+        ).value.toLowerCase()
         const color = VariantsUtil.getColorByKey(
           product.color
-        ).color.toLowerCase()
+        ).value.toLowerCase()
         const memory = VariantsUtil.getMemoryByKey(
           product.memory
-        ).memory.toLowerCase()
+        ).value.toLowerCase()
         const price = product.price.toString().toLowerCase()
         const searchTerm = this.search.toLowerCase()
 
@@ -71,6 +73,7 @@ export default {
       })
     },
     ...mapState({
+      // map products in $store with the page after fetch() life cycle above
       products: (state) => state.products.products,
     }),
   },

@@ -92,21 +92,3 @@ export default {
   transform: translate(0, 0);
 }
 </style>
-
-<!-- <div class="button-container">
-  <div class="button -shadow">
-    <fa icon="plus-square" />
-  </div>
-  <div>Register Product</div>
-</div> -->
-
-<!-- .button {
-  width: 55px;
-  height: 38px;
-  border: 1.5px solid black;
-  border-radius: 13px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-} -->

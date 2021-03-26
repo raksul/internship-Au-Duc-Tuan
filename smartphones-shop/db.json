@@ -3,7 +3,7 @@
     {
       "id": "p001",
       "brand": "apple",
-      "model": "ipX",
+      "model": "ipx",
       "memory": "GB128",
       "color": "black",
       "os": "ios13",
@@ -18,7 +18,7 @@
     {
       "id": "p002",
       "brand": "samsung",
-      "model": "galaxyS10",
+      "model": "galaxys10",
       "memory": "GB256",
       "color": "white",
       "os": "android10",
@@ -63,7 +63,7 @@
     {
       "id": "p005",
       "brand": "samsung",
-      "model": "galaxyA21",
+      "model": "galaxya21",
       "memory": "GB64",
       "color": "purple",
       "os": "android10",
@@ -108,7 +108,7 @@
     {
       "id": "p008",
       "brand": "samsung",
-      "model": "galaxyNote20",
+      "model": "galaxynote20",
       "memory": "GB256",
       "color": "black",
       "os": "android10",

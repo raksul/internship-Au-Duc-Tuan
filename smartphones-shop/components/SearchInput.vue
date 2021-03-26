@@ -8,6 +8,7 @@
 <script>
 export default {
   methods: {
+    // return input value to parent component when changes are made
     updateValue(event) {
       this.$emit('input', event.target.value)
     },

@@ -4,11 +4,11 @@
       <img :src="image.src" class="product-card-img" />
       <div class="product-card-info">
         <div class="info-column2 hide">
-          {{ brand.brand }}
+          {{ brand.value }}
         </div>
-        <div class="info-column3">{{ model.model }}</div>
-        <div class="info-column1">{{ color.color }}</div>
-        <div class="info-column1">{{ memory.memory }}</div>
+        <div class="info-column3">{{ model.value }}</div>
+        <div class="info-column1">{{ color.value }}</div>
+        <div class="info-column1">{{ memory.value }}</div>
         <div class="info-column1 hide">${{ product.price }}</div>
         <div><fa icon="pen" /></div>
       </div>
@@ -29,7 +29,6 @@ export default {
   },
   data() {
     return {
-      // windowWidth: 0,
       image: {},
     }
   },
@@ -39,6 +38,7 @@ export default {
     })
   },
   computed: {
+    // get data from variants.json file according to product's info
     brand() {
       return VariantsUtil.getBrandByKey(this.product.brand)
     },
@@ -51,11 +51,6 @@ export default {
     memory() {
       return VariantsUtil.getMemoryByKey(this.product.memory)
     },
-  },
-  mounted() {
-    window.addEventListener('resize', () => {
-      this.windowWidth = window.innerWidth
-    })
   },
 }
 </script>

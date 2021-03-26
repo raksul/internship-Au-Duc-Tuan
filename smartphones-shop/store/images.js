@@ -27,9 +27,11 @@ export const actions = {
     return ImageService.getImageByProductId(productId)
       .then((res) => {
         commit('SET_IMAGE', res.data)
+        // implement better error handling codes here
         console.log(res.data)
       })
       .catch((err) => {
+        // implement better error handling codes here
         console.log(err)
       })
   },
@@ -37,6 +39,7 @@ export const actions = {
     image.created_at = new Date().toString
     image.updated_at = new Date().toString
     return ImageService.addImage(image).then((res) => {
+      // implement better error handling codes here
       console.log('Added')
     })
   },
