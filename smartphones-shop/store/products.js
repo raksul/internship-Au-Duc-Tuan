@@ -33,10 +33,10 @@ export const actions = {
     if (state.product.id === id) {
       return state.product
     }
-    const event = getters.getProductById(id)
+    const product = getters.getProductById(id)
 
-    if (event) {
-      commit('SET_PRODUCT', event)
+    if (product) {
+      commit('SET_PRODUCT', product)
     } else {
       return ProductService.getProduct(id)
         .then((res) => {
@@ -50,6 +50,8 @@ export const actions = {
   },
 
   addProduct({ commit }, product) {
+    product.created_at = new Date().toString
+    product.updated_at = new Date().toString
     return ProductService.addProduct(product)
       .then(() => {
         commit('ADD_PRODUCT', product)

@@ -39,7 +39,8 @@
       </div>
       <div>
         <label>Attach image</label>
-        <input type="text" />
+        <fa icon="paperclip" />
+        <img v-for="image in images" :key="image.id" :src="image.src" />
       </div>
     </div>
   </div>
@@ -48,20 +49,37 @@
 <script>
 import { mapState } from 'vuex'
 import VariantsUtil from '~/services/VariantsUtil.js'
+import ImageService from '~/services/ImageService.js'
 export default {
-  async fetch({ store, error, params }) {
-    try {
-      await store.dispatch('products/fetchProduct', params.id)
-      //   await store.dispatch('images/fetchImagesForProduct', params.id)
-    } catch (e) {
-      error({
-        statusCode: 503,
-        message: e.message,
-      })
+  data() {
+    return {
+      images: [],
     }
   },
-  computed: mapState({
-    product: (state) => state.products.product,
+  async fetch() {
+    await this.$store.dispatch('products/fetchProduct', this.$route.params.id)
+    await ImageService.getImageByProductId(this.$route.params.id).then(
+      (res) => {
+        this.images = res.data
+      }
+    )
+    // async fetch({ store, error, params }) {
+    // try {
+    //     await store.dispatch('products/fetchProduct', params.id)
+    //     await ImageService.getImageByProductId(params.id).then((res) => {
+    //     this.data.images = res.data
+    //     })
+    // } catch (e) {
+    //     error({
+    //     statusCode: 503,
+    //     message: e.message,
+    //     })
+    // }
+  },
+  computed: {
+    ...mapState({
+      product: (state) => state.products.product,
+    }),
     brand() {
       return VariantsUtil.getBrandByKey(this.product.brand)
     },
@@ -77,8 +95,13 @@ export default {
     os() {
       return VariantsUtil.getOSVersionByKey(this.product.os)
     },
-  }),
+  },
 }
 </script>
 
-<style></style>
+<style scoped>
+img {
+  width: 30px;
+  height: 30px;
+}
+</style>

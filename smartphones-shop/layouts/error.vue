@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1>{{ message }}</h1>
+    <fa icon="exclamation" class="fa-3x" />
     <p v-if="statusCode === 404">
       <nuxt-link to="/"> Return to homepage </nuxt-link>
     </p>

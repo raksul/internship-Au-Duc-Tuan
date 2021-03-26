@@ -1,11 +1,13 @@
 <template>
   <div>
     <div class="row">
-      <BaseButton icon="plus" label="Add Product" />
+      <nuxt-link to="/add"
+        ><BaseButton icon="plus" label="Add Product" />
+      </nuxt-link>
       <SearchInput v-model="search" />
     </div>
 
-    <div class="header-container">
+    <div v-if="filteredProducts.length > 0" class="header-container">
       <div class="invisible"></div>
       <div class="product-header">
         <div class="info-column2"><b>Brand</b></div>
@@ -19,9 +21,6 @@
     <div v-for="product in filteredProducts" :key="product.id">
       <ProductCard :product="product" />
     </div>
-    <nuxt-link to="/">Home</nuxt-link> |
-    <nuxt-link to="/modify">Update</nuxt-link> |
-    <nuxt-link to="/register">Create</nuxt-link>
   </div>
 </template>
 
@@ -44,8 +43,7 @@ export default {
       })
     }
   },
-  computed: mapState({
-    products: (state) => state.products.products,
+  computed: {
     filteredProducts() {
       return this.products.filter((product) => {
         const brand = VariantsUtil.getBrandByKey(
@@ -72,7 +70,10 @@ export default {
         )
       })
     },
-  }),
+    ...mapState({
+      products: (state) => state.products.products,
+    }),
+  },
 }
 </script>
 

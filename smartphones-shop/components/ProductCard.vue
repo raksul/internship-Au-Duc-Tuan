@@ -1,17 +1,15 @@
 <template>
   <nuxt-link :to="'/product/' + product.id">
     <div class="product-card">
-      <img src="@/assets/img.png" class="product-card-img" />
+      <img :src="image.src" class="product-card-img" />
       <div class="product-card-info">
-        <div v-if="windowWidth > 710" class="info-column2">
+        <div class="info-column2 hide">
           {{ brand.brand }}
         </div>
         <div class="info-column3">{{ model.model }}</div>
         <div class="info-column1">{{ color.color }}</div>
         <div class="info-column1">{{ memory.memory }}</div>
-        <div v-if="windowWidth > 710" class="info-column1">
-          ${{ product.price }}
-        </div>
+        <div class="info-column1 hide">${{ product.price }}</div>
         <div><fa icon="pen" /></div>
       </div>
     </div>
@@ -20,6 +18,8 @@
 
 <script>
 import VariantsUtil from '~/services/VariantsUtil.js'
+import ImageService from '~/services/ImageService.js'
+
 export default {
   props: {
     product: {
@@ -29,8 +29,14 @@ export default {
   },
   data() {
     return {
-      windowWidth: 711,
+      // windowWidth: 0,
+      image: {},
     }
+  },
+  async fetch() {
+    await ImageService.getImageByProductId(this.product.id).then((res) => {
+      this.image = res.data[0]
+    })
   },
   computed: {
     brand() {
@@ -44,9 +50,6 @@ export default {
     },
     memory() {
       return VariantsUtil.getMemoryByKey(this.product.memory)
-    },
-    image() {
-      return ''
     },
   },
   mounted() {
@@ -92,11 +95,12 @@ a {
   display: flex;
   flex-direction: row;
 }
-.product-card-info:hover {
+/* .product-card-info:hover {
   transform: scale(1.03);
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2), 0 1px 15px 0 rgba(0, 0, 0, 0.19);
-}
+} */
 .product-card-img:hover {
   transform: scale(1.6);
+  cursor: default;
 }
 </style>

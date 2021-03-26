@@ -10,8 +10,11 @@ const apiClient = axios.create({
 })
 
 export default {
-  getImage(productId) {
-    return apiClient.get('/images/' + productId)
+  getImages() {
+    return apiClient.get('images')
+  },
+  getImageByProductId(productId) {
+    return apiClient.get('images?product_id=' + productId)
   },
   addImage(image) {
     return apiClient.post('/images', image)

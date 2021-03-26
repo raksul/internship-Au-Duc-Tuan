@@ -77,5 +77,8 @@ body {
   .header-container > div {
     display: none;
   }
+  .hide {
+    display: none;
+  }
 }
 </style>
