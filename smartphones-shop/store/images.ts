@@ -1,4 +1,4 @@
-import ImageService from '@/services/ImageService.js'
+import ImageService from '~/services/ImageService.js'
 
 export const state = () => ({
   images: [],

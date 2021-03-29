@@ -4,26 +4,26 @@
       <span>General</span>
       <div>
         <label>Brand</label>
-        <BaseAutoCompleteInput v-model="autocompleteBrand" :items="brands" />
+        <AutoCompleteInput v-model="autocompleteBrand" :items="brands" />
       </div>
       <div>
         <label>Model</label>
-        <BaseAutoCompleteInput v-model="autocompleteModel" :items="models" />
+        <AutoCompleteInput v-model="autocompleteModel" :items="models" />
       </div>
     </div>
     <div>
       <span>Varians</span>
       <div>
         <label>Memory Size</label>
-        <BaseAutoCompleteInput v-model="autocompleteMemory" :items="memories" />
+        <AutoCompleteInput v-model="autocompleteMemory" :items="memories" />
       </div>
       <div>
         <label>Color</label>
-        <BaseAutoCompleteInput v-model="autocompleteColor" :items="colors" />
+        <AutoCompleteInput v-model="autocompleteColor" :items="colors" />
       </div>
       <div>
         <label>OS Version</label>
-        <BaseAutoCompleteInput v-model="autocompleteOS" :items="osVersions" />
+        <AutoCompleteInput v-model="autocompleteOS" :items="osVersions" />
       </div>
       <div>
         <label>Year</label>
@@ -40,10 +40,17 @@
           v-for="(uploadedImage, index) in uploadedImages"
           :key="index"
           :src="uploadedImage"
+          @mousedown="removeImage(index)"
         />
-        <input type="file" accept="image/*" multiple @change="handleImages" />
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          @change="handleImages($event)"
+        />
       </div>
-      <button @click="addProduct">Click</button>
+      <nuxt-link to="/"><button>Cancel</button></nuxt-link>
+      <button @click="addProduct">Create</button>
     </div>
   </div>
 </template>
@@ -100,8 +107,8 @@ export default {
         is_published: true,
         is_sold: false,
         is_deleted: false,
-        created_at: new Date().toDateString,
-        updated_at: new Date().toDateString,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       }
 
       // calling action from Vuex to add product along with its image(s)
@@ -112,6 +119,8 @@ export default {
           id: uuidv4(),
           src: img,
           product_id: this.addedProduct.id,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         }
         ImageService.addImage(addedImage)
       })
@@ -123,6 +132,12 @@ export default {
         const selectedImage = e.target.files[0]
         this.createBase64Image(selectedImage)
       }
+    },
+
+    removeImage(index) {
+      // this.$refs.imageInput.files.splice(index, 1)
+      this.imageInput.files.splice(index, 1)
+      this.uploadedImages.splice(index, 1)
     },
 
     // parse image to base64 data url
@@ -140,7 +155,11 @@ export default {
 
 <style scoped>
 img {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
+  margin: 0 5px;
+}
+img:hover {
+  outline: 2px solid red;
 }
 </style>

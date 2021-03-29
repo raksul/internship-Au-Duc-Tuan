@@ -3,7 +3,7 @@
     <div class="header">
       <div></div>
       <nuxt-link to="/"
-        ><img src="@/assets/smartphone.png" alt="logo" class="logo" />
+        ><img src="~/assets/smartphone.png" alt="logo" class="logo" />
       </nuxt-link>
       <fa icon="cog" class="setting-icon" />
     </div>

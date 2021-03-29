@@ -1,4 +1,4 @@
-import * as variants from '@/variants.json'
+import * as variants from '~/variants.json'
 
 export default {
   getOS() {
@@ -92,42 +92,15 @@ export default {
     }
     return os
   },
-  // getBrandNameByKey(key) {
-  //   let result = ''
-  //   for (let i = 0; i < variants.os.length; i++) {
-  //     for (let j = 0; j < variants.os[i].brands.length; j++) {
-  //       if (variants.os[i].brands[j].id === key) {
-  //         result = variants.os[i].brands[j].brand
-  //       }
-  //     }
-  //   }
-  //   return result.brand
-  // },
-  // getModelNameByKey(key) {
-  //   let result = ''
-  //   for (let x = 0; x < variants.os.length; x++) {
-  //     for (let y = 0; y < variants.os[x].brands.length; y++) {
-  //       for (let z = 0; z < variants.os[x].brands[y].models.length; z++) {
-  //         if (variants.os[x].brands[y].models[z].id === key) {
-  //           result = variants.os[x].brands[y].models[z].model
-  //         }
-  //       }
-  //     }
-  //   }
-  //   return result
-  // },
-  // getColorNameByKey(key) {
-  //   for (let i = 0; i < variants.colors.length; i++) {
-  //     if (variants.colors[i].id === key) {
-  //       return variants.colors[i].color
-  //     }
-  //   }
-  // },
-  // getMemoryNameByKey(key) {
-  //   for (let i = 0; i < variants.memories.length; i++) {
-  //     if (variants.memories[i].id === key) {
-  //       return variants.memories[i].memory
-  //     }
-  //   }
-  // },
+  formatMoney(price) {
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+
+      // These options are needed to round to whole numbers if that's what you want.
+      // minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+      // maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+    })
+    return formatter.format(price)
+  },
 }

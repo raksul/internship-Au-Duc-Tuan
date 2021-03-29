@@ -1,5 +1,5 @@
 <template>
-  <div class="search -shadow">
+  <div class="search shadow">
     <input type="text" placeholder="Search..." @input="updateValue" />
     <fa icon="search" class="search-icon" />
   </div>

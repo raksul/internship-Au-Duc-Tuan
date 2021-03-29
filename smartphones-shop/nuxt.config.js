@@ -30,6 +30,8 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
+    '@nuxt/typescript-build',
+    'nuxt-typed-vuex',
     '@nuxtjs/eslint-module',
     '@nuxtjs/fontawesome',
   ],
@@ -51,4 +53,12 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  typescript: {
+    typeCheck: {
+      eslint: {
+        files: './**/*.{ts,js,vue}',
+      },
+    },
+  },
 }

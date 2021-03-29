@@ -1,5 +1,5 @@
 <template>
-  <div id="autocomplete">
+  <div class="autocomplete">
     <input
       v-model="search"
       type="text"
@@ -16,7 +16,7 @@
         v-for="(result, index) in results"
         :key="index"
         class="autocomplete-result"
-        :class="{ 'is-active': index === arrowCounter }"
+        :class="{ 'is-active': index === selectedIndex }"
         @touchend="setResult(result)"
         @mousedown="setResult(result)"
       >
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+// import Option from '~/interfaces/option.ts'
 export default {
   props: {
     items: {
@@ -34,15 +35,28 @@ export default {
       required: false,
       default: () => [],
     },
+    init: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
       search: '',
-      returnObject: {},
+      selectedOption: {},
       results: [],
       isOpen: false,
-      arrowCounter: 0,
+      selectedIndex: 0,
       isValid: true,
+    }
+  },
+  created() {
+    // map the initial value with the component
+    // mainly for modify function
+    if (this.init) {
+      this.search = this.init.value
+      this.selectedOption = this.init
+      this.$emit('input', this.selectedOption)
     }
   },
   methods: {
@@ -58,39 +72,39 @@ export default {
       // automatically choose the first suggested result
       // if user's input can fetch data
       if (this.results.length > 0) {
-        this.arrowCounter = 0
+        this.selectedIndex = 0
       }
       this.isOpen = true
 
-      this.$emit('input', this.returnObject)
+      this.$emit('input', this.selectedOption)
     },
 
     // set the autocomplete result when user click on a suggested row
     setResult(result) {
       this.search = result.value
-      this.returnObject = result
+      this.selectedOption = result
       this.isOpen = false
     },
 
     // handling the event when user press arrow down key
     onArrowDown() {
-      if (this.arrowCounter < this.results.length - 1) {
+      if (this.selectedIndex < this.results.length - 1) {
         // move the current highlighted result down 1 row
-        this.arrowCounter = this.arrowCounter + 1
+        this.selectedIndex = this.selectedIndex + 1
       } else {
         // move back to the top when the current highlighted result at bottom
-        this.arrowCounter = 0
+        this.selectedIndex = 0
       }
     },
 
     // handling the event when user press arrow up key
     onArrowUp() {
-      if (this.arrowCounter > 0) {
+      if (this.selectedIndex > 0) {
         // move the current highlighted current result up 1 row
-        this.arrowCounter = this.arrowCounter - 1
+        this.selectedIndex = this.selectedIndex - 1
       } else {
         // move to the bottom when the current highlighted result at top
-        this.arrowCounter = this.results.length - 1
+        this.selectedIndex = this.results.length - 1
       }
     },
 
@@ -98,12 +112,12 @@ export default {
     // use up/down arrow key to select a suggested row
     // and press Enter
     onEnter() {
-      this.search = this.results[this.arrowCounter].value
-      this.returnObject = this.results[this.arrowCounter]
-      this.arrowCounter = 0
+      this.search = this.results[this.selectedIndex].value
+      this.selectedOption = this.results[this.selectedIndex]
+      this.selectedIndex = 0
       this.isOpen = false
-      this.$emit('input', this.returnObject)
-      this.returnObject = {}
+      this.$emit('input', this.selectedOption)
+      this.selectedOption = {}
     },
 
     // handling the event when user tab/click/deselect the input
@@ -113,6 +127,7 @@ export default {
       // check if the user's current input can fetch any suggested data or not
       if (this.results.length === 0) {
         this.isValid = false
+        this.isOpen = false
       } else {
         this.isValid = true
         // automatically select an suggestion with user's current input
@@ -132,13 +147,10 @@ export default {
   position: absolute;
   z-index: 10;
   padding: 4px;
-  width: 143px;
+  width: 100%;
   margin: 0;
   border: 1px solid #eeeeee;
   background-color: #fff;
-  /* height: 120px; */
-  min-height: 1em;
-  /* max-height: 6em; */
   overflow: auto;
 }
 
@@ -151,7 +163,7 @@ export default {
 
 .autocomplete-result.is-active,
 .autocomplete-result:hover {
-  background-color: #4aae9b;
+  background-color: #42cbbc;
   color: white;
 }
 

@@ -9,11 +9,9 @@
 export default {
   props: {
     label: {
-      type: [String, Number],
+      type: String,
       default: '',
     },
   },
 }
 </script>
-
-<style></style>

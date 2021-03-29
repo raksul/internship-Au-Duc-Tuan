@@ -1,47 +1,65 @@
 <template>
   <div>
     <div>
-      <p>{{ product }}</p>
-    </div>
-
-    <div>
       <span>General</span>
       <div>
         <label>Brand</label>
-        <input type="text" :value="brand.value" />
+        <AutoCompleteInput
+          v-model="autocompleteBrand"
+          :init="brand"
+          :items="brands"
+        />
       </div>
       <div>
         <label>Model</label>
-        <input type="text" :value="model.value" />
+        <AutoCompleteInput
+          v-model="autocompleteModel"
+          :init="model"
+          :items="models"
+        />
       </div>
     </div>
     <div>
       <span>Varians</span>
       <div>
         <label>Memory Size</label>
-        <input type="text" :value="memory.value" />
+        <AutoCompleteInput
+          v-model="autocompleteMemory"
+          :init="memory"
+          :items="memories"
+        />
       </div>
       <div>
         <label>Color</label>
-        <input type="text" :value="color.value" />
+        <AutoCompleteInput
+          v-model="autocompleteColor"
+          :init="color"
+          :items="colors"
+        />
       </div>
       <div>
         <label>OS Version</label>
-        <input type="text" :value="os.value" />
+        <AutoCompleteInput
+          v-model="autocompleteOS"
+          :init="os"
+          :items="osVersions"
+        />
       </div>
       <div>
         <label>Year</label>
-        <input type="text" :value="product.year" />
+        <input v-model="year" type="number" />
       </div>
       <div>
         <label>Price</label>
-        <input type="text" :value="product.price" />
+        <input v-model="price" type="number" />
       </div>
       <div>
         <label>Attach image</label>
         <fa icon="paperclip" />
         <img v-for="image in images" :key="image.id" :src="image.src" />
       </div>
+      <nuxt-link to="/"><button>Cancel</button></nuxt-link>
+      <button @click="updateProduct">Update</button>
     </div>
   </div>
 </template>
@@ -53,7 +71,14 @@ import ImageService from '~/services/ImageService.js'
 export default {
   data() {
     return {
-      images: [],
+      images: Array,
+      autocompleteBrand: Object,
+      autocompleteModel: Object,
+      autocompleteMemory: Object,
+      autocompleteColor: Object,
+      autocompleteOS: Object,
+      year: '',
+      price: '',
     }
   },
   async fetch() {
@@ -98,6 +123,40 @@ export default {
     },
     os() {
       return VariantsUtil.getOSVersionByKey(this.product.os)
+    },
+
+    // fetch all the data for auto-complete components
+    brands() {
+      return VariantsUtil.getBrands()
+    },
+    models() {
+      return VariantsUtil.getModelsByBrandKey(this.autocompleteBrand.id)
+    },
+    osVersions() {
+      return VariantsUtil.getOSVersionsByBrand(this.autocompleteBrand.id)
+    },
+    memories() {
+      return VariantsUtil.getMemories()
+    },
+    colors() {
+      return VariantsUtil.getColors()
+    },
+  },
+  methods: {
+    updateProduct() {
+      const updatedProduct = {
+        id: this.product.id,
+        brand: this.autocompleteBrand.id,
+        model: this.autocompleteModel.id,
+        memory: this.autocompleteMemory.id,
+        color: this.autocompleteColor.id,
+        os: this.autocompleteOS.id,
+        year: this.year,
+        price: this.price,
+        created_at: this.product.created_at,
+        updated_at: new Date().toISOString(),
+      }
+      console.log(updatedProduct)
     },
   },
 }

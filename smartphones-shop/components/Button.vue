@@ -1,8 +1,8 @@
 <template>
-  <div class="button-container">
+  <div class="btn-container">
     <button class="btn btn-primary">
       <span></span>
-      <span><fa :icon="icon" /></span>
+      <span><fa v-if="icon" :icon="icon" /></span>
     </button>
     <span class="side-label">{{ label }}</span>
   </div>
@@ -13,11 +13,10 @@ export default {
   props: {
     icon: {
       type: String,
-      required: true,
+      default: '',
     },
     label: {
       type: String,
-      required: false,
       default: '',
     },
   },
@@ -25,7 +24,7 @@ export default {
 </script>
 
 <style>
-.button-container {
+.btn-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -1,9 +1,10 @@
-import ProductService from '@/services/ProductService.js'
-// import ImageService from '@/services/ImageService.js'
+import ProductService from '~/services/ProductService.js'
 
 export const state = () => ({
   products: [],
   product: {},
+  perPage: 5,
+  productsTotal: 0,
 })
 
 export const mutations = {
@@ -13,15 +14,19 @@ export const mutations = {
   SET_PRODUCT(state, product) {
     state.product = product
   },
+  SET_PRODUCTS_TOTAL(state, productsTotal) {
+    state.productsTotal = productsTotal
+  },
   ADD_PRODUCT(state, product) {
     state.products.push(product)
   },
 }
 
 export const actions = {
-  fetchProducts({ commit }) {
-    return ProductService.getProducts()
+  fetchProducts({ commit, state }, page) {
+    return ProductService.getProducts(state.perPage, page)
       .then((res) => {
+        commit('SET_PRODUCTS_TOTAL', parseInt(res.headers['x-total-count']))
         commit('SET_PRODUCTS', res.data)
       })
       .catch((err) => {

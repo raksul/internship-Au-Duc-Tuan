@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="row">
-      <nuxt-link to="/add"
-        ><BaseButton icon="plus" label="Add Product" />
+      <nuxt-link to="/add">
+        <Button icon="plus" label="Add Product" />
       </nuxt-link>
       <SearchInput v-model="search" />
     </div>
@@ -27,16 +27,19 @@
 <script>
 import { mapState } from 'vuex'
 import VariantsUtil from '~/services/VariantsUtil.js'
+// import ProductService from '~/services/ProductService.js'
+
 export default {
   data() {
     return {
       search: '',
+      currentPage: this.$route.params.page || 1,
     }
   },
   async fetch({ store, error }) {
     // calling action from $store, fetch product data
     try {
-      await store.dispatch('products/fetchProducts')
+      await store.dispatch('products/fetchProducts', this.currentPage)
     } catch (e) {
       error({
         statusCode: 503,
@@ -47,6 +50,7 @@ export default {
   computed: {
     // filter products in $store using user's search input to display
     filteredProducts() {
+      // return ProductService.getProductsBySearch(this.search)
       return this.products.filter((product) => {
         const brand = VariantsUtil.getBrandByKey(
           product.brand

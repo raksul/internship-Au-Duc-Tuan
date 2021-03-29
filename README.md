@@ -13,22 +13,21 @@
 ## Database Design
 
 - ERD design
- <img width="736" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111940602-bf8f4d80-8b01-11eb-98dd-3a923911389d.png">
+  <img width="736" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111940602-bf8f4d80-8b01-11eb-98dd-3a923911389d.png">
 
-- However, the project will use the simplified version of database desgin and supported by variants.json file (which can be found with details in 'Database/third-design')
- <img width="449" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111940637-d170f080-8b01-11eb-99be-84f49f1dbd29.png">
+- However, the project will use the simplified version of database design and supported by variants.json file (which can be found with details in 'Database/third-design')
+  <img width="449" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111940637-d170f080-8b01-11eb-99be-84f49f1dbd29.png">
 
 ## Installations
 
 ```bash
-npm install -g json-server
+npm install json-server
 cd smartphones-shop
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:3001
-$ json-server --watch db.json
-$ PORT=3001 npm run dev
+# serve with hot reload at localhost:3000
+$ npm run dev
 
 # build for production and launch server
 $ npm run build
