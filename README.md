@@ -13,6 +13,7 @@
 ## Database Design
 
 - ERD design
+ <img src="/Database/first-design/ERD.png">
  <img width="736" alt="ERD" src="https://user-images.githubusercontent.com/43056724/111940602-bf8f4d80-8b01-11eb-98dd-3a923911389d.png">
 
 - However, the project will use the simplified version of database desgin and supported by variants.json file (which can be found with details in 'Database/third-design')
