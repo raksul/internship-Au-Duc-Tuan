@@ -172,19 +172,19 @@
                         },
                         {
                             "id": "galaxynote9",
-                            "value": "Galaxy Note9"
+                            "value": "Galaxy Note 9"
                         },
                         {
                             "id": "galaxynote10",
-                            "value": "Galaxy Note10"
+                            "value": "Galaxy Note 10"
                         },
                         {
                             "id": "galaxynote20",
-                            "value": "Galaxy Note20"
+                            "value": "Galaxy Note 20"
                         },
                         {
                             "id": "galaxynote20ultra",
-                            "value": "Galaxy Note20 Ultra"
+                            "value": "Galaxy Note 20 Ultra"
                         },
                         {
                             "id": "galaxys10",
@@ -339,11 +339,11 @@
     "memories": [
         {
             "id": "GB4",
-            "value": "4BG"
+            "value": "4GB"
         },
         {
             "id": "GB8",
-            "value": "8BG"
+            "value": "8GB"
         },
         {
             "id": "GB16",

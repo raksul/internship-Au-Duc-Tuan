@@ -47,19 +47,22 @@
       </div>
       <div>
         <label>Year</label>
-        <input v-model="year" type="number" />
+        <InputNumber v-model="year" :init="parseInt(product.year)" />
       </div>
       <div>
-        <label>Price</label>
-        <input v-model="price" type="number" />
+        <label>Price($)</label>
+        <InputNumber v-model="price" :init="parseFloat(product.price)" />
       </div>
       <div>
         <label>Attach image</label>
         <fa icon="paperclip" />
         <img v-for="image in images" :key="image.id" :src="image.src" />
       </div>
-      <nuxt-link to="/"><button>Cancel</button></nuxt-link>
-      <button @click="updateProduct">Update</button>
+      <div class="btn-container">
+        <nuxt-link to="/"><Button icon="times" /></nuxt-link>
+        <Button icon="edit" @button-clicked="updateProduct" />
+      </div>
+      <Button icon="trash" :danger="true" @button-clicked="deleteProduct" />
     </div>
   </div>
 </template>
@@ -77,8 +80,8 @@ export default {
       autocompleteMemory: Object,
       autocompleteColor: Object,
       autocompleteOS: Object,
-      year: '',
-      price: '',
+      year: Number,
+      price: Number,
     }
   },
   async fetch() {
@@ -89,18 +92,6 @@ export default {
         this.images = res.data
       }
     )
-    //   async fetch({ store, error, params }) {
-    //     try {
-    //       await store.dispatch('products/fetchProduct', params.id)
-    //       await ImageService.getImageByProductId(params.id).then((res) => {
-    //         this.data.images = res.data
-    //       })
-    //     } catch (e) {
-    //       error({
-    //         statusCode: 503,
-    //         message: e.message,
-    //       })
-    //     }
   },
   computed: {
     ...mapState({
@@ -143,20 +134,53 @@ export default {
     },
   },
   methods: {
-    updateProduct() {
-      const updatedProduct = {
-        id: this.product.id,
-        brand: this.autocompleteBrand.id,
-        model: this.autocompleteModel.id,
-        memory: this.autocompleteMemory.id,
-        color: this.autocompleteColor.id,
-        os: this.autocompleteOS.id,
-        year: this.year,
-        price: this.price,
-        created_at: this.product.created_at,
-        updated_at: new Date().toISOString(),
+    async updateProduct() {
+      if (
+        // check the validation of user's autocomplete input
+        VariantsUtil.isObjectEmpty(this.autocompleteBrand) ||
+        VariantsUtil.isObjectEmpty(this.autocompleteModel) ||
+        VariantsUtil.isObjectEmpty(this.autocompleteMemory) ||
+        VariantsUtil.isObjectEmpty(this.autocompleteOS) ||
+        VariantsUtil.isObjectEmpty(this.autocompleteColor) ||
+        !VariantsUtil.isNumber(this.year) ||
+        !VariantsUtil.isNumber(this.price)
+      ) {
+        this.$toast.error('Please check your input!')
+      } else {
+        try {
+          await this.$store.dispatch('products/updateProduct', {
+            id: this.product.id,
+            brand: this.autocompleteBrand.id,
+            model: this.autocompleteModel.id,
+            memory: this.autocompleteMemory.id,
+            color: this.autocompleteColor.id,
+            os: this.autocompleteOS.id,
+            year: this.year,
+            price: this.price,
+            is_published: true,
+            is_sold: false,
+            is_deleted: false,
+            created_at: this.product.created_at,
+            updated_at: new Date().toISOString(),
+          })
+          this.$toast.success('Updated Successfully!')
+          this.$router.push('/')
+        } catch (err) {
+          this.$toast.error(err)
+        }
       }
-      console.log(updatedProduct)
+    },
+
+    async deleteProduct() {
+      try {
+        const deletedProduct = Object.assign({}, this.product)
+        deletedProduct.is_deleted = true
+        await this.$store.dispatch('products/deleteProduct', deletedProduct)
+        this.$toast.success('Deleted Successfully!')
+        this.$router.push('/')
+      } catch (err) {
+        this.$toast.error(err)
+      }
     },
   },
 }
@@ -166,5 +190,12 @@ export default {
 img {
   width: 30px;
   height: 30px;
+}
+.btn-container {
+  margin: 10px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 </style>

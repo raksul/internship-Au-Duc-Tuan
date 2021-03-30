@@ -1,6 +1,6 @@
 <template>
   <div class="btn-container">
-    <button class="btn btn-primary">
+    <button class="btn" :class="btnClass" @click="$emit('button-clicked')">
       <span></span>
       <span><fa v-if="icon" :icon="icon" /></span>
     </button>
@@ -15,9 +15,18 @@ export default {
       type: String,
       default: '',
     },
+    danger: {
+      type: Boolean,
+      default: false,
+    },
     label: {
       type: String,
       default: '',
+    },
+  },
+  computed: {
+    btnClass() {
+      return this.danger ? 'btn-danger' : 'btn-primary'
     },
   },
 }
@@ -60,6 +69,7 @@ export default {
 }
 
 .btn-danger span {
+  font-size: 20px;
   background-color: var(--bg-btn-danger);
 }
 

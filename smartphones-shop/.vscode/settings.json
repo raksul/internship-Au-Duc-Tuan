@@ -2,5 +2,9 @@
     "cSpell.ignoreWords": [
         "fontawesome",
         "nuxtjs"
-    ]
+    ],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.prettier": true
+    }
 }

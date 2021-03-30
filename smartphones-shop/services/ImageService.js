@@ -19,4 +19,11 @@ export default {
   addImage(image) {
     return apiClient.post('/images', image)
   },
+  async deleteImageByProductId(productId) {
+    const images = (await apiClient.get(`images?product_id=${productId}`)).data
+    images.forEach((image) => {
+      apiClient.delete(`images/${image.id}`)
+    })
+    // return apiClient.delete(`images?product_id=${productId}`)
+  },
 }

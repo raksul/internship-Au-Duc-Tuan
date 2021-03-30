@@ -1,10 +1,12 @@
 import ProductService from '~/services/ProductService.js'
+import ImageService from '~/services/ImageService.js'
 
 export const state = () => ({
   products: [],
   product: {},
-  perPage: 5,
-  productsTotal: 0,
+  // perPage: 5,
+  // productsTotal: 0,
+  // filteredProducts: [],
 })
 
 export const mutations = {
@@ -14,25 +16,44 @@ export const mutations = {
   SET_PRODUCT(state, product) {
     state.product = product
   },
-  SET_PRODUCTS_TOTAL(state, productsTotal) {
-    state.productsTotal = productsTotal
-  },
+  // SET_PRODUCTS_TOTAL(state, productsTotal) {
+  //   state.productsTotal = productsTotal
+  // },
+  // SET_FILTERED_PRODUCT(state, filteredProducts) {
+  //   state.filteredProducts = filteredProducts
+  // },
   ADD_PRODUCT(state, product) {
     state.products.push(product)
+  },
+  DELETE_PRODUCT(state, product) {
+    for (let i = 0; i < state.products.length; i++) {
+      if (state.products[i].id === product.id) {
+        state.products.splice(i, 1)
+      }
+    }
   },
 }
 
 export const actions = {
-  fetchProducts({ commit, state }, page) {
-    return ProductService.getProducts(state.perPage, page)
+  fetchProducts({ commit }) {
+    return ProductService.getProducts()
       .then((res) => {
-        commit('SET_PRODUCTS_TOTAL', parseInt(res.headers['x-total-count']))
         commit('SET_PRODUCTS', res.data)
       })
       .catch((err) => {
         console.log(err)
       })
   },
+  // fetchProducts({ commit, state }, page) {
+  //   return ProductService.getProducts(state.perPage, page)
+  //     .then((res) => {
+  //       commit('SET_PRODUCTS_TOTAL', parseInt(res.headers['x-total-count']))
+  //       commit('SET_PRODUCTS', res.data)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // },
 
   fetchProduct({ commit, state, getters }, id) {
     if (state.product.id === id) {
@@ -54,9 +75,17 @@ export const actions = {
     }
   },
 
+  // filterProduct({ commit }, search) {
+  //   return ProductService.getProductsBySearch(search)
+  //     .then((res) => {
+  //       commit('SET_FILTERED_PRODUCT', res.data)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // },
+
   addProduct({ commit }, product) {
-    product.created_at = new Date().toString
-    product.updated_at = new Date().toString
     return ProductService.addProduct(product)
       .then(() => {
         commit('ADD_PRODUCT', product)
@@ -65,6 +94,18 @@ export const actions = {
       .catch((err) => {
         console.log(err)
       })
+  },
+  updateProduct({ commit }, product) {
+    return ProductService.updateProduct(product).then((res) => {
+      commit('SET_PRODUCT', res.data)
+    })
+  },
+  deleteProduct({ commit }, product) {
+    return ProductService.updateProduct(product).then((res) => {
+      commit('SET_PRODUCT', res.data)
+      commit('DELETE_PRODUCT', res.data)
+      ImageService.deleteImageByProductId(product.id)
+    })
   },
 }
 export const getters = {

@@ -26,10 +26,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 20px;
 }
 .search input[type='text'] {
   border: none;
+  width: 155px;
   font-size: 14.9px;
 }
 .search input[type='text']:focus {

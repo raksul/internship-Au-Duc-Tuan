@@ -19,8 +19,6 @@
 <script>
 import VariantsUtil from '~/services/VariantsUtil.js'
 import ImageService from '~/services/ImageService.js'
-// import Product from '~/types/product.ts'
-// import Image from '~/types/image.ts'
 
 export default {
   props: {

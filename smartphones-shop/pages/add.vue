@@ -2,55 +2,77 @@
   <div>
     <div>
       <span>General</span>
-      <div>
-        <label>Brand</label>
-        <AutoCompleteInput v-model="autocompleteBrand" :items="brands" />
-      </div>
-      <div>
-        <label>Model</label>
-        <AutoCompleteInput v-model="autocompleteModel" :items="models" />
+      <div class="flex-row">
+        <AutoCompleteInput
+          v-model="autocompleteBrand"
+          class="autocomplete-input"
+          :items="brands"
+          label="Brand"
+        />
+        <AutoCompleteInput
+          v-model="autocompleteModel"
+          class="autocomplete-input"
+          :items="models"
+          label="Model"
+        />
       </div>
     </div>
     <div>
-      <span>Varians</span>
-      <div>
-        <label>Memory Size</label>
-        <AutoCompleteInput v-model="autocompleteMemory" :items="memories" />
-      </div>
-      <div>
-        <label>Color</label>
-        <AutoCompleteInput v-model="autocompleteColor" :items="colors" />
-      </div>
-      <div>
-        <label>OS Version</label>
-        <AutoCompleteInput v-model="autocompleteOS" :items="osVersions" />
-      </div>
-      <div>
-        <label>Year</label>
-        <input v-model="year" type="number" />
-      </div>
-      <div>
-        <label>Price</label>
-        <input v-model="price" type="number" />
-      </div>
-      <div>
-        <label>Attach image</label>
-        <fa icon="paperclip" />
-        <img
-          v-for="(uploadedImage, index) in uploadedImages"
-          :key="index"
-          :src="uploadedImage"
-          @mousedown="removeImage(index)"
+      <span>Variants</span>
+      <div class="flex-row">
+        <AutoCompleteInput
+          v-model="autocompleteMemory"
+          class="autocomplete-input"
+          :items="memories"
+          label="Memory Size"
         />
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          @change="handleImages($event)"
+        <AutoCompleteInput
+          v-model="autocompleteColor"
+          class="autocomplete-input"
+          :items="colors"
+          label="Color"
         />
       </div>
-      <nuxt-link to="/"><button>Cancel</button></nuxt-link>
-      <button @click="addProduct">Create</button>
+      <div class="flex-row">
+        <AutoCompleteInput
+          v-model="autocompleteOS"
+          class="autocomplete-input"
+          :items="osVersions"
+          label="OS Version"
+        />
+        <InputNumber
+          v-model="year"
+          class="autocomplete-input"
+          :init="new Date().getFullYear()"
+          label="Year"
+        />
+      </div>
+      <div class="flex-row">
+        <div class="autocomplete-input">
+          <InputNumber v-model="price" label="Price ($)" />
+        </div>
+        <div class="autocomplete-input">
+          <label>Attach image</label>
+          <fa icon="paperclip" />
+          <img
+            v-for="(uploadedImage, index) in uploadedImages"
+            :key="index"
+            :src="uploadedImage"
+            @mousedown="removeImage(index)"
+          />
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            @change="handleImages($event)"
+          />
+        </div>
+      </div>
+      <div class="btn-container">
+        <nuxt-link to="/"><Button icon="times" /></nuxt-link>
+        <Button icon="edit" @button-clicked="addProduct" />
+      </div>
+      <Button icon="info" @button-clicked="showToast" />
     </div>
   </div>
 </template>
@@ -69,8 +91,8 @@ export default {
       autocompleteMemory: {},
       autocompleteColor: {},
       autocompleteOS: {},
-      year: '',
-      price: '',
+      year: Number,
+      price: Number,
     }
   },
   computed: {
@@ -93,37 +115,57 @@ export default {
   },
   methods: {
     // call action from vuex to add product along with its image(s)
-    // Note: need to add validation
     async addProduct() {
-      this.addedProduct = {
-        id: uuidv4(),
-        brand: this.autocompleteBrand.id,
-        model: this.autocompleteModel.id,
-        memory: this.autocompleteMemory.id,
-        color: this.autocompleteColor.id,
-        os: this.autocompleteOS.id,
-        year: this.year,
-        price: this.price,
-        is_published: true,
-        is_sold: false,
-        is_deleted: false,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      }
+      if (
+        // check the validation of user's autocomplete input
+        VariantsUtil.isObjectEmpty(this.autocompleteBrand) ||
+        VariantsUtil.isObjectEmpty(this.autocompleteModel) ||
+        VariantsUtil.isObjectEmpty(this.autocompleteMemory) ||
+        VariantsUtil.isObjectEmpty(this.autocompleteOS) ||
+        VariantsUtil.isObjectEmpty(this.autocompleteColor) ||
+        !VariantsUtil.isNumber(this.year) ||
+        !VariantsUtil.isNumber(this.price)
+      ) {
+        // inform the user to check again
+        this.$toast.error('Please check your input!')
+      } else {
+        // generating a unique key for product
+        const uuid = uuidv4()
 
-      // calling action from Vuex to add product along with its image(s)
-      // Note: should implement rollback mechanism here
-      await this.$store.dispatch('products/addProduct', this.addedProduct)
-      await this.uploadedImages.forEach((img) => {
-        const addedImage = {
-          id: uuidv4(),
-          src: img,
-          product_id: this.addedProduct.id,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+        // calling action from Vuex to add product along with its image(s)
+        // Note: should implement rollback mechanism here
+        try {
+          await this.$store.dispatch('products/addProduct', {
+            id: uuid,
+            brand: this.autocompleteBrand.id,
+            model: this.autocompleteModel.id,
+            memory: this.autocompleteMemory.id,
+            color: this.autocompleteColor.id,
+            os: this.autocompleteOS.id,
+            year: this.year,
+            price: this.price,
+            is_published: true,
+            is_sold: false,
+            is_deleted: false,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          this.uploadedImages.forEach(async (img) => {
+            const addedImage = {
+              id: uuidv4(),
+              src: img,
+              product_id: uuid,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            }
+            await ImageService.addImage(addedImage)
+          })
+          this.$toast.success('Added Successfully!')
+          this.$router.push('/')
+        } catch (err) {
+          this.$toast.error(err)
         }
-        ImageService.addImage(addedImage)
-      })
+      }
     },
 
     // loop through uploaded image(s) and convert them to base64
@@ -136,7 +178,7 @@ export default {
 
     removeImage(index) {
       // this.$refs.imageInput.files.splice(index, 1)
-      this.imageInput.files.splice(index, 1)
+      // this.imageInput.files.splice(index, 1)
       this.uploadedImages.splice(index, 1)
     },
 
@@ -148,6 +190,10 @@ export default {
         this.uploadedImages.push(e.target.result)
       }
       reader.readAsDataURL(image)
+    },
+
+    showToast() {
+      this.$toast.success('Clicked!')
     },
   },
 }
@@ -161,5 +207,22 @@ img {
 }
 img:hover {
   outline: 2px solid red;
+}
+.btn-container {
+  margin: 10px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.flex-row {
+  margin: 20px 0px;
+  display: flex;
+  flex: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.autocomplete-input {
+  width: 40%;
 }
 </style>
