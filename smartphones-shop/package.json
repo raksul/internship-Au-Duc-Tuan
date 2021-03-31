@@ -23,6 +23,7 @@
     "nuxt-typed-vuex": "^0.1.22",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.6",
+    "vue-confirm-dialog": "^1.0.2",
     "vue-feather-icons": "^5.1.0",
     "vue-toastification": "^1.7.11"
   },

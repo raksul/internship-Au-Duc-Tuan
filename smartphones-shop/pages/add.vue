@@ -49,7 +49,7 @@
       </div>
       <div class="flex-row">
         <div class="autocomplete-input">
-          <InputNumber v-model="price" label="Price ($)" />
+          <InputNumber v-model="price" label="Price ($)" :decimal="true" />
         </div>
         <div class="autocomplete-input">
           <label>Attach image</label>
@@ -126,45 +126,50 @@ export default {
         !VariantsUtil.isNumber(this.year) ||
         !VariantsUtil.isNumber(this.price)
       ) {
-        // inform the user to check again
-        this.$toast.error('Please check your input!')
-      } else {
-        // generating a unique key for product
-        const uuid = uuidv4()
+        // inform the user to check inputs again
+        this.$toast.error('Please check your input again!')
+        return
+      }
+      if (this.uploadedImages.length === 0) {
+        // product should have at least 1 picture for the visual of listing page
+        this.$toast.error('Product should have at least 1 image!')
+        return
+      }
+      // generating a unique key for product using uuid-npm
+      const uuid = uuidv4()
 
-        // calling action from Vuex to add product along with its image(s)
-        // Note: should implement rollback mechanism here
-        try {
-          await this.$store.dispatch('products/addProduct', {
-            id: uuid,
-            brand: this.autocompleteBrand.id,
-            model: this.autocompleteModel.id,
-            memory: this.autocompleteMemory.id,
-            color: this.autocompleteColor.id,
-            os: this.autocompleteOS.id,
-            year: this.year,
-            price: this.price,
-            is_published: true,
-            is_sold: false,
-            is_deleted: false,
+      // calling action from Vuex to add product along with its image(s)
+      // Note: should implement rollback mechanism here
+      try {
+        await this.$store.dispatch('products/addProduct', {
+          id: uuid,
+          brand: this.autocompleteBrand.id,
+          model: this.autocompleteModel.id,
+          memory: this.autocompleteMemory.id,
+          color: this.autocompleteColor.id,
+          os: this.autocompleteOS.id,
+          year: this.year,
+          price: this.price,
+          is_published: true,
+          is_sold: false,
+          is_deleted: false,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })
+        this.uploadedImages.forEach(async (img) => {
+          const addedImage = {
+            id: uuidv4(),
+            src: img,
+            product_id: uuid,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
-          })
-          this.uploadedImages.forEach(async (img) => {
-            const addedImage = {
-              id: uuidv4(),
-              src: img,
-              product_id: uuid,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString(),
-            }
-            await ImageService.addImage(addedImage)
-          })
-          this.$toast.success('Added Successfully!')
-          this.$router.push('/')
-        } catch (err) {
-          this.$toast.error(err)
-        }
+          }
+          await ImageService.addImage(addedImage)
+        })
+        this.$toast.success('Added Successfully!')
+        this.$router.push('/')
+      } catch (err) {
+        this.$toast.error(err)
       }
     },
 

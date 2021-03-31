@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>
+      <vue-confirm-dialog></vue-confirm-dialog>
       <span>General</span>
       <div>
         <label>Brand</label>
@@ -145,42 +146,56 @@ export default {
         !VariantsUtil.isNumber(this.year) ||
         !VariantsUtil.isNumber(this.price)
       ) {
-        this.$toast.error('Please check your input!')
-      } else {
-        try {
-          await this.$store.dispatch('products/updateProduct', {
-            id: this.product.id,
-            brand: this.autocompleteBrand.id,
-            model: this.autocompleteModel.id,
-            memory: this.autocompleteMemory.id,
-            color: this.autocompleteColor.id,
-            os: this.autocompleteOS.id,
-            year: this.year,
-            price: this.price,
-            is_published: true,
-            is_sold: false,
-            is_deleted: false,
-            created_at: this.product.created_at,
-            updated_at: new Date().toISOString(),
-          })
-          this.$toast.success('Updated Successfully!')
-          this.$router.push('/')
-        } catch (err) {
-          this.$toast.error(err)
-        }
+        this.$toast.error('Please check your input again!')
+        return
       }
-    },
-
-    async deleteProduct() {
       try {
-        const deletedProduct = Object.assign({}, this.product)
-        deletedProduct.is_deleted = true
-        await this.$store.dispatch('products/deleteProduct', deletedProduct)
-        this.$toast.success('Deleted Successfully!')
+        await this.$store.dispatch('products/updateProduct', {
+          id: this.product.id,
+          brand: this.autocompleteBrand.id,
+          model: this.autocompleteModel.id,
+          memory: this.autocompleteMemory.id,
+          color: this.autocompleteColor.id,
+          os: this.autocompleteOS.id,
+          year: this.year,
+          price: this.price,
+          is_published: true,
+          is_sold: false,
+          is_deleted: false,
+          created_at: this.product.created_at,
+          updated_at: new Date().toISOString(),
+        })
+        this.$toast.success('Updated Successfully!')
         this.$router.push('/')
       } catch (err) {
         this.$toast.error(err)
       }
+    },
+
+    deleteProduct() {
+      this.$confirm({
+        message: `Are you sure you want to delete the product?!`,
+        button: {
+          no: 'No',
+          yes: 'Yes',
+        },
+        callback: async (confirm) => {
+          if (confirm) {
+            try {
+              const deletedProduct = Object.assign({}, this.product)
+              deletedProduct.is_deleted = true
+              await this.$store.dispatch(
+                'products/deleteProduct',
+                deletedProduct
+              )
+              this.$toast.success('Deleted Successfully!')
+              this.$router.push('/')
+            } catch (err) {
+              this.$toast.error(err)
+            }
+          }
+        },
+      })
     },
   },
 }

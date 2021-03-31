@@ -2,6 +2,7 @@
   <div>
     <Header />
     <div class="container">
+      <!-- <vue-confirm-dialog></vue-confirm-dialog> -->
       <Nuxt />
     </div>
   </div>
