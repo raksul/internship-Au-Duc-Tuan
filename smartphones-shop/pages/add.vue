@@ -122,12 +122,18 @@ export default {
         VariantsUtil.isObjectEmpty(this.autocompleteModel) ||
         VariantsUtil.isObjectEmpty(this.autocompleteMemory) ||
         VariantsUtil.isObjectEmpty(this.autocompleteOS) ||
-        VariantsUtil.isObjectEmpty(this.autocompleteColor) ||
+        VariantsUtil.isObjectEmpty(this.autocompleteColor)
+      ) {
+        // inform the user to check inputs again
+        this.$toast.error('Please check your input again!')
+        return
+      }
+      if (
         !VariantsUtil.isNumber(this.year) ||
         !VariantsUtil.isNumber(this.price)
       ) {
         // inform the user to check inputs again
-        this.$toast.error('Please check your input again!')
+        this.$toast.error('Make sure Price and Year are numeric!')
         return
       }
       if (this.uploadedImages.length === 0) {

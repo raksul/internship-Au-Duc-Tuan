@@ -12,15 +12,16 @@
         @keydown.enter="onEnter"
         @focus="onChange"
         @blur="onOutFocus"
+        @keydown.esc="onEsc"
       />
       <ul v-show="isOpen" class="autocomplete-results">
         <li
           v-for="(result, index) in results"
           :key="index"
           class="autocomplete-result"
-          :class="{ 'is-active': index === selectedIndex }"
-          @touchend="setResult(result)"
-          @mousedown="setResult(result)"
+          :class="{ active: index === selectedIndex }"
+          @touchend="setResult(result, index)"
+          @mousedown="setResult(result, index)"
         >
           {{ result.value }}
         </li>
@@ -38,7 +39,6 @@ export default {
     },
     items: {
       type: Array,
-      required: false,
       default: () => [],
     },
     init: {
@@ -56,13 +56,17 @@ export default {
       isValid: true,
     }
   },
+  watch: {
+    selectedOption(oldOption, newOption) {
+      this.$emit('input', this.selectedOption)
+    },
+  },
   created() {
     // map the initial value with the component
     // mainly for modify function
     if (this.init) {
-      this.search = this.init.value
       this.selectedOption = this.init
-      this.$emit('input', this.selectedOption)
+      this.search = this.selectedOption.value
     }
   },
   methods: {
@@ -73,20 +77,22 @@ export default {
     },
 
     onChange() {
+      // avoid annoying user when typing
+      this.isValid = true
+
       this.filterResults()
 
       // automatically choose the first suggested result
       // if user's input can fetch data
       if (this.results.length > 0) {
         this.selectedIndex = 0
+        this.isOpen = true
       }
-      this.isOpen = true
-
-      this.$emit('input', this.selectedOption)
     },
 
     // set the autocomplete result when user click on a suggested row
-    setResult(result) {
+    setResult(result, index) {
+      this.selectedIndex = index
       this.search = result.value
       this.selectedOption = result
       this.isOpen = false
@@ -122,26 +128,32 @@ export default {
       this.selectedOption = this.results[this.selectedIndex]
       this.selectedIndex = 0
       this.isOpen = false
-      this.$emit('input', this.selectedOption)
-      this.selectedOption = {}
     },
 
     // handling the event when user tab/click/deselect the input
     onOutFocus() {
-      // automatically filter suggestions with user's current input
-      this.filterResults()
       // check if the user's current input can fetch any suggested data or not
       if (this.results.length === 0) {
         this.isValid = false
-        this.isOpen = false
-
-        this.selectedOption = {}
-        this.$emit('input', {})
+        this.reset()
       } else {
         this.isValid = true
         // automatically select an suggestion with user's current input
+        // if they click somewhere else or tab away
         this.onEnter()
       }
+    },
+
+    onEsc() {
+      this.isOpen = false
+      this.results = []
+    },
+
+    reset() {
+      this.isOpen = false
+      this.results = []
+      this.selectedIndex = 0
+      this.selectedOption = {}
     },
   },
 }
@@ -203,7 +215,7 @@ export default {
   cursor: pointer;
 }
 
-.autocomplete-result.is-active,
+.autocomplete-result.active,
 .autocomplete-result:hover {
   background-color: #3fc2b2;
   color: white;

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import VariantsUtil from '~/services/VariantsUtil.js'
+// import VariantsUtil from '~/services/VariantsUtil.js'
 export default {
   props: {
     label: {
@@ -43,13 +43,13 @@ export default {
     this.$emit('input', this.init)
   },
   methods: {
-    validate(event) {
-      if (VariantsUtil.isNumber(event.target.value)) {
-        this.isValid = true
-      } else {
-        this.isValid = false
-      }
-    },
+    // validate(event) {
+    //   if (VariantsUtil.isNumber(event.target.value)) {
+    //     this.isValid = true
+    //   } else {
+    //     this.isValid = false
+    //   }
+    // },
     onChange(event) {
       this.$emit('input', event.target.value)
     },

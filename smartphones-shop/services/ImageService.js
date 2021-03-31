@@ -24,6 +24,5 @@ export default {
     images.forEach((image) => {
       apiClient.delete(`images/${image.id}`)
     })
-    // return apiClient.delete(`images?product_id=${productId}`)
   },
 }

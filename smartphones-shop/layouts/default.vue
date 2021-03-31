@@ -57,6 +57,25 @@ a {
   text-decoration: none;
   color: black;
 }
+
+/* override the Toastification color */
+.Vue-Toastification__toast--default {
+  background-color: #2195f3e8;
+  color: #fff;
+}
+.Vue-Toastification__toast--info {
+  background-color: #2195f3e8;
+  color: #fff;
+}
+.Vue-Toastification__toast--success {
+  background-color: #4caf4fe1;
+  color: #fff;
+}
+.Vue-Toastification__toast--error {
+  background-color: #e91e63;
+  color: #fff;
+}
+
 /* For responsive */
 @media screen and (max-width: 710px) {
   .product-card-img {

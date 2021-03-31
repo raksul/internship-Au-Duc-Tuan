@@ -1,6 +1,10 @@
 <template>
   <div class="product-card">
-    <img :src="image.src" class="product-card-img" />
+    <img
+      :src="image.src"
+      class="product-card-img"
+      :alt="`represent-image-for-product-${image.product_id}`"
+    />
     <div class="product-card-info">
       <div class="info-column2 hide-desktop">
         {{ brand }}
@@ -10,7 +14,7 @@
       <div class="info-column1">{{ memory }}</div>
       <div class="info-column1 hide-desktop">{{ price }}</div>
       <nuxt-link :to="`/product/${product.id}`">
-        <div><fa icon="pen" /></div>
+        <fa icon="pen" />
       </nuxt-link>
     </div>
   </div>

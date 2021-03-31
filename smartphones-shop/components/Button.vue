@@ -2,7 +2,9 @@
   <div class="btn-container">
     <button class="btn" :class="btnClass" @click="$emit('button-clicked')">
       <span></span>
-      <span><fa v-if="icon" :icon="icon" /></span>
+      <span>
+        <fa v-if="icon" :icon="icon" />
+      </span>
     </button>
     <span class="side-label">{{ label }}</span>
   </div>
@@ -35,7 +37,6 @@ export default {
 <style>
 .btn-container {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
