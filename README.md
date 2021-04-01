@@ -21,8 +21,7 @@
 ## Installations
 
 ```bash
-npm install json-server
-cd smartphones-shop
+cd internship-Au-Duc-Tuan
 # install dependencies
 $ npm install
 
