@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header />
     <Nuxt />
   </div>
 </template>
@@ -24,32 +25,72 @@ html {
   margin: 0;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
+body {
+  margin: 0;
+  font-size: 16px;
+
+  /* line-height: 1.5; */
+}
+.container {
+  width: 90%;
+  margin: auto;
+}
+.gradient {
+  background: linear-gradient(to bottom right, #a8fff6, #16c0b0);
+  box-shadow: 0 8px 20px -6px grey;
+}
+.shadow {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.13);
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.info-column1 {
+  width: 10%;
+}
+.info-column2 {
+  width: 20%;
+}
+.info-column3 {
+  width: 30%;
+}
+a {
   text-decoration: none;
-  padding: 10px 30px;
+  color: black;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+/* For responsive */
+@media screen and (max-width: 710px) {
+  .product-card-img {
+    display: none;
+  }
+  .product-card {
+    justify-content: center;
+  }
+  .product-card-info {
+    width: 100%;
+    margin-bottom: 17px;
+  }
+  .side-label {
+    display: none;
+  }
+  .info-column3 {
+    width: 40%;
+  }
+  .info-column1 {
+    width: 20%;
+  }
+  .header-container > div {
+    display: none;
+  }
+  .hide-desktop {
+    display: none;
+  }
 }
 </style>
