@@ -15,9 +15,8 @@
 - ERD design
   <img src="/Database/first-design/ERD.png">
 
-- However, the project will use the simplified version of database desgin and supported by variants.json file (which can be found with details in 'Database/third-design')
+- However, the project will use the simplified version of database design and supported by variants.json file (which can be found with details in 'Database/third-design')
   <img src="/Database/third-design/ERD.png">
-  > > > > > > > 9b104bc09e6835a63b837fc4810d2eb65711fd55
 
 ## Installations
 
