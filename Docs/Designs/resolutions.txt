@@ -1,2 +1,0 @@
-Desktop: 1440 x 900
-Mobile: 375 x 812
