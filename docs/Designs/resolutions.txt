@@ -1,2 +1,2 @@
 Desktop: 1440 x 900
-Mobile: 357 x 812
+Mobile: 375 x 812
