@@ -92,29 +92,4 @@ export default {
     }
     return os
   },
-  formatMoney(price) {
-    const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-
-      // These options are needed to round to whole numbers if that's what you want.
-      // minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-      // maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-    })
-    return formatter.format(price)
-  },
-  isObjectEmpty(value) {
-    return (
-      Object.prototype.toString.call(value) === '[object Object]' &&
-      JSON.stringify(value) === '{}'
-    )
-  },
-  isNumber(value) {
-    // if (typeof value !== 'string') return false // we only process strings!
-    // return (
-    //   !isNaN(value) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-    //   !isNaN(parseFloat(value))
-    // ) // ...and ensure strings of whitespace fail
-    return !isNaN(value) && value !== ''
-  },
 }
