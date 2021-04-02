@@ -1,6 +1,6 @@
 export interface Image {
     id: string
-    product_id: string
+    productId: string
     src: string
     createdAt: string
     updatedAt: string
