@@ -6,13 +6,13 @@
       :alt="`represent-image-for-product-${image.product_id}`"
     />
     <div class="product-card-info">
-      <div class="info-column2 hide-desktop">
+      <div>
         {{ brand }}
       </div>
-      <div class="info-column3">{{ model }}</div>
-      <div class="info-column1">{{ color }}</div>
-      <div class="info-column1">{{ memory }}</div>
-      <div class="info-column1 hide-desktop">{{ price }}</div>
+      <div>{{ model }}</div>
+      <div>{{ color }}</div>
+      <div>{{ memory }}</div>
+      <div>{{ price }}</div>
       <nuxt-link :to="`/product/${product.id}`">
         <fa icon="pen" />
       </nuxt-link>
@@ -21,8 +21,8 @@
 </template>
 
 <script lang="ts">
-import VariantsUtil from '~/utilities/VariantsUtil.js'
-import Formatter from '~/utilities/Formatter.js'
+import VariantsUtil from '~/services/VariantsUtil.js'
+import Formatter from '~/services/Formatter.js'
 import { Image } from '~/types/Image.interface'
 import { Product } from '~/types/Product.interface'
 import { Option } from '~/types/Option.interface'

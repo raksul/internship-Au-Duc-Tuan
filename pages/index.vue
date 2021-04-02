@@ -11,17 +11,9 @@
       <AutoCompleteInput label="Brands" :items="brands" />
       <AutoCompleteInput label="Models" :items="models" />
       <AutoCompleteInput label="Colors" :items="colors" />
-      <AutoCompleteInput
-        label="With init value"
-        :value="brand"
-        :items="brands"
-      />
+      <AutoCompleteInput label="With init value" :value="brand" :items="brands" />
       <NumberInput label="Without value" v-model="number1" />
-      <NumberInput
-        label="With value"
-        v-model="number2"
-        :initValue="parseInt(100)"
-      />
+      <NumberInput label="With value" v-model="number2" :initValue="parseInt(100)" />
       <Button icon="trash" :danger="true" @clicked="showError" />
       <SearchInput v-model="search" />
       <ProductCard :product="product" />
@@ -43,13 +35,16 @@ export default Vue.extend({
   },
   methods: {
     showSuccess() {
-      this.$toast.success('Success Toast!')
+      this.$toast.success('Clicked!')
     },
     showError() {
-      this.$toast.error('Error Toast!')
+      this.$toast.error('Clicked!')
     },
   },
   computed: {
+    brand() {
+      return Constants.BRAND
+    },
     brands() {
       return Constants.BRANDS
     },
@@ -59,13 +54,10 @@ export default Vue.extend({
     colors() {
       return Constants.COLORS
     },
-    brand() {
-      return Constants.BRAND
-    },
     product() {
       return Constants.PRODUCT
-    },
-  },
+    }
+  }
 })
 </script>
 
