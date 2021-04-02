@@ -7,9 +7,9 @@ export interface Product {
     os: string
     year: number
     price: number
-    is_published?: boolean
-    is_sold?: boolean
-    is_deleted: boolean
-    created_at?: string
-    updated_at?: string
+    isPublished?: boolean
+    isSold?: boolean
+    isDeleted: boolean
+    createdAt?: string
+    updatedAt?: string
 }
