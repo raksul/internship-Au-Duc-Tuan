@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "server": "json-server --watch db.json --port 3001",
-    "dev": "nuxt && npm run server",
+    "dev": "nuxt & npm run server",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -20,7 +20,6 @@
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/fontawesome": "^1.1.2",
     "core-js": "^3.9.1",
-    "humps": "^2.0.1",
     "json-server": "^0.16.3",
     "nuxt": "^2.15.3",
     "uuid": "^8.3.2",

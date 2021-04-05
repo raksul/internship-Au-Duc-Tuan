@@ -1,4 +1,4 @@
-import { Image } from '~/types/Image.interface'
+import { Image } from './../types/Image.interface'
 import apiClient from '~/services/AxiosConfig'
 
 export default {

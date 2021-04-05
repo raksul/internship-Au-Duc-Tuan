@@ -1,5 +1,5 @@
 import axios from 'axios'
-import humps from 'humps'
+import DataTransformer from '~/utilities/DataTransformer'
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:3001/',
@@ -11,11 +11,11 @@ const apiClient = axios.create({
   transformResponse: [
     // convert keys of returned data from snake_case to camelCase
     ...axios.defaults.transformResponse,
-    (data) => humps.camelizeKeys(data),
+    (data) => DataTransformer.camelizeKeys(data),
   ],
   transformRequest: [
     // convert keys of request data from camelCase to snake_case
-    (data) => humps.decamelizeKeys(data),
+    (data) => DataTransformer.decamelizeKeys(data),
     ...axios.defaults.transformRequest,
   ],
 })
