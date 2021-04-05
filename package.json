@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "server": "json-server --watch db.json --port 3001",
-    "dev": "npm run server & nuxt",
+    "dev": "nuxt & npm run server",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -14,9 +14,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/fontawesome": "^1.1.2",
     "core-js": "^3.9.1",
-    "nuxt": "^2.15.3"
+    "json-server": "^0.16.3",
+    "nuxt": "^2.15.3",
+    "uuid": "^8.3.2",
+    "vue-feather-icons": "^5.1.0",
+    "vue-toastification": "^1.7.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
@@ -41,6 +49,7 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^21.0.0",
     "ts-jest": "^26.5.4",
-    "vue-jest": "^3.0.4"
+    "vue-jest": "^3.0.4",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3"
   }
 }

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header />
     <Nuxt />
   </div>
 </template>
@@ -24,32 +25,25 @@ html {
   margin: 0;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
+body {
+  margin: 0;
+  font-size: 16px;
+}
+
+a {
   text-decoration: none;
-  padding: 10px 30px;
+  color: black;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+.container {
+  max-width: 1024px;
+  margin: auto;
 }
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+.gradient {
+  background: linear-gradient(to bottom right, #a8fff6, #16c0b0);
+  box-shadow: 0 8px 20px -6px grey;
 }
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.shadow {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.13);
 }
 </style>
