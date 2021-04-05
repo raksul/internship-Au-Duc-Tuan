@@ -6,7 +6,7 @@
         <nuxt-link to="/product/add">Add New Page</nuxt-link> |
         <nuxt-link to="/product/p001">Edit Page</nuxt-link>
       </div>
-      <Button icon="plus" type="primary" @clicked="showSuccess" />
+      <Button icon="plus" type="primary" @click="showSuccess" />
 
       <AutoCompleteInput label="Without init value" :items="brands" />
       <AutoCompleteInput
@@ -16,7 +16,7 @@
       />
       <NumberInput label="Without value" v-model="number1" />
       <NumberInput label="With value" v-model="number2" :initValue="number2" />
-      <Button icon="trash" type="danger" @clicked="showError" />
+      <Button icon="trash" type="danger" @click="showError" />
       <SearchInput v-model="search" />
       <ProductCard :product="product" />
     </div>
@@ -26,7 +26,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Option, Product } from '~/types'
-import VariantsUtil from '~/utilities/VariantsUtil'
 
 export default Vue.extend({
   data(): {
@@ -42,8 +41,7 @@ export default Vue.extend({
   },
   methods: {
     showSuccess(): void {
-      console.log(VariantsUtil.getBrands())
-
+      console.log()
       this.$toast.success('Success Toast!')
     },
     showError(): void {

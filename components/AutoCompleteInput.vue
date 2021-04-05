@@ -182,9 +182,6 @@ export default {
 .autocomplete > div {
   flex-basis: 70%;
 }
-.autocomplete-input.invalid {
-  border: 2px solid #e91e63;
-}
 .autocomplete-input {
   position: relative;
   font-size: 16px;
@@ -194,12 +191,13 @@ export default {
   border: 1px solid black;
   border-radius: 10px;
 }
-
 .autocomplete-input:focus {
   outline: none;
   border: 2.5px solid #3fc2b2;
 }
-
+.autocomplete-input.invalid {
+  border: 2px solid #e91e63;
+}
 .autocomplete-results {
   position: absolute;
   z-index: 10;
@@ -212,7 +210,6 @@ export default {
   background-color: #fff;
   overflow: auto;
 }
-
 .autocomplete-result {
   font-size: 17px;
   list-style: none;
@@ -220,7 +217,6 @@ export default {
   padding: 4px 2px;
   cursor: pointer;
 }
-
 .autocomplete-result.active,
 .autocomplete-result:hover {
   background-color: #3fc2b2;
