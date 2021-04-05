@@ -6,23 +6,17 @@
         <nuxt-link to="/product/add">Add New Page</nuxt-link> |
         <nuxt-link to="/product/p001">Edit Page</nuxt-link>
       </div>
-      <Button icon="plus" @clicked="showSuccess" />
+      <Button icon="plus" type="primary" @clicked="showSuccess" />
 
-      <AutoCompleteInput label="Brands" :items="brands" />
-      <AutoCompleteInput label="Models" :items="models" />
-      <AutoCompleteInput label="Colors" :items="colors" />
+      <AutoCompleteInput label="Without init value" :items="brands" />
       <AutoCompleteInput
         label="With init value"
         :value="brand"
         :items="brands"
       />
       <NumberInput label="Without value" v-model="number1" />
-      <NumberInput
-        label="With value"
-        v-model="number2"
-        :initValue="parseInt(100)"
-      />
-      <Button icon="trash" :danger="true" @clicked="showError" />
+      <NumberInput label="With value" v-model="number2" :initValue="number2" />
+      <Button icon="trash" type="danger" @clicked="showError" />
       <SearchInput v-model="search" />
       <ProductCard :product="product" />
     </div>
@@ -31,18 +25,20 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Constants } from '~/constants/MockupData'
+import VariantsUtil from '~/utilities/VariantsUtil'
 
 export default Vue.extend({
   data() {
     return {
-      search: '' as string,
+      search: '',
       number1: Number,
-      number2: Number,
+      number2: 100,
     }
   },
   methods: {
     showSuccess() {
+      console.log(VariantsUtil.getBrands())
+
       this.$toast.success('Success Toast!')
     },
     showError() {
@@ -51,19 +47,28 @@ export default Vue.extend({
   },
   computed: {
     brands() {
-      return Constants.BRANDS
-    },
-    models() {
-      return Constants.MODELS
-    },
-    colors() {
-      return Constants.COLORS
+      return [
+        { id: 'apple', value: 'Apple' },
+        { id: 'samsung', value: 'Samsung' },
+        { id: 'google', value: 'Google' },
+        { id: 'vivo', value: 'Vivo' },
+      ]
     },
     brand() {
-      return Constants.BRAND
+      return { id: 'apple', value: 'Apple' }
     },
     product() {
-      return Constants.PRODUCT
+      return {
+        id: 'p001',
+        brand: 'apple',
+        model: 'ipx',
+        memory: 'GB128',
+        color: 'black',
+        year: 2020,
+        price: 1000.99,
+        created_at: '2021-03-31T08:27:34.857Z',
+        updated_at: '2021-03-31T08:27:34.857Z',
+      }
     },
   },
 })

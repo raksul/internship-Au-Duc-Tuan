@@ -1,8 +1,8 @@
 <template>
   <div class="btn-container">
-    <button class="btn" :class="btnClass" @click="$emit('clicked')">
-      <span></span>
-      <span>
+    <button class="btn" :class="type" @click="$emit('clicked')">
+      <span class="base-layer"></span>
+      <span class="upper-layer">
         <fa v-if="icon" :icon="icon" />
       </span>
     </button>
@@ -17,25 +17,19 @@ export default {
       type: String,
       default: '',
     },
-    danger: {
-      type: Boolean,
-      default: false,
+    type: {
+      type: String,
+      default: 'default',
     },
     label: {
       type: String,
       default: '',
     },
   },
-  computed: {
-    btnClass() {
-      return this.danger ? 'btn-danger' : 'btn-primary'
-    },
-  },
 }
 </script>
 
 <style>
-
 .btn-container {
   display: flex;
   justify-content: space-between;
@@ -50,6 +44,8 @@ export default {
   --bg-body: #1a1a2e;
   --bg-btn-primary: #44cec0;
   --bg-btn-danger: #e91e63;
+  --bg-btn-secondary: #3aa3ff;
+  --bg-btn-default: #3aa3ff;
   --color-btn: #fff;
 }
 
@@ -69,14 +65,24 @@ export default {
   margin-right: 10px;
 }
 
-.btn-primary span {
+.primary span {
   font-size: 25px;
   background-color: var(--bg-btn-primary);
 }
 
-.btn-danger span {
+.danger span {
   font-size: 20px;
   background-color: var(--bg-btn-danger);
+}
+
+.secondary span {
+  font-size: 20px;
+  background-color: var(--bg-btn-secondary);
+}
+
+.default span {
+  font-size: 20px;
+  background-color: var(--bg-btn-default);
 }
 
 .btn span {
@@ -88,22 +94,22 @@ export default {
   clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
 }
 
-.btn > span:nth-child(2) {
+.upper-layer {
   display: grid;
   place-items: center;
   transform: translate(var(--translate), var(--translate));
   transition: transform 0.2s ease-in-out;
 }
 
-.btn > span:nth-child(1) {
+.base-layer {
   opacity: 0.6;
 }
 
-.btn:hover > span:nth-child(2) {
+.btn:hover > .upper-layer {
   transform: translate(calc(var(--translate) / 2), calc(var(--translate) / 2));
 }
 
-.btn:active > span:nth-child(2) {
+.btn:active > .base-layer {
   transform: translate(0, 0);
 }
 </style>

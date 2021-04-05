@@ -31,7 +31,7 @@ export default {
 .search input[type='text'] {
   border: none;
   width: 155px;
-  font-size: 14.9px;
+  font-size: 14px;
 }
 .search input[type='text']:focus {
   outline: none;

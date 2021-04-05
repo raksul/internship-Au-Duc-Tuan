@@ -1,7 +1,7 @@
 <template>
   <div class="product-card">
     <img
-      src="~/assets/img.png"
+      src="image.src"
       class="product-card-img"
       :alt="`represent-image-for-product-${image.product_id}`"
     />
@@ -21,11 +21,9 @@
 </template>
 
 <script lang="ts">
-import VariantsUtil from '~/utilities/VariantsUtil.js'
-import Formatter from '~/utilities/Formatter.js'
-import { Image } from '~/types/Image.interface'
-import { Product } from '~/types/Product.interface'
-import { Option } from '~/types/Option.interface'
+import VariantsUtil from '~/utilities/VariantsUtil'
+import Formatter from '~/utilities/Formatter'
+import { Product, Image, Option } from '~/types/index'
 
 export default {
   props: {
@@ -50,16 +48,16 @@ export default {
   computed: {
     // get data from variants.json file according to product's info
     brand(): string {
-      return (VariantsUtil.getBrandByKey(this.product.brand) as Option).value
+      return (VariantsUtil.getBrandByKey(this.product.brand) as Option)?.value
     },
     model(): string {
-      return (VariantsUtil.getModelByKey(this.product.model) as Option).value
+      return (VariantsUtil.getModelByKey(this.product.model) as Option)?.value
     },
     color(): string {
-      return (VariantsUtil.getColorByKey(this.product.color) as Option).value
+      return (VariantsUtil.getColorByKey(this.product.color) as Option)?.value
     },
     memory(): string {
-      return (VariantsUtil.getMemoryByKey(this.product.memory) as Option).value
+      return (VariantsUtil.getMemoryByKey(this.product.memory) as Option)?.value
     },
     price(): string {
       return Formatter.formatMoney(this.product.price)

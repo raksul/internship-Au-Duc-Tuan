@@ -1,4 +1,4 @@
-import apiClient from '~/services/AxiosConfig.js'
+import apiClient from '~/services/AxiosConfig'
 
 export default {
   getProducts() {

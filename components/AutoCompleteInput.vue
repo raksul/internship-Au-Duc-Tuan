@@ -5,6 +5,7 @@
       <input
         v-model="search"
         type="text"
+        class="autocomplete-input"
         :class="{ invalid: !isValid }"
         @input="onChange"
         @keydown.down="onArrowDown"
@@ -31,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { Option } from '~/types/Option.interface'
+import { Option } from '~/types/index'
 
 export default {
   props: {
@@ -59,7 +60,7 @@ export default {
     }
   },
   watch: {
-    selectedOption(oldOption: Option, newOption: Option): void {
+    selectedOption(oldOption, newOption): void {
       this.$emit('input', this.selectedOption)
     },
   },
@@ -126,7 +127,7 @@ export default {
     // use up/down arrow key to select a suggested row
     // and press Enter
     onEnter(): void {
-      this.search = this.results[this.selectedIndex].value
+      this.search = this.results[this.selectedIndex]?.value
       this.selectedOption = this.results[this.selectedIndex]
       this.selectedIndex = 0
       this.isOpen = false
@@ -169,19 +170,15 @@ export default {
   flex-wrap: wrap;
 }
 .autocomplete > label {
-  max-width: 30%;
-  min-width: 30%;
-
-  /* width: 700px; */
+  flex-basis: 30%;
 }
 .autocomplete > div {
-  max-width: 70%;
-  min-width: 70%;
+  flex-basis: 70%;
 }
-.invalid {
-  border: 2px solid #e91e63 !important;
+.autocomplete-input.invalid {
+  border: 2px solid #e91e63;
 }
-.autocomplete > div > input {
+.autocomplete-input {
   position: relative;
   font-size: 16px;
   max-width: 100%;
@@ -191,7 +188,7 @@ export default {
   border-radius: 10px;
 }
 
-.autocomplete > div > input:focus {
+.autocomplete-input:focus {
   outline: none;
   border: 2.5px solid #3fc2b2;
 }

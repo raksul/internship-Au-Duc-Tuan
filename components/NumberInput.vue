@@ -7,7 +7,7 @@
       :class="{ invalid: !isValid }"
       min="0"
       :onkeypress="isDecimal"
-     @input="onChange"
+      @input="onChange"
     />
   </div>
 </template>
@@ -39,9 +39,6 @@ export default {
       return this.decimal ? '' : 'return event.charCode >= 48'
     },
   },
-  created() {
-    this.$emit('input', this.initValue)
-  },
   methods: {
     onChange(event) {
       this.$emit('input', event.target.value)
@@ -61,7 +58,7 @@ input:focus {
   outline: none;
   border: 2px solid #3fc2b2;
 }
-input[type="number"].invalid {
+input[type='number'].invalid {
   border: 2px solid #e91e63;
 }
 </style>
