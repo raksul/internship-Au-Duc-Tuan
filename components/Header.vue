@@ -10,10 +10,6 @@
   </div>
 </template>
 
-<script>
-export default {}
-</script>
-
 <style>
 .header {
   max-width: 1024px;

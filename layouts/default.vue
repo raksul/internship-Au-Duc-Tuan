@@ -28,8 +28,6 @@ html {
 body {
   margin: 0;
   font-size: 16px;
-
-  /* line-height: 1.5; */
 }
 
 a {
@@ -48,52 +46,4 @@ a {
 .shadow {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.13);
 }
-
-/* .row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-.info-column1 {
-  width: 10%;
-}
-.info-column2 {
-  width: 20%;
-}
-.info-column3 {
-  width: 30%;
-} */
-
-/* For responsive */
-
-/* @media screen and (max-width: 710px) {
-  .product-card-img {
-    display: none;
-  }
-  .product-card {
-    justify-content: center;
-  }
-  .product-card-info {
-    width: 100%;
-    margin-bottom: 17px;
-  }
-  .side-label {
-    display: none;
-  }
-  .info-column3 {
-    width: 40%;
-  }
-  .info-column1 {
-    width: 20%;
-  }
-  .header-container > div {
-    display: none;
-  }
-  .hide-desktop {
-    display: none;
-  }
-} */
 </style>

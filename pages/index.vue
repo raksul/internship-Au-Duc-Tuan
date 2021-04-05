@@ -25,28 +25,33 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Option, Product } from '~/types'
 import VariantsUtil from '~/utilities/VariantsUtil'
 
 export default Vue.extend({
-  data() {
+  data(): {
+    search: string
+    number1: number | string
+    number2: number | string
+  } {
     return {
       search: '',
-      number1: Number,
+      number1: '',
       number2: 100,
     }
   },
   methods: {
-    showSuccess() {
+    showSuccess(): void {
       console.log(VariantsUtil.getBrands())
 
       this.$toast.success('Success Toast!')
     },
-    showError() {
+    showError(): void {
       this.$toast.error('Error Toast!')
     },
   },
   computed: {
-    brands() {
+    brands(): Option[] {
       return [
         { id: 'apple', value: 'Apple' },
         { id: 'samsung', value: 'Samsung' },
@@ -54,20 +59,24 @@ export default Vue.extend({
         { id: 'vivo', value: 'Vivo' },
       ]
     },
-    brand() {
+    brand(): Option {
       return { id: 'apple', value: 'Apple' }
     },
-    product() {
+    product(): Product {
       return {
         id: 'p001',
         brand: 'apple',
         model: 'ipx',
         memory: 'GB128',
         color: 'black',
+        os: 'ios10',
         year: 2020,
         price: 1000.99,
-        created_at: '2021-03-31T08:27:34.857Z',
-        updated_at: '2021-03-31T08:27:34.857Z',
+        createdAt: '2021-03-31T08:27:34.857Z',
+        updatedAt: '2021-03-31T08:27:34.857Z',
+        isPublished: true,
+        isSold: false,
+        isDeleted: false,
       }
     },
   },

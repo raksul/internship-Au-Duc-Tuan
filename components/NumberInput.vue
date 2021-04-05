@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   props: {
     label: {
@@ -28,7 +28,9 @@ export default {
       default: false,
     },
   },
-  data() {
+  data(): {
+    isValid: boolean
+  } {
     return {
       isValid: true,
     }
@@ -40,7 +42,7 @@ export default {
     },
   },
   methods: {
-    onChange(event) {
+    onChange(event: any) {
       this.$emit('input', event.target.value)
     },
   },

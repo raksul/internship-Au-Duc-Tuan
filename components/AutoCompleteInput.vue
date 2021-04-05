@@ -49,7 +49,14 @@ export default {
       default: () => {},
     },
   },
-  data() {
+  data(): {
+    search: string
+    selectedOption: Option
+    results: Option[]
+    isOpen: boolean
+    selectedIndex: number
+    isValid: boolean
+  } {
     return {
       search: '',
       selectedOption: {} as Option,
@@ -60,7 +67,7 @@ export default {
     }
   },
   watch: {
-    selectedOption(oldOption, newOption): void {
+    selectedOption(): void {
       this.$emit('input', this.selectedOption)
     },
   },
@@ -127,7 +134,7 @@ export default {
     // use up/down arrow key to select a suggested row
     // and press Enter
     onEnter(): void {
-      this.search = this.results[this.selectedIndex]?.value
+      this.search = this.results[this.selectedIndex]?.value || ''
       this.selectedOption = this.results[this.selectedIndex]
       this.selectedIndex = 0
       this.isOpen = false

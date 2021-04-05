@@ -5,11 +5,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   methods: {
     // return input value to parent component when changes are made
-    updateValue(event) {
+    updateValue(event: any) {
       this.$emit('input', event.target.value)
     },
   },
