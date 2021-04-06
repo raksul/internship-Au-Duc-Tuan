@@ -3,16 +3,16 @@
     <img
       :src="image.src"
       class="product-card-img"
-      :alt="`image-of-product-${image.product_id}`"
+      :alt="`image-of-product_${image.productId}`"
     />
     <div class="product-card-info">
-      <div class="col-2 hide-mobile">
+      <div class="col-sm hide-mobile">
         {{ brand }}
       </div>
-      <div class="col-3 col-4">{{ model }}</div>
-      <div class="col-1 col-2">{{ color }}</div>
-      <div class="col-1 col-2">{{ memory }}</div>
-      <div class="col-1 hide-mobile">{{ price }}</div>
+      <div class="col-md">{{ model }}</div>
+      <div class="col-xs">{{ color }}</div>
+      <div class="col-xs">{{ memory }}</div>
+      <div class="col-xs hide-mobile">{{ price }}</div>
       <nuxt-link :to="`/product/${product.id}`">
         <fa icon="pen" />
       </nuxt-link>
@@ -28,7 +28,7 @@ import {
   getMemoryByKey,
 } from '~/utilities/VariantsUtil'
 import Formatter from '~/utilities/Formatter'
-import { Product, Image } from '~/types/index'
+import { Product, Image } from '~/types'
 import ImageService from '~/services/ImageService'
 
 export default {
@@ -45,7 +45,7 @@ export default {
       image: {} as Image,
     }
   },
-  // fetch image(s) of the product
+  // // fetch image(s) of the product
   async fetch() {
     await ImageService.getImageByProductId(this.product.id).then((res) => {
       if (res.data.length > 0) {
@@ -70,6 +70,9 @@ export default {
     price(): string {
       return Formatter.formatMoney(this.product.price)
     },
+    // image(): string {
+    //   return this.product.images[0].src
+    // },
   },
 }
 </script>

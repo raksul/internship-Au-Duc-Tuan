@@ -13,7 +13,7 @@
 <style>
 .header {
   max-width: 1024px;
-  margin: auto;
+  margin: auto auto 30px auto;
   justify-content: space-between;
   align-items: center;
   display: flex;

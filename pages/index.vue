@@ -7,13 +7,13 @@
       <SearchInput v-model="search" />
     </div>
     <div class="header-container" v-if="filteredProducts.length > 0">
-      <div class="invisible"></div>
-      <div class="product-header">
-        <div class="col-2"><b>Brand</b></div>
-        <div class="col-3"><b>Model</b></div>
-        <div class="col-1"><b>Color</b></div>
-        <div class="col-1"><b>Memory</b></div>
-        <div class="col-1"><b>Price</b></div>
+      <div style="width: 86px" class="hide-mobile"></div>
+      <div class="product-header hide-mobile">
+        <div class="col-sm hide-mobile"><b>Brand</b></div>
+        <div class="col-md hide-mobile"><b>Model</b></div>
+        <div class="col-xs hide-mobile"><b>Color</b></div>
+        <div class="col-xs hide-mobile"><b>Memory</b></div>
+        <div class="col-xs hide-mobile"><b>Price</b></div>
         <div style="width: 15px"></div>
       </div>
     </div>
@@ -84,10 +84,6 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-}
-.invisible {
-  height: 50px;
-  width: 86px;
 }
 .product-header {
   padding: 15px 15px;

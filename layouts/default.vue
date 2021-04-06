@@ -44,7 +44,6 @@ a {
 .gradient {
   background: linear-gradient(to bottom right, #a8fff6, #16c0b0);
   box-shadow: 0 8px 20px -6px grey;
-  margin-bottom: 30px;
 }
 .shadow {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.13);
@@ -75,13 +74,13 @@ a {
   align-items: center;
   margin-bottom: 30px;
 }
-.col-1 {
+.col-xs {
   width: 10%;
 }
-.col-2 {
+.col-sm {
   width: 20%;
 }
-.col-3 {
+.col-md {
   width: 30%;
 }
 
@@ -100,14 +99,11 @@ a {
   .side-label {
     display: none;
   }
-  .col-4 {
-    width: 40%;
-  }
-  .col-2 {
+  .col-xs {
     width: 20%;
   }
-  .header-container > div {
-    display: none;
+  .col-md {
+    width: 40%;
   }
   .hide-mobile {
     display: none;
