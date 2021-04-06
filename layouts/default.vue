@@ -46,4 +46,22 @@ a {
 .shadow {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.13);
 }
+
+/* override the Toastification color */
+.Vue-Toastification__toast--default {
+  background-color: #2195f3e8;
+  color: #fff;
+}
+.Vue-Toastification__toast--info {
+  background-color: #2195f3e8;
+  color: #fff;
+}
+.Vue-Toastification__toast--success {
+  background-color: #4caf4fe1;
+  color: #fff;
+}
+.Vue-Toastification__toast--error {
+  background-color: #e91e63;
+  color: #fff;
+}
 </style>

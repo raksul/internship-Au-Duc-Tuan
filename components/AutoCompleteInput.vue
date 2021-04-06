@@ -107,7 +107,6 @@ export default {
       this.selectedOption = result
       this.isOpen = false
     },
-
     // handling the event when user press arrow down key
     onArrowDown(): void {
       if (this.selectedIndex < this.results.length - 1) {

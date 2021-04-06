@@ -26,6 +26,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Option, Product } from '~/types'
+import ProductService from '~/services/ProductService'
 
 export default Vue.extend({
   data(): {
@@ -41,7 +42,9 @@ export default Vue.extend({
   },
   methods: {
     showSuccess(): void {
-      console.log()
+      ProductService.getProducts().then((res) => {
+        console.log(res.data)
+      })
       this.$toast.success('Success Toast!')
     },
     showError(): void {
