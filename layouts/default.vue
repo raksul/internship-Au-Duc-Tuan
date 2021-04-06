@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <Nuxt />
+    <Nuxt class="container" />
   </div>
 </template>
 
@@ -38,10 +38,13 @@ a {
 .container {
   max-width: 1024px;
   margin: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .gradient {
   background: linear-gradient(to bottom right, #a8fff6, #16c0b0);
   box-shadow: 0 8px 20px -6px grey;
+  margin-bottom: 30px;
 }
 .shadow {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.13);
@@ -63,5 +66,51 @@ a {
 .Vue-Toastification__toast--error {
   background-color: #e91e63;
   color: #fff;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.col-1 {
+  width: 10%;
+}
+.col-2 {
+  width: 20%;
+}
+.col-3 {
+  width: 30%;
+}
+
+/* For responsive */
+@media screen and (max-width: 768px) {
+  .product-card-img {
+    display: none;
+  }
+  .product-card {
+    justify-content: center;
+  }
+  .product-card-info {
+    width: 100%;
+    margin-bottom: 17px;
+  }
+  .side-label {
+    display: none;
+  }
+  .col-4 {
+    width: 40%;
+  }
+  .col-2 {
+    width: 20%;
+  }
+  .header-container > div {
+    display: none;
+  }
+  .hide-mobile {
+    display: none;
+  }
 }
 </style>

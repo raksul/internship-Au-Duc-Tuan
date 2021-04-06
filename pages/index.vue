@@ -1,118 +1,98 @@
 <template>
-  <div class="container">
-    <div>
-      <h1 class="title">smartphones-shop</h1>
-      <div class="links">
-        <nuxt-link to="/product/add">Add New Page</nuxt-link> |
-        <nuxt-link to="/product/p001">Edit Page</nuxt-link>
-      </div>
-      <Button icon="plus" type="primary" @click="showSuccess" />
-
-      <AutoCompleteInput label="Without init value" :items="brands" />
-      <AutoCompleteInput
-        label="With init value"
-        :value="brand"
-        :items="brands"
-      />
-      <NumberInput label="Without value" v-model="number1" />
-      <NumberInput label="With value" v-model="number2" :initValue="number2" />
-      <Button icon="trash" type="danger" @click="showError" />
+  <div>
+    <div class="row">
+      <nuxt-link to="/product/add">
+        <Button icon="plus" type="primary" label="Add Product" />
+      </nuxt-link>
       <SearchInput v-model="search" />
+    </div>
+    <div class="header-container" v-if="filteredProducts.length > 0">
+      <div class="invisible"></div>
+      <div class="product-header">
+        <div class="col-2"><b>Brand</b></div>
+        <div class="col-3"><b>Model</b></div>
+        <div class="col-1"><b>Color</b></div>
+        <div class="col-1"><b>Memory</b></div>
+        <div class="col-1"><b>Price</b></div>
+        <div style="width: 15px"></div>
+      </div>
+    </div>
+    <div v-for="product in filteredProducts" :key="product.id">
       <ProductCard :product="product" />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import { Option, Product } from '~/types'
-import ProductService from '~/services/ProductService'
+<script>
+import { mapState } from 'vuex'
+import {
+  getBrandByKey,
+  getModelByKey,
+  getColorByKey,
+  getMemoryByKey,
+} from '~/utilities/VariantsUtil'
 
-export default Vue.extend({
-  data(): {
-    search: string
-    number1: number | string
-    number2: number | string
-  } {
+export default {
+  data() {
     return {
       search: '',
-      number1: '',
-      number2: 100,
     }
   },
-  methods: {
-    showSuccess(): void {
-      ProductService.getProducts().then((res) => {
-        console.log(res.data)
+  async fetch({ store, error }) {
+    // calling action from $store, fetch product data
+    try {
+      await store.dispatch('products/fetchProducts')
+    } catch (e) {
+      error({
+        statusCode: 503,
+        message: e.message,
       })
-      this.$toast.success('Success Toast!')
-    },
-    showError(): void {
-      this.$toast.error('Error Toast!')
-    },
+    }
   },
   computed: {
-    brands(): Option[] {
-      return [
-        { id: 'apple', value: 'Apple' },
-        { id: 'samsung', value: 'Samsung' },
-        { id: 'google', value: 'Google' },
-        { id: 'vivo', value: 'Vivo' },
-      ]
+    // filter products in $store using user's search input to display
+    filteredProducts() {
+      return this.products.filter((product) => {
+        const brand = getBrandByKey(product.brand)?.value.toLowerCase() || ''
+        const model = getModelByKey(product.model)?.value.toLowerCase() || ''
+        const color = getColorByKey(product.color)?.value.toLowerCase() || ''
+        const memory = getMemoryByKey(product.memory)?.value.toLowerCase() || ''
+        const price = product.price.toString().toLowerCase()
+        const searchTerm = this.search.toLowerCase()
+
+        return (
+          brand.includes(searchTerm) ||
+          model.includes(searchTerm) ||
+          color.includes(searchTerm) ||
+          memory.includes(searchTerm) ||
+          price.includes(searchTerm)
+        )
+      })
     },
-    brand(): Option {
-      return { id: 'apple', value: 'Apple' }
-    },
-    product(): Product {
-      return {
-        id: 'p001',
-        brand: 'apple',
-        model: 'ipx',
-        memory: 'GB128',
-        color: 'black',
-        os: 'ios10',
-        year: 2020,
-        price: 1000.99,
-        createdAt: '2021-03-31T08:27:34.857Z',
-        updatedAt: '2021-03-31T08:27:34.857Z',
-        isPublished: true,
-        isSold: false,
-        isDeleted: false,
-      }
-    },
+    ...mapState({
+      // map products in $store with the page after fetch() life cycle above
+      products: (state) => state.products.products,
+    }),
   },
-})
+}
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
+.header-container {
+  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  text-align: center;
 }
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.invisible {
+  height: 50px;
+  width: 86px;
 }
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.product-header {
+  padding: 15px 15px;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

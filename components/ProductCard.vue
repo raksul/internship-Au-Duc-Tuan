@@ -1,18 +1,18 @@
 <template>
   <div class="product-card">
     <img
-      src="image.src"
+      :src="image.src"
       class="product-card-img"
-      :alt="`represent-image-for-product-${image.product_id}`"
+      :alt="`image-of-product-${image.product_id}`"
     />
     <div class="product-card-info">
-      <div class="info-column2 hide-desktop">
+      <div class="col-2 hide-mobile">
         {{ brand }}
       </div>
-      <div class="info-column3">{{ model }}</div>
-      <div class="info-column1">{{ color }}</div>
-      <div class="info-column1">{{ memory }}</div>
-      <div class="info-column1 hide-desktop">{{ price }}</div>
+      <div class="col-3 col-4">{{ model }}</div>
+      <div class="col-1 col-2">{{ color }}</div>
+      <div class="col-1 col-2">{{ memory }}</div>
+      <div class="col-1 hide-mobile">{{ price }}</div>
       <nuxt-link :to="`/product/${product.id}`">
         <fa icon="pen" />
       </nuxt-link>
@@ -28,7 +28,8 @@ import {
   getMemoryByKey,
 } from '~/utilities/VariantsUtil'
 import Formatter from '~/utilities/Formatter'
-import { Product, Image, Option } from '~/types/index'
+import { Product, Image } from '~/types/index'
+import ImageService from '~/services/ImageService'
 
 export default {
   props: {
@@ -45,26 +46,26 @@ export default {
     }
   },
   // fetch image(s) of the product
-  // async fetch() {
-  //   await ImageService.getImageByProductId(this.product.id).then((res) => {
-  //     if (res.data.length > 0) {
-  //       this.image = res.data[0]
-  //     }
-  //   })
-  // },
+  async fetch() {
+    await ImageService.getImageByProductId(this.product.id).then((res) => {
+      if (res.data.length > 0) {
+        this.image = res.data[0]
+      }
+    })
+  },
   computed: {
     // get data from variants.json file according to product's info
     brand(): string {
-      return (getBrandByKey(this.product.brand) as Option)?.value || ''
+      return getBrandByKey(this.product.brand)?.value || ''
     },
     model(): string {
-      return (getModelByKey(this.product.model) as Option)?.value || ''
+      return getModelByKey(this.product.model)?.value || ''
     },
     color(): string {
-      return (getColorByKey(this.product.color) as Option)?.value || ''
+      return getColorByKey(this.product.color)?.value || ''
     },
     memory(): string {
-      return (getMemoryByKey(this.product.memory) as Option)?.value || ''
+      return getMemoryByKey(this.product.memory)?.value || ''
     },
     price(): string {
       return Formatter.formatMoney(this.product.price)
@@ -76,17 +77,16 @@ export default {
 .product-card {
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin: 0 0 10px 0;
 }
 .product-card-img {
   max-height: 76px;
   max-width: 76px;
-  transition: all 0.3s linear;
   margin-right: 10px;
   text-align: center;
+  transition: all 0.3s linear;
 }
 .product-card-info {
   padding: 15px 15px;
@@ -94,7 +94,7 @@ export default {
   border: 1px solid black;
   border-radius: 15px;
   box-shadow: 0 8px 6px -4px grey;
-  width: 95%;
+  flex-basis: 95%;
   display: flex;
   justify-content: space-between;
   align-items: center;
