@@ -30,10 +30,21 @@ export const mutations = {
 }
 
 export const actions = {
-  fetchProducts({ commit }) {
-    return ProductService.getProducts()
-      .then((res) => {
-        commit('SET_PRODUCTS', res.data)
+  async fetchProducts({ commit }) {
+    let products: Product[] = []
+    let results: Product[] = []
+    await ProductService.getProducts()
+      .then(async (res) => {
+        products = res.data
+        products.forEach(async (product: Product) => {
+          await ImageService.getImageByProductId(product.id).then((res) => {
+            product.images = res.data
+            results.push(product)
+          })
+        })
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(commit('SET_PRODUCTS', results)), 1000)
+        })
       })
       .catch((err) => {
         console.log(err)

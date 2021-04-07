@@ -3,7 +3,7 @@
     <img
       :src="image.src"
       class="product-card-img"
-      :alt="`image-of-product_${image.productId}`"
+      :alt="`image-of-product_${product.id}`"
     />
     <div class="product-card-info">
       <div class="col-sm hide-mobile">
@@ -29,7 +29,6 @@ import {
 } from '~/utilities/VariantsUtil'
 import Formatter from '~/utilities/Formatter'
 import { Product, Image } from '~/types'
-import ImageService from '~/services/ImageService'
 
 export default {
   props: {
@@ -37,21 +36,6 @@ export default {
       type: Object as () => Product,
       required: true,
     },
-  },
-  data(): {
-    image: Image
-  } {
-    return {
-      image: {} as Image,
-    }
-  },
-  // // fetch image(s) of the product
-  async fetch() {
-    await ImageService.getImageByProductId(this.product.id).then((res) => {
-      if (res.data.length > 0) {
-        this.image = res.data[0]
-      }
-    })
   },
   computed: {
     // get data from variants.json file according to product's info
@@ -70,9 +54,11 @@ export default {
     price(): string {
       return Formatter.formatMoney(this.product.price)
     },
-    // image(): string {
-    //   return this.product.images[0].src
-    // },
+    image(): Image {
+      return this.product && this.product.images
+        ? this.product.images[0]
+        : ({} as Image)
+    },
   },
 }
 </script>
