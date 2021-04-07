@@ -55,9 +55,7 @@ export default {
       return Formatter.formatMoney(this.product.price)
     },
     image(): Image {
-      return this.product && this.product.images
-        ? this.product.images[0]
-        : ({} as Image)
+      return this.product.images ? this.product.images[0] : ({} as Image)
     },
   },
 }

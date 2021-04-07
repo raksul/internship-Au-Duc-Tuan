@@ -1,7 +1,7 @@
 <template>
   <div class="autocomplete">
-    <label>{{ label }}</label>
-    <div>
+    <label class="label">{{ label }}</label>
+    <div class="input">
       <input
         v-model="search"
         type="text"
@@ -81,9 +81,11 @@ export default {
   },
   methods: {
     filterResults(): void {
-      this.results = this.items.filter((item: Option) =>
-        item.value.toLowerCase().includes(this.search.toLowerCase())
-      )
+      this.results = this.items.filter((item: Option) => {
+        return item.value
+          .toLowerCase()
+          .includes(this.search?.toLowerCase() || '')
+      })
     },
 
     onChange(): void {
@@ -174,11 +176,11 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.autocomplete > label {
-  flex-basis: 30%;
+.autocomplete .label {
+  flex-basis: 40%;
 }
-.autocomplete > div {
-  flex-basis: 70%;
+.autocomplete .input {
+  flex-basis: 60%;
 }
 .autocomplete-input {
   position: relative;
