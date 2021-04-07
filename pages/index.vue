@@ -7,14 +7,14 @@
       <SearchInput v-model="search" />
     </div>
     <div class="header-container" v-if="filteredProducts.length > 0">
-      <div style="width: 86px" class="hide-mobile"></div>
+      <div class="filler-image hide-mobile"></div>
       <div class="product-header hide-mobile">
-        <div class="col-sm hide-mobile"><b>Brand</b></div>
-        <div class="col-md hide-mobile"><b>Model</b></div>
-        <div class="col-xs hide-mobile"><b>Color</b></div>
-        <div class="col-xs hide-mobile"><b>Memory</b></div>
-        <div class="col-xs hide-mobile"><b>Price</b></div>
-        <div style="width: 15px"></div>
+        <div class="col-md-2 hide-mobile"><b>Brand</b></div>
+        <div class="col-md-3 hide-mobile"><b>Model</b></div>
+        <div class="col-md-1 hide-mobile"><b>Color</b></div>
+        <div class="col-md-1 hide-mobile"><b>Memory</b></div>
+        <div class="col-md-1 hide-mobile"><b>Price</b></div>
+        <div class="filler-icon"></div>
       </div>
     </div>
     <div v-for="product in filteredProducts" :key="product.id">
@@ -57,7 +57,7 @@ export default {
         const model = getModelByKey(product.model)?.value.toLowerCase() || ''
         const color = getColorByKey(product.color)?.value.toLowerCase() || ''
         const memory = getMemoryByKey(product.memory)?.value.toLowerCase() || ''
-        const price = product.price.toString().toLowerCase()
+        const price = product.price?.toString().toLowerCase() || ''
         const searchTerm = this.search.toLowerCase()
 
         return (
@@ -90,5 +90,11 @@ export default {
   width: 95%;
   display: flex;
   justify-content: space-between;
+}
+.filler-image {
+  width: 86px;
+}
+.filler-icon {
+  width: 15px;
 }
 </style>

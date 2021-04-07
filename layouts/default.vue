@@ -74,13 +74,13 @@ a {
   align-items: center;
   margin-bottom: 30px;
 }
-.col-xs {
+.col-md-1 {
   width: 10%;
 }
-.col-sm {
+.col-md-2 {
   width: 20%;
 }
-.col-md {
+.col-md-3 {
   width: 30%;
 }
 
@@ -99,10 +99,10 @@ a {
   .side-label {
     display: none;
   }
-  .col-xs {
+  .col-xs-2 {
     width: 20%;
   }
-  .col-md {
+  .col-xs-4 {
     width: 40%;
   }
   .hide-mobile {

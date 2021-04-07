@@ -6,13 +6,13 @@
       :alt="`image-of-product_${product.id}`"
     />
     <div class="product-card-info">
-      <div class="col-sm hide-mobile">
+      <div class="col-md-2 hide-mobile">
         {{ brand }}
       </div>
-      <div class="col-md">{{ model }}</div>
-      <div class="col-xs">{{ color }}</div>
-      <div class="col-xs">{{ memory }}</div>
-      <div class="col-xs hide-mobile">{{ price }}</div>
+      <div class="col-md-3 col-xs-4">{{ model }}</div>
+      <div class="col-md-1 col-xs-2">{{ color }}</div>
+      <div class="col-md-1 col-xs-2">{{ memory }}</div>
+      <div class="col-md-1 hide-mobile">{{ price }}</div>
       <nuxt-link :to="`/product/${product.id}`">
         <fa icon="pen" />
       </nuxt-link>

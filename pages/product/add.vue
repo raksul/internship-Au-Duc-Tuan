@@ -5,13 +5,13 @@
       <div class="row">
         <AutoCompleteInput
           class="col"
-          v-model="autocompleteBrand"
+          v-model="selectedBrand"
           :items="brands"
           label="Brand"
         />
         <AutoCompleteInput
           class="col"
-          v-model="autocompleteModel"
+          v-model="selectedModel"
           :items="models"
           label="Model"
         />
@@ -22,13 +22,13 @@
       <div class="row">
         <AutoCompleteInput
           class="col"
-          v-model="autocompleteMemory"
+          v-model="selectedMemory"
           :items="memories"
           label="Memory Size"
         />
         <AutoCompleteInput
           class="col"
-          v-model="autocompleteColor"
+          v-model="selectedColor"
           :items="colors"
           label="Color"
         />
@@ -36,7 +36,7 @@
       <div class="row">
         <AutoCompleteInput
           class="col"
-          v-model="autocompleteOS"
+          v-model="selectedOS"
           :items="osVersions"
           label="OS Version"
         />
@@ -69,9 +69,9 @@
           <img
             class="image"
             v-for="(uploadedImage, index) in uploadedImages"
-            :key="index"
-            :src="uploadedImage"
-            @mousedown="removeImage(index)"
+            :key="uploadedImage.id"
+            :src="uploadedImage.value"
+            @mousedown="removeImage(uploadedImage.id)"
           />
         </div>
       </div>
@@ -95,26 +95,26 @@ import {
 } from '~/utilities/VariantsUtil'
 import Validator from '~/utilities/Validator'
 import ImageService from '~/services/ImageService'
-import { Option } from '~/types'
+import { Option, Image } from '~/types'
 export default {
   data(): {
-    uploadedImages: string[]
-    autocompleteBrand: Option
-    autocompleteModel: Option
-    autocompleteMemory: Option
-    autocompleteColor: Option
-    autocompleteOS: Option
+    uploadedImages: Option[]
+    selectedBrand: Option
+    selectedModel: Option
+    selectedMemory: Option
+    selectedColor: Option
+    selectedOS: Option
     year: number | string
     price: number | string
   } {
     return {
       // initial variables for the page
-      uploadedImages: [] as string[],
-      autocompleteBrand: {} as Option,
-      autocompleteModel: {} as Option,
-      autocompleteMemory: {} as Option,
-      autocompleteColor: {} as Option,
-      autocompleteOS: {} as Option,
+      uploadedImages: [] as Option[],
+      selectedBrand: {} as Option,
+      selectedModel: {} as Option,
+      selectedMemory: {} as Option,
+      selectedColor: {} as Option,
+      selectedOS: {} as Option,
       year: new Date().getFullYear(),
       price: 0,
     }
@@ -125,10 +125,10 @@ export default {
       return getBrands()
     },
     models() {
-      return getModelsByBrandKey(this.autocompleteBrand.id)
+      return getModelsByBrandKey(this.selectedBrand.id)
     },
     osVersions() {
-      return getOSVersionsByBrand(this.autocompleteBrand.id)
+      return getOSVersionsByBrand(this.selectedBrand.id)
     },
     memories() {
       return getMemories()
@@ -142,11 +142,11 @@ export default {
     async addProduct() {
       if (
         // check the validation of user's autocomplete input
-        Validator.isObjectEmpty(this.autocompleteBrand) ||
-        Validator.isObjectEmpty(this.autocompleteModel) ||
-        Validator.isObjectEmpty(this.autocompleteMemory) ||
-        Validator.isObjectEmpty(this.autocompleteOS) ||
-        Validator.isObjectEmpty(this.autocompleteColor)
+        Validator.isObjectEmpty(this.selectedBrand) ||
+        Validator.isObjectEmpty(this.selectedModel) ||
+        Validator.isObjectEmpty(this.selectedMemory) ||
+        Validator.isObjectEmpty(this.selectedOS) ||
+        Validator.isObjectEmpty(this.selectedColor)
       ) {
         // inform the user to check inputs again
         this.$toast.error('Please check your input again!')
@@ -164,18 +164,18 @@ export default {
       }
 
       // generating a unique key for product using uuid-npm
-      const uuid = uuidv4()
+      const productId = uuidv4()
 
       // calling action from Vuex to add product along with its image(s)
       // TODO: should implement rollback mechanism here
       try {
         await this.$store.dispatch('products/addProduct', {
-          id: uuid,
-          brand: this.autocompleteBrand.id,
-          model: this.autocompleteModel.id,
-          memory: this.autocompleteMemory.id,
-          color: this.autocompleteColor.id,
-          os: this.autocompleteOS.id,
+          id: productId,
+          brand: this.selectedBrand.id,
+          model: this.selectedModel.id,
+          memory: this.selectedMemory.id,
+          color: this.selectedColor.id,
+          os: this.selectedOS.id,
           year: this.year,
           price: this.price,
           isPublished: true,
@@ -186,9 +186,9 @@ export default {
         })
         this.uploadedImages.forEach(async (img) => {
           const addedImage = {
-            id: uuidv4(),
-            src: img,
-            productId: uuid,
+            id: img.id,
+            src: img.value,
+            productId: productId,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           }
@@ -209,10 +209,12 @@ export default {
       }
     },
 
-    removeImage(index: number) {
-      // this.$refs.imageInput.files.splice(index, 1)
-      // this.imageInput.files.splice(index, 1)
-      this.uploadedImages.splice(index, 1)
+    removeImage(id: string) {
+      for (let i = 0; i < this.uploadedImages.length; i++) {
+        if (this.uploadedImages[i].id === id) {
+          this.uploadedImages.splice(i, 1)
+        }
+      }
     },
 
     // parse image to base64 data url
@@ -220,7 +222,10 @@ export default {
       const reader = new FileReader()
 
       reader.onload = (e) => {
-        this.uploadedImages.push(e.target.result)
+        this.uploadedImages.push({
+          id: uuidv4(),
+          value: e.target?.result as string,
+        })
       }
       reader.readAsDataURL(imageData)
     },
