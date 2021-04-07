@@ -1,5 +1,5 @@
 import * as variants from '~/variants.json'
-import { OS, Brand, Option } from '~/types/index'
+import { OS, Brand, Option } from '~/types'
 
 export function getOS(): OS[] {
   return variants.os
@@ -27,7 +27,7 @@ export function getMemoryByKey(key: string): Option | undefined {
 }
 
 export function getBrands(): Brand[] | undefined {
-  let brands = undefined
+  let brands: Brand[] = []
   variants.os.forEach((os) => {
     os.brands.forEach((brand) => {
       brands.push(brand)

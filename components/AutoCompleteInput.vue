@@ -135,7 +135,6 @@ export default {
     onEnter(): void {
       this.search = this.results[this.selectedIndex]?.value || ''
       this.selectedOption = this.results[this.selectedIndex]
-      this.selectedIndex = 0
       this.isOpen = false
     },
 
@@ -184,8 +183,7 @@ export default {
 .autocomplete-input {
   position: relative;
   font-size: 16px;
-  max-width: 100%;
-  min-width: 100%;
+  width: 100%;
   padding: 7px 25px;
   border: 1px solid black;
   border-radius: 10px;
@@ -201,8 +199,7 @@ export default {
   position: absolute;
   z-index: 10;
   padding: 4px 10px;
-  max-width: 100%;
-  min-width: 100%;
+  width: 100%;
   margin: 0;
   border: 0.5px solid grey;
   border-top: none;
