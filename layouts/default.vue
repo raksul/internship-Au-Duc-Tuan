@@ -68,8 +68,6 @@ a {
 }
 
 .row {
-  margin-top: 0;
-  margin-bottom: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

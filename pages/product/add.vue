@@ -256,6 +256,7 @@ export default {
 }
 .paper-clip {
   margin-left: 5px;
+  margin-right: 25px;
   font-size: 30px;
   transition: all 0.1s linear;
 }

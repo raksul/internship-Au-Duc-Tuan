@@ -1,11 +1,9 @@
 <template>
   <div class="gradient">
     <div class="header">
-      <div></div>
       <nuxt-link to="/"
         ><img src="~/assets/smartphone.png" alt="logo" class="logo" />
       </nuxt-link>
-      <fa icon="cog" class="setting-icon" />
     </div>
   </div>
 </template>
@@ -14,7 +12,7 @@
 .header {
   max-width: 1024px;
   margin: auto auto 30px auto;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   display: flex;
   padding: 7px 10px;

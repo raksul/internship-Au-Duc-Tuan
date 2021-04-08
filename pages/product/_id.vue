@@ -250,9 +250,10 @@ export default {
 <style>
 .image:hover {
   transform: scale(1.6);
+  outline: none;
 }
 .btn-delete-container {
-  height: 35px;
+  height: 30px;
   position: relative;
 }
 .align-right {
