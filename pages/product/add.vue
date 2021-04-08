@@ -42,7 +42,7 @@
         />
         <NumberInput
           class="col"
-          v-model="year"
+          v-model.number="year"
           :initValue="year"
           label="Year"
         />
@@ -50,7 +50,7 @@
       <div class="row">
         <NumberInput
           class="col"
-          v-model="price"
+          v-model.number="price"
           label="Price ($)"
           :decimal="true"
         />
@@ -104,8 +104,8 @@ export default {
     selectedMemory: Option
     selectedColor: Option
     selectedOS: Option
-    year: number | string
-    price: number | string
+    year: number
+    price: number
   } {
     return {
       // initial variables for the page
