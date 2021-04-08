@@ -4,13 +4,13 @@
       <span class="seperator">General</span>
       <div class="row">
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedBrand"
           :items="brands"
           label="Brand"
         />
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedModel"
           :items="models"
           label="Model"
@@ -21,13 +21,13 @@
       <span class="seperator">Variants</span>
       <div class="row">
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedMemory"
           :items="memories"
           label="Memory Size"
         />
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedColor"
           :items="colors"
           label="Color"
@@ -35,13 +35,13 @@
       </div>
       <div class="row">
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedOS"
           :items="osVersions"
           label="OS Version"
         />
         <NumberInput
-          class="col"
+          class="col-md col-xs"
           v-model.number="year"
           :initValue="year"
           label="Year"
@@ -49,12 +49,12 @@
       </div>
       <div class="row">
         <NumberInput
-          class="col"
+          class="col-md col-xs"
           v-model.number="price"
           label="Price ($)"
           :decimal="true"
         />
-        <div class="col">
+        <div class="col-md col-xs">
           <label for="upload"
             >Attach images <fa icon="paperclip" class="paper-clip"
           /></label>
@@ -231,7 +231,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .seperator {
   text-decoration: underline;
   font-size: 20px;
@@ -240,14 +240,15 @@ export default {
   margin: 20px 0;
   display: flex;
   flex: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
-.col {
-  flex-basis: 40%;
+.col-md {
+  flex-basis: 45%;
 }
 .btn-container {
-  margin: 30px 10px;
+  margin-top: 15px;
+  margin-left: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;

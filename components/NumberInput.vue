@@ -1,8 +1,8 @@
 <template>
-  <div class="number-input">
+  <div class="number-input-container">
     <label class="label">{{ label }}</label>
     <input
-      class="input"
+      class="number-input"
       :value="initValue"
       type="number"
       :class="{ invalid: !isValid }"
@@ -50,8 +50,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.number-input {
+<style>
+.number-input-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -60,18 +60,18 @@ export default {
 .label {
   flex-basis: 40%;
 }
-.input {
+.number-input {
   flex-basis: 60%;
   font-size: 16px;
   padding: 7px 20px;
   border: 1px solid black;
   border-radius: 10px;
 }
-.input:focus {
+.number-input:focus {
   outline: none;
   border: 2px solid #3fc2b2;
 }
-.input.invalid {
+.number-input.invalid {
   border: 2px solid #e91e63;
 }
 </style>

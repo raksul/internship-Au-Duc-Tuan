@@ -22,7 +22,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 8px 20px -6px grey;
   height: 37px;
-  width: 200px;
+  width: 195px;
   display: flex;
   justify-content: space-between;
   align-items: center;

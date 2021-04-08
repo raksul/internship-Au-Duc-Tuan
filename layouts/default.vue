@@ -68,11 +68,12 @@ a {
 }
 
 .row {
+  margin-top: 0;
+  margin-bottom: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
 }
 .col-md-1 {
   width: 10%;
@@ -86,6 +87,7 @@ a {
 
 /* For responsive */
 @media screen and (max-width: 768px) {
+  /* Listing page */
   .product-card-img {
     display: none;
   }
@@ -107,6 +109,24 @@ a {
   }
   .hide-mobile {
     display: none;
+  }
+
+  /* Add, modify page */
+  .row .col-xs {
+    flex-basis: 100%;
+  }
+  .autocomplete .input {
+    flex-basis: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .number-input-container .number-input {
+    flex-basis: 100%;
+  }
+  .col-xs .paper-clip {
+    margin-top: 23px;
+    margin-left: 5px;
+    font-size: 20px;
   }
 }
 </style>

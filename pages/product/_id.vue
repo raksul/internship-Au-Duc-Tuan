@@ -12,14 +12,14 @@
       <span class="seperator">General</span>
       <div class="row">
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedBrand"
           :initValue="brand"
           :items="brands"
           label="Brand"
         />
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedModel"
           :initValue="model"
           :items="models"
@@ -31,14 +31,14 @@
       <span class="seperator">Variants</span>
       <div class="row">
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedMemory"
           :initValue="memory"
           :items="memories"
           label="Memory Size"
         />
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedColor"
           :initValue="color"
           :items="colors"
@@ -47,14 +47,14 @@
       </div>
       <div class="row">
         <AutoCompleteInput
-          class="col"
+          class="col-md col-xs"
           v-model="selectedOS"
           :initValue="osVersion"
           :items="osVersions"
           label="OS Version"
         />
         <NumberInput
-          class="col"
+          class="col-md col-xs"
           v-model.number="year"
           :initValue="this.product.year"
           label="Year"
@@ -62,13 +62,13 @@
       </div>
       <div class="row">
         <NumberInput
-          class="col"
+          class="col-md col-xs"
           v-model.number="price"
           :initValue="this.product.price"
           label="Price ($)"
           :decimal="true"
         />
-        <div class="col">
+        <div class="col-md col-xs">
           <label>
             Attach images <fa icon="paperclip" class="paper-clip" />
           </label>
@@ -247,49 +247,17 @@ export default {
 }
 </script>
 
-<style scoped>
-.seperator {
-  text-decoration: underline;
-  font-size: 20px;
-}
-.row {
-  margin: 20px 0;
-  display: flex;
-  flex: wrap;
-  justify-content: space-around;
-  align-items: center;
-}
-.col {
-  flex-basis: 40%;
-}
-.btn-container {
-  margin: 30px 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.paper-clip {
-  margin-left: 5px;
-  font-size: 30px;
-  transition: all 0.1s linear;
-}
-.image {
-  width: 30px;
-  height: 30px;
-  margin: 0 0 0 3px;
-  transition: all 0.1s linear;
-}
+<style>
 .image:hover {
   transform: scale(1.6);
 }
 .btn-delete-container {
-  height: 45px;
+  height: 35px;
   position: relative;
 }
 .align-right {
   position: absolute;
   top: 0;
-  right: -30px;
+  right: -20px;
 }
 </style>

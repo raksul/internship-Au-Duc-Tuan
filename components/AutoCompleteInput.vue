@@ -169,17 +169,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .autocomplete {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.autocomplete .label {
+.label {
   flex-basis: 40%;
 }
-.autocomplete .input {
+.input {
   flex-basis: 60%;
 }
 .autocomplete-input {
