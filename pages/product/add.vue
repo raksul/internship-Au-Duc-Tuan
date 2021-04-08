@@ -79,7 +79,6 @@
         <nuxt-link to="/"><Button icon="times" type="primary" /></nuxt-link>
         <Button icon="edit" type="primary" @click="addProduct" />
       </div>
-      <!-- <Button icon="info" @click="showToast" /> -->
     </div>
   </div>
 </template>
@@ -220,7 +219,6 @@ export default {
     // parse image to base64 data url
     createBase64Image(imageData: Blob) {
       const reader = new FileReader()
-
       reader.onload = (e) => {
         this.uploadedImages.push({
           id: uuidv4(),
@@ -228,10 +226,6 @@ export default {
         })
       }
       reader.readAsDataURL(imageData)
-    },
-
-    showToast() {
-      this.$toast.success('Clicked!')
     },
   },
 }

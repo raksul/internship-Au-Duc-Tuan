@@ -17,6 +17,13 @@ export const mutations = {
   ADD_PRODUCT(state, product: Product) {
     state.products.push(product)
   },
+  UPDATE_PRODUCT(state, product: Product) {
+    for (let i = 0; i < state.products.length; i++) {
+      if (state.products[i].id === product.id) {
+        state.products[i] = product
+      }
+    }
+  },
   DELETE_PRODUCT(state, product: Product) {
     for (let i = 0; i < state.products.length; i++) {
       if (state.products[i].id === product.id) {
@@ -75,12 +82,12 @@ export const actions = {
   updateProduct({ commit }, product: Product) {
     return ProductService.updateProduct(product).then((res) => {
       commit('SET_PRODUCT', res.data)
+      commit('UPDATE_PRODUCT', res.data)
     })
   },
 
   deleteProduct({ commit }, product: Product) {
     return ProductService.updateProduct(product).then((res) => {
-      commit('SET_PRODUCT', res.data)
       commit('DELETE_PRODUCT', res.data)
       ImageService.deleteImageByProductId(product.id)
     })

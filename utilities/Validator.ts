@@ -1,3 +1,4 @@
+import { getBrandByKey, getOSVersionsByBrand } from '~/utilities/VariantsUtil'
 export default {
   isObjectEmpty(value: Object): boolean {
     return (
@@ -12,5 +13,31 @@ export default {
     //   !isNaN(parseFloat(value))
     // ) // ...and ensure strings of whitespace fail
     return !isNaN(value) && value !== ''
+  },
+
+  isBrandModelMatch(brandKey: string, modelKey: string): boolean {
+    let flag = false
+    const brand = getBrandByKey(brandKey)
+    brand?.models.every((model) => {
+      if (model.id === modelKey) {
+        flag = true
+        return false // stop looping
+      }
+      return true // continue looping with every
+    })
+    return flag
+  },
+
+  isBrandOSMatch(brandKey: string, osKey: string): boolean {
+    let flag = false
+    const osVersions = getOSVersionsByBrand(brandKey)
+    osVersions?.every((os) => {
+      if (os.id === osKey) {
+        flag = true
+        return false // stop looping
+      }
+      return true // continue looping with every
+    })
+    return flag
   },
 }
