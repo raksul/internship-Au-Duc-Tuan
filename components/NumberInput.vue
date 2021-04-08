@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <label>{{ label }}</label>
+  <div class="number-input">
+    <label class="label">{{ label }}</label>
     <input
+      class="input"
       :value="initValue"
       type="number"
       :class="{ invalid: !isValid }"
@@ -50,17 +51,27 @@ export default {
 </script>
 
 <style scoped>
-input {
+.number-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.label {
+  flex-basis: 40%;
+}
+.input {
+  flex-basis: 60%;
   font-size: 16px;
   padding: 7px 20px;
   border: 1px solid black;
   border-radius: 10px;
 }
-input:focus {
+.input:focus {
   outline: none;
   border: 2px solid #3fc2b2;
 }
-input[type='number'].invalid {
+.input.invalid {
   border: 2px solid #e91e63;
 }
 </style>

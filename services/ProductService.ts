@@ -1,12 +1,23 @@
+import ImageService from '~/services/ImageService'
 import { Product } from './../types/Product.interface'
 import apiClient from '~/services/AxiosConfig'
 
 export default {
-  getProducts(): Promise<any> {
-    return apiClient.get(`/products?is_deleted=false`)
+  async getProducts(): Promise<Product> {
+    const products = await apiClient.get(`/products?is_deleted=false`)
+    await products.data.forEach(async (product: Product) => {
+      await ImageService.getImageByProductId(product.id).then((res) => {
+        product.images = res.data
+      })
+    })
+    return products.data
   },
-  getProduct(id: string): Promise<any> {
-    return apiClient.get(`products/${id}`)
+  async getProduct(id: string): Promise<Product> {
+    const response = await apiClient.get(`products/${id}`)
+    await ImageService.getImageByProductId(response.data.id).then((res) => {
+      response.data.images = res.data
+    })
+    return response.data
   },
   addProduct(product: Product): Promise<any> {
     return apiClient.post('/products', product)
