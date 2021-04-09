@@ -1,3 +1,4 @@
+import { Option, Brand } from '~/types/'
 import { getBrandByKey, getOSVersionsByBrand } from '~/utilities/VariantsUtil'
 export default {
   isObjectEmpty(value: Object): boolean {
@@ -7,37 +8,16 @@ export default {
     )
   },
   isNumber(value: any): boolean {
-    // if (typeof value !== 'string') return false // we only process strings!
-    // return (
-    //   !isNaN(value) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-    //   !isNaN(parseFloat(value))
-    // ) // ...and ensure strings of whitespace fail
     return !isNaN(value) && value !== ''
   },
 
   isBrandModelMatch(brandKey: string, modelKey: string): boolean {
-    let flag = false
-    const brand = getBrandByKey(brandKey)
-    brand?.models.every((model) => {
-      if (model.id === modelKey) {
-        flag = true
-        return false // stop looping
-      }
-      return true // continue looping with every
-    })
-    return flag
+    const brand = getBrandByKey(brandKey) as Brand
+    return brand.models.some((model: Option) => model.id === modelKey)
   },
 
   isBrandOSMatch(brandKey: string, osKey: string): boolean {
-    let flag = false
-    const osVersions = getOSVersionsByBrand(brandKey)
-    osVersions?.every((os) => {
-      if (os.id === osKey) {
-        flag = true
-        return false // stop looping
-      }
-      return true // continue looping with every
-    })
-    return flag
+    const osVersions = getOSVersionsByBrand(brandKey) as Option[]
+    return osVersions.some((os) => os.id === osKey)
   },
 }

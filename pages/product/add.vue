@@ -43,7 +43,7 @@
         <NumberInput
           class="col-md col-xs"
           v-model.number="year"
-          :initValue="year"
+          :value="year"
           label="Year"
         />
       </div>

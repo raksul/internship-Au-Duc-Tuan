@@ -44,7 +44,7 @@ export default {
       type: Array as () => Array<Option>,
       default: () => [],
     },
-    initValue: {
+    value: {
       type: Object as () => Option,
       default: () => {},
     },
@@ -74,8 +74,8 @@ export default {
   created(): void {
     // map the initial value with the component
     // mainly for modify function
-    if (this.initValue) {
-      this.selectedOption = this.initValue
+    if (this.value) {
+      this.selectedOption = this.value
       this.search = this.selectedOption.value
     }
   },

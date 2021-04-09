@@ -3,7 +3,7 @@
     <label class="label">{{ label }}</label>
     <input
       class="number-input"
-      :value="initValue"
+      :value="value"
       type="number"
       :class="{ invalid: !isValid }"
       min="0"
@@ -20,7 +20,7 @@ export default {
       type: String,
       default: '',
     },
-    initValue: {
+    value: {
       type: Number,
       default: 0,
     },

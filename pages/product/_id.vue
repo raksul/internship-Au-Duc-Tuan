@@ -14,14 +14,14 @@
         <AutoCompleteInput
           class="col-md col-xs"
           v-model="selectedBrand"
-          :initValue="brand"
+          :value="brand"
           :items="brands"
           label="Brand"
         />
         <AutoCompleteInput
           class="col-md col-xs"
           v-model="selectedModel"
-          :initValue="model"
+          :value="model"
           :items="models"
           label="Model"
         />
@@ -33,14 +33,14 @@
         <AutoCompleteInput
           class="col-md col-xs"
           v-model="selectedMemory"
-          :initValue="memory"
+          :value="memory"
           :items="memories"
           label="Memory Size"
         />
         <AutoCompleteInput
           class="col-md col-xs"
           v-model="selectedColor"
-          :initValue="color"
+          :value="color"
           :items="colors"
           label="Color"
         />
@@ -49,14 +49,14 @@
         <AutoCompleteInput
           class="col-md col-xs"
           v-model="selectedOS"
-          :initValue="osVersion"
+          :value="osVersion"
           :items="osVersions"
           label="OS Version"
         />
         <NumberInput
           class="col-md col-xs"
           v-model.number="year"
-          :initValue="this.product.year"
+          :value="price"
           label="Year"
         />
       </div>
@@ -64,7 +64,7 @@
         <NumberInput
           class="col-md col-xs"
           v-model.number="price"
-          :initValue="this.product.price"
+          :value="price"
           label="Price ($)"
           :decimal="true"
         />
@@ -130,6 +130,22 @@ export default {
   },
   computed: {
     product() {
+      // passing fetched product details to data()
+      this.selectedBrand = getBrandByKey(
+        this.$store.state.products.product.brand
+      ) as Option
+      this.selectedModel = getModelByKey(
+        this.$store.state.products.product.model
+      ) as Option
+      this.selectedMemory = getMemoryByKey(
+        this.$store.state.products.product.memory
+      ) as Option
+      this.selectedColor = getColorByKey(
+        this.$store.state.products.product.color
+      ) as Option
+      this.selectedOS = getOSVersionByKey(
+        this.$store.state.products.product.os
+      ) as Option
       this.year = this.$store.state.products.product.year
       this.price = this.$store.state.products.product.price
       return this.$store.state.products.product
