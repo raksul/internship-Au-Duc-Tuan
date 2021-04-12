@@ -1,9 +1,5 @@
 import * as variants from '~/variants.json'
-import { OS, Brand, Option } from '~/types'
-
-export function getOS(): OS[] {
-  return variants.os
-}
+import { Brand, Option } from '~/types'
 
 export function getOSVersionsByBrand(key: string): Option[] | undefined {
   return variants.os.find((os) => os.brands.find((brand) => brand.id === key))

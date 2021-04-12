@@ -1,12 +1,6 @@
 import { Option, Brand } from '~/types/'
 import { getBrandByKey, getOSVersionsByBrand } from '~/utilities/VariantsUtil'
 export default {
-  isEmptyString(string: any): boolean {
-    return string === undefined || string == null || string.length <= 0
-      ? true
-      : false
-  },
-
   isObjectEmpty(value: Object): boolean {
     return (
       Object.prototype.toString.call(value) === '[object Object]' &&

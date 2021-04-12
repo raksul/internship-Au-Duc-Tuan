@@ -1,4 +1,5 @@
-import { Product } from '~/types/Product.interface'
+import { Product, Option, ProductEditForm } from '~/types'
+import { v4 as uuidv4 } from 'uuid'
 import ProductService from '~/services/ProductService'
 import ImageService from '~/services/ImageService'
 
@@ -18,18 +19,14 @@ export const mutations = {
     state.products.push(product)
   },
   UPDATE_PRODUCT(state, product: Product) {
-    for (let i = 0; i < state.products.length; i++) {
-      if (state.products[i].id === product.id) {
-        state.products[i] = product
-      }
-    }
+    state.products[
+      state.products.findIndex((item: Product) => item.id === product.id)
+    ] = product
   },
   DELETE_PRODUCT(state, product: Product) {
-    for (let i = 0; i < state.products.length; i++) {
-      if (state.products[i].id === product.id) {
-        state.products.splice(i, 1)
-      }
-    }
+    state.products = state.products.filter(
+      (item: Product) => item.id !== product.id
+    )
   },
 }
 
@@ -66,27 +63,70 @@ export const actions = {
     }
   },
 
-  addProduct({ commit }, product: Product) {
+  addProduct({ commit }, productDetails: ProductEditForm) {
+    const productId = uuidv4()
+    const product = {
+      id: productId,
+      brand: productDetails.brand,
+      model: productDetails.model,
+      memory: productDetails.memory,
+      color: productDetails.color,
+      os: productDetails.os,
+      year: productDetails.year,
+      price: productDetails.price,
+      isPublished: true,
+      isSold: false,
+      isDeleted: false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }
     return ProductService.addProduct(product)
       .then(() => {
         commit('ADD_PRODUCT', product)
+        productDetails.uploadImages.forEach(async (image: Option) => {
+          const addedImage = {
+            id: image.id,
+            src: image.value,
+            productId: productId,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          }
+          await ImageService.addImage(addedImage)
+        })
       })
       .catch((err) => {
         console.log(err)
       })
   },
 
-  updateProduct({ commit }, product: Product) {
-    const updatedProduct = Object.assign({}, product)
-    delete updatedProduct.images
-    return ProductService.updateProduct(updatedProduct).then((res) => {
+  updateProduct({ state, commit }, productDetails: ProductEditForm) {
+    const product = {
+      id: state.product.id,
+      brand: productDetails.brand,
+      model: productDetails.model,
+      memory: productDetails.memory,
+      color: productDetails.color,
+      os: productDetails.os,
+      year: productDetails.year,
+      price: productDetails.price,
+      images: state.product.images,
+      isPublished: true,
+      isSold: false,
+      isDeleted: false,
+      createdAt: state.product.createdAt,
+      updatedAt: new Date().toISOString(),
+    }
+    const { images, ...restProps } = product
+    return ProductService.updateProduct(restProps).then((res) => {
       commit('SET_PRODUCT', product)
       commit('UPDATE_PRODUCT', product)
     })
   },
 
   deleteProduct({ commit }, product: Product) {
-    return ProductService.updateProduct(product).then((res) => {
+    const { images, ...restProps } = product
+    restProps.isDeleted = true
+    return ProductService.updateProduct(restProps).then((res) => {
       commit('DELETE_PRODUCT', res.data)
       ImageService.deleteImageByProductId(product.id)
     })
