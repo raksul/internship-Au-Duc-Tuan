@@ -4,14 +4,14 @@
       <span class="seperator">General</span>
       <div class="row">
         <AutoCompleteInput
-          class="col-md col-xs"
+          class="col-md-6 col-xs-12"
           v-model="selectedBrand"
           :value="selectedBrand"
           :items="brands"
           label="Brand"
         />
         <AutoCompleteInput
-          class="col-md col-xs"
+          class="col-md-6 col-xs-12"
           v-model="selectedModel"
           :value="selectedModel"
           :items="models"
@@ -23,14 +23,14 @@
       <span class="seperator">Variants</span>
       <div class="row">
         <AutoCompleteInput
-          class="col-md col-xs"
+          class="col-md-6 col-xs-12"
           v-model="selectedMemory"
           :value="selectedMemory"
           :items="memories"
           label="Memory Size"
         />
         <AutoCompleteInput
-          class="col-md col-xs"
+          class="col-md-6 col-xs-12"
           v-model="selectedColor"
           :value="selectedColor"
           :items="colors"
@@ -39,14 +39,14 @@
       </div>
       <div class="row">
         <AutoCompleteInput
-          class="col-md col-xs"
+          class="col-md-6 col-xs-12"
           v-model="selectedOS"
           :value="selectedOS"
           :items="osVersions"
           label="OS Version"
         />
         <NumberInput
-          class="col-md col-xs"
+          class="col-md-6 col-xs-12"
           v-model.number="selectedYear"
           :value="selectedYear"
           label="Year"
@@ -54,13 +54,13 @@
       </div>
       <div class="row">
         <NumberInput
-          class="col-md col-xs"
+          class="col-md-6 col-xs-12"
           v-model.number="selectedPrice"
           :value="selectedPrice"
           label="Price ($)"
           :decimal="true"
         />
-        <div v-if="!isModify" class="col-md col-xs">
+        <div v-if="!isModify" class="col-md-6 col-xs-12">
           <label for="upload"
             >Attach images <fa icon="paperclip" class="paperclip"
           /></label>
@@ -80,7 +80,7 @@
             @mousedown="removeImage(uploadedImage.id)"
           />
         </div>
-        <div v-if="isModify" class="col-md col-xs">
+        <div v-if="isModify" class="col-md-6 col-xs-12">
           <label>
             Attach images
             <fa icon="paperclip" class="paperclip paperclip--modify" />
@@ -269,7 +269,7 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-.col-md {
+.col-md-6 {
   flex-basis: 45%;
 }
 .btn-container {
@@ -308,10 +308,10 @@ export default {
 /* For responsive */
 @media screen and (max-width: 768px) {
   /* Add, modify page */
-  .row .col-xs {
+  .row .col-xs-12 {
     flex-basis: 100%;
   }
-  .col-xs .paper-clip {
+  .col-xs-12 .paper-clip {
     margin-top: 23px;
     margin-left: 5px;
     font-size: 20px;
