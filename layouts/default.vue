@@ -109,23 +109,5 @@ a {
   .hide-mobile {
     display: none;
   }
-
-  /* Add, modify page */
-  .row .col-xs {
-    flex-basis: 100%;
-  }
-  .autocomplete .input {
-    flex-basis: 100%;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-  .number-input-container .number-input {
-    flex-basis: 100%;
-  }
-  .col-xs .paper-clip {
-    margin-top: 23px;
-    margin-left: 5px;
-    font-size: 20px;
-  }
 }
 </style>

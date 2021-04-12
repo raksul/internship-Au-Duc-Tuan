@@ -169,7 +169,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .autocomplete {
   display: flex;
   align-items: center;
@@ -219,5 +219,13 @@ export default {
 .autocomplete-result:hover {
   background-color: #3fc2b2;
   color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .autocomplete .input {
+    flex-basis: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 }
 </style>

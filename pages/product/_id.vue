@@ -9,77 +9,11 @@
           @click="deleteProduct"
         />
       </div>
-      <span class="seperator">General</span>
-      <div class="row">
-        <AutoCompleteInput
-          class="col-md col-xs"
-          v-model="selectedBrand"
-          :value="brand"
-          :items="brands"
-          label="Brand"
-        />
-        <AutoCompleteInput
-          class="col-md col-xs"
-          v-model="selectedModel"
-          :value="model"
-          :items="models"
-          label="Model"
-        />
-      </div>
-    </div>
-    <div>
-      <span class="seperator">Variants</span>
-      <div class="row">
-        <AutoCompleteInput
-          class="col-md col-xs"
-          v-model="selectedMemory"
-          :value="memory"
-          :items="memories"
-          label="Memory Size"
-        />
-        <AutoCompleteInput
-          class="col-md col-xs"
-          v-model="selectedColor"
-          :value="color"
-          :items="colors"
-          label="Color"
-        />
-      </div>
-      <div class="row">
-        <AutoCompleteInput
-          class="col-md col-xs"
-          v-model="selectedOS"
-          :value="osVersion"
-          :items="osVersions"
-          label="OS Version"
-        />
-        <NumberInput
-          class="col-md col-xs"
-          v-model.number="year"
-          :value="price"
-          label="Year"
-        />
-      </div>
-      <div class="row">
-        <NumberInput
-          class="col-md col-xs"
-          v-model.number="price"
-          :value="price"
-          label="Price ($)"
-          :decimal="true"
-        />
-        <div class="col-md col-xs">
-          <label>
-            Attach images <fa icon="paperclip" class="paper-clip" />
-          </label>
-          <img
-            class="image"
-            v-for="(uploadedImage, index) in this.product.images"
-            :key="uploadedImage.id"
-            :src="uploadedImage.src"
-          />
-        </div>
-      </div>
+      <ProductEditForm
+        v-model="productDetails"
+        :product="this.$store.state.products.product"
+        :isModify="true"
+      />
       <div class="btn-container">
         <nuxt-link to="/"><Button icon="times" type="primary" /></nuxt-link>
         <Button icon="edit" type="primary" @click="updateProduct" />
@@ -90,109 +24,33 @@
 
 <script lang="ts">
 import {
-  getBrands,
-  getModelsByBrandKey,
-  getOSVersionsByBrand,
-  getMemories,
-  getColors,
   getBrandByKey,
   getModelByKey,
-  getColorByKey,
-  getMemoryByKey,
   getOSVersionByKey,
 } from '~/utilities/VariantsUtil'
 import Validator from '~/utilities/Validator'
-import { Option } from '~/types'
+import { ProductEditForm } from '~/types'
 export default {
   data(): {
-    selectedBrand: Option
-    selectedModel: Option
-    selectedMemory: Option
-    selectedColor: Option
-    selectedOS: Option
-    year: number
-    price: number
+    productDetails: ProductEditForm
   } {
     return {
-      // initial variables for the page
-      selectedBrand: {} as Option,
-      selectedModel: {} as Option,
-      selectedMemory: {} as Option,
-      selectedColor: {} as Option,
-      selectedOS: {} as Option,
-      year: 0,
-      price: 0,
+      productDetails: {} as ProductEditForm,
     }
   },
   async fetch() {
     // calling action to get product info along with it's image(s) from $store
     await this.$store.dispatch('products/fetchProduct', this.$route.params.id)
   },
-  computed: {
-    product() {
-      // passing fetched product details to data()
-      this.selectedBrand = getBrandByKey(
-        this.$store.state.products.product.brand
-      ) as Option
-      this.selectedModel = getModelByKey(
-        this.$store.state.products.product.model
-      ) as Option
-      this.selectedMemory = getMemoryByKey(
-        this.$store.state.products.product.memory
-      ) as Option
-      this.selectedColor = getColorByKey(
-        this.$store.state.products.product.color
-      ) as Option
-      this.selectedOS = getOSVersionByKey(
-        this.$store.state.products.product.os
-      ) as Option
-      this.year = this.$store.state.products.product.year
-      this.price = this.$store.state.products.product.price
-      return this.$store.state.products.product
-    },
-    // get data from variants.json file according to product's info
-    brand() {
-      return getBrandByKey(this.product.brand)
-    },
-    model() {
-      return getModelByKey(this.product.model)
-    },
-    color() {
-      return getColorByKey(this.product.color)
-    },
-    memory() {
-      return getMemoryByKey(this.product.memory)
-    },
-    osVersion() {
-      return getOSVersionByKey(this.product.os)
-    },
-
-    // fetch all the data for auto-complete components
-    brands() {
-      return getBrands()
-    },
-    models() {
-      return getModelsByBrandKey(this.selectedBrand.id)
-    },
-    osVersions() {
-      return getOSVersionsByBrand(this.selectedBrand.id)
-    },
-    memories() {
-      return getMemories()
-    },
-    colors() {
-      return getColors()
-    },
-  },
   methods: {
     async updateProduct() {
       if (
         // check the validation of user's autocomplete input
-        Validator.isObjectEmpty(this.selectedBrand) ||
-        Validator.isObjectEmpty(this.selectedModel) ||
-        Validator.isObjectEmpty(this.selectedMemory) ||
-        Validator.isObjectEmpty(this.selectedOS) ||
-        Validator.isObjectEmpty(this.selectedColor)
+        Validator.isEmptyString(this.productDetails.brand) ||
+        Validator.isEmptyString(this.productDetails.model) ||
+        Validator.isEmptyString(this.productDetails.memory) ||
+        Validator.isEmptyString(this.productDetails.color) ||
+        Validator.isEmptyString(this.productDetails.os)
       ) {
         // inform the user to check inputs again
         this.$toast.error('Please check your input again!')
@@ -200,56 +58,71 @@ export default {
       }
       if (
         !Validator.isBrandModelMatch(
-          this.selectedBrand.id,
-          this.selectedModel.id
+          this.productDetails.brand,
+          this.productDetails.model
         )
       ) {
         // inform the user to check inputs again
         this.$toast.error(
-          `${this.selectedBrand.value} doesn't support ${this.selectedModel.value}`
+          `${getBrandByKey(this.productDetails.brand)?.value} doesn't support ${
+            getModelByKey(this.productDetails.model)?.value
+          }`
         )
         return
       }
       if (
-        !Validator.isBrandOSMatch(this.selectedBrand.id, this.selectedOS.id)
+        !Validator.isBrandOSMatch(
+          this.productDetails.brand,
+          this.productDetails.os
+        )
       ) {
         // inform the user to check inputs again
         this.$toast.error(
-          `${this.selectedBrand.value} doesn't support ${this.selectedOS.value}`
+          `${getBrandByKey(this.productDetails.brand)?.value} doesn't support ${
+            getOSVersionByKey(this.productDetails.os)?.value
+          }`
         )
         return
       }
-      if (!Validator.isNumber(this.year) || !Validator.isNumber(this.price)) {
+      if (
+        !Validator.isNumber(this.productDetails.year) ||
+        !Validator.isNumber(this.productDetails.price)
+      ) {
         // inform the user to check inputs again
         this.$toast.error('Make sure Price and Year are numeric!')
         return
       }
       try {
         await this.$store.dispatch('products/updateProduct', {
-          id: this.product.id,
-          brand: this.selectedBrand.id,
-          model: this.selectedModel.id,
-          memory: this.selectedMemory.id,
-          color: this.selectedColor.id,
-          os: this.selectedOS.id,
-          year: this.year,
-          price: this.price,
+          id: this.$store.state.products.product.id,
+          brand: this.productDetails.brand,
+          model: this.productDetails.model,
+          memory: this.productDetails.memory,
+          color: this.productDetails.color,
+          os: this.productDetails.os,
+          year: this.productDetails.year,
+          price: this.productDetails.price,
+          images: this.$store.state.products.product.images,
           isPublished: true,
           isSold: false,
           isDeleted: false,
-          createdAt: this.product.createdAt,
+          createdAt: this.$store.state.products.product.createdAt,
           updatedAt: new Date().toISOString(),
         })
         this.$toast.success('Updated Successfully!')
         this.$router.push('/')
       } catch (err) {
+        console.log(err)
         this.$toast.error(err)
       }
     },
 
     async deleteProduct() {
       try {
-        const deletedProduct = Object.assign({}, this.product)
+        const deletedProduct = Object.assign(
+          {},
+          this.$store.state.products.product
+        )
         delete deletedProduct.images
         deletedProduct.isDeleted = true
         await this.$store.dispatch('products/deleteProduct', deletedProduct)
@@ -263,11 +136,7 @@ export default {
 }
 </script>
 
-<style>
-.image:hover {
-  transform: scale(1.6);
-  outline: none;
-}
+<style scoped>
 .btn-delete-container {
   height: 30px;
   position: relative;
@@ -276,5 +145,13 @@ export default {
   position: absolute;
   top: 0;
   right: -20px;
+}
+.btn-container {
+  margin-top: 15px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 </style>

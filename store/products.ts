@@ -31,9 +31,6 @@ export const mutations = {
       }
     }
   },
-  SET_FILTERED_PRODUCTS(state, products: Product[]) {
-    state.filteredProducts = products
-  },
 }
 
 export const actions = {
@@ -80,9 +77,11 @@ export const actions = {
   },
 
   updateProduct({ commit }, product: Product) {
-    return ProductService.updateProduct(product).then((res) => {
-      commit('SET_PRODUCT', res.data)
-      commit('UPDATE_PRODUCT', res.data)
+    const updatedProduct = Object.assign({}, product)
+    delete updatedProduct.images
+    return ProductService.updateProduct(updatedProduct).then((res) => {
+      commit('SET_PRODUCT', product)
+      commit('UPDATE_PRODUCT', product)
     })
   },
 

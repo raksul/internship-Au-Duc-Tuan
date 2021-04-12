@@ -1,3 +1,4 @@
+export { ProductEditForm } from '~/types/ProductEditForm.interface'
 export { Brand } from '~/types/Brand.interface'
 export { Product } from '~/types/Product.interface'
 export { Image } from '~/types/Image.interface'

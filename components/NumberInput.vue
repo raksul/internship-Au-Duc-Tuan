@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .number-input-container {
   display: flex;
   align-items: center;
@@ -73,5 +73,11 @@ export default {
 }
 .number-input.invalid {
   border: 2px solid #e91e63;
+}
+
+@media screen and (max-width: 768px) {
+  .number-input-container .number-input {
+    flex-basis: 100%;
+  }
 }
 </style>
