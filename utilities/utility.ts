@@ -1,6 +1,3 @@
-import { Option, Brand } from '~/types/'
-import { getBrandByKey, getOSVersionsByBrand } from '~/utilities/variantsUtil'
-
 export function formatMoney(price: number): string {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
