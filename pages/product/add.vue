@@ -39,7 +39,7 @@ export default {
       } 
     },
     toggle() {
-      this.showError = false
+      this.showError = !this.showError
     }
   },
 }
@@ -49,9 +49,7 @@ export default {
 .btn-container {
   margin-top: 15px;
   margin-left: 10px;
-  display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 </style>

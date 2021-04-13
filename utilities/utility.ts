@@ -17,7 +17,7 @@ export function convertToBase64(imageData: Blob) {
   return new Promise<string>((resolve, reject) => {
     const reader = new FileReader()
     reader.readAsDataURL(imageData)
-    reader.onload = () => resolve(reader.result.toString())
+    reader.onload = () => resolve(reader.result!.toString())
     reader.onerror = (error) => reject(error)
   })
 }
@@ -31,14 +31,4 @@ export function isObjectEmpty(value: Object): boolean {
 
 export function isNumber(value: any): boolean {
   return !isNaN(value) && value !== ''
-}
-
-export function isBrandModelMatch(brandKey: string, modelKey: string): boolean {
-  const brand = getBrandByKey(brandKey) as Brand
-  return brand.models.some((model: Option) => model.id === modelKey)
-}
-
-export function isBrandOSMatch(brandKey: string, osKey: string): boolean {
-  const osVersions = getOSVersionsByBrand(brandKey) as Option[]
-  return osVersions.some((os) => os.id === osKey)
 }

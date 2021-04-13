@@ -1,12 +1,7 @@
 <template>
   <div>
     <div class="btn-delete-container">
-      <Button
-        class="align-right"
-        icon="trash"
-        type="danger"
-        @click="deleteProduct"
-      />
+      <Button icon="trash" type="danger" @click="deleteProduct" />
     </div>
     <ProductEditForm
       v-model="formData"
@@ -52,16 +47,13 @@ export default {
           this.$toast.error(err)
         }
       } else {
-        this.showError = !this.showError
+        this.showError = true
       }
     },
 
     async deleteProduct() {
       try {
-        await this.$store.dispatch(
-          'products/deleteProduct',
-          this.$store.state.products.product
-        )
+        await this.$store.dispatch('products/deleteProduct')
         this.$toast.success('Deleted Successfully!')
         this.$router.push('/')
       } catch (err) {
@@ -70,7 +62,7 @@ export default {
     },
 
     toggle() {
-      this.showError = false
+      this.showError = !this.showError
     },
   },
   computed: {
@@ -84,19 +76,12 @@ export default {
 <style scoped>
 .btn-delete-container {
   height: 30px;
-  position: relative;
-}
-.align-right {
-  position: absolute;
-  top: 0;
-  right: -20px;
+  text-align: right;
 }
 .btn-container {
   margin-top: 15px;
   margin-left: 10px;
-  display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 </style>

@@ -100,13 +100,7 @@
 
 <script lang="ts">
 import { v4 as uuidv4 } from 'uuid'
-import {
-  isObjectEmpty,
-  isBrandModelMatch,
-  isBrandOSMatch,
-  isNumber,
-  convertToBase64,
-} from '~/utilities/utility'
+import { isObjectEmpty, isNumber, convertToBase64 } from '~/utilities/utility'
 import { Option, Product, ProductEdit } from '~/types'
 import {
   getBrands,
@@ -119,6 +113,8 @@ import {
   getColorByKey,
   getMemoryByKey,
   getOSVersionByKey,
+  isBrandModelMatch,
+  isBrandOSMatch,
 } from '~/utilities/variantsUtil'
 export default {
   props: {
@@ -219,7 +215,7 @@ export default {
     showError() {
       if (this.showError) {
         this.$toast.error(this.errorMsg, {
-          onClose: () => this.$emit('toggle', true),
+          onClose: () => this.$emit('toggle'),
         })
       }
     },

@@ -99,3 +99,13 @@ export function getOSVersionByKey(key: string): Option | undefined {
   })
   return returnedVersion
 }
+
+export function isBrandModelMatch(brandKey: string, modelKey: string): boolean {
+  const brand = getBrandByKey(brandKey) as Brand
+  return brand.models.some((model: Option) => model.id === modelKey)
+}
+
+export function isBrandOSMatch(brandKey: string, osKey: string): boolean {
+  const osVersions = getOSVersionsByBrand(brandKey) as Option[]
+  return osVersions.some((os) => os.id === osKey)
+}

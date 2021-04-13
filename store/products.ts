@@ -113,12 +113,12 @@ export const actions = {
     })
   },
 
-  deleteProduct({ commit }, product: Product) {
-    const { images, ...restProps } = product
+  deleteProduct({ commit, state }) {
+    const { images, ...restProps } = state.product
     restProps.isDeleted = true
     return ProductService.updateProduct(restProps).then((res) => {
       commit('DELETE_PRODUCT', res.data)
-      ImageService.deleteImageByProductId(product.id)
+      ImageService.deleteImageByProductId(restProps.id)
     })
   },
 }
