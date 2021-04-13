@@ -97,15 +97,11 @@ export const actions = {
   },
 
   updateProduct({ state, commit }, productDetails: ProductEdit) {
-    const { images, ...updatedProduct } = state.product
-    console.log(updatedProduct)
-    updatedProduct.brand = productDetails.brand
-    updatedProduct.model = productDetails.model
-    updatedProduct.memory = productDetails.memory
-    updatedProduct.color = productDetails.color
-    updatedProduct.os = productDetails.os
-    updatedProduct.year = productDetails.year
-    updatedProduct.price = productDetails.price
+    const { images, ...product } = state.product
+    const updatedProduct = {
+      ...product,
+      ...productDetails,
+    }
     updatedProduct.updatedAt = new Date().toISOString()
     return ProductService.updateProduct(updatedProduct).then((res) => {
       commit('SET_PRODUCT', updatedProduct)
