@@ -22,13 +22,6 @@ export const mutations = {
     state.products[
       state.products.findIndex((item: Product) => item.id === product.id)
     ] = product
-    let updatedProduct = state.products.find(
-      (item: Product) => item.id === product.id
-    )
-    console.log(updatedProduct)
-    updatedProduct = product
-    let temp = state.products.find((item: Product) => item.id === product.id)
-    console.log(temp)
   },
   DELETE_PRODUCT(state, product: Product) {
     state.products = state.products.filter(
