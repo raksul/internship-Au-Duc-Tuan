@@ -1,9 +1,5 @@
 import * as variants from '~/variants.json'
-import { OS, Brand, Option } from '~/types'
-
-export function getOS(): OS[] {
-  return variants.os
-}
+import { Brand, Option } from '~/types'
 
 export function getOSVersionsByBrand(key: string): Option[] | undefined {
   return variants.os.find((os) => os.brands.find((brand) => brand.id === key))
@@ -102,4 +98,14 @@ export function getOSVersionByKey(key: string): Option | undefined {
     return true
   })
   return returnedVersion
+}
+
+export function isBrandModelMatch(brandKey: string, modelKey: string): boolean {
+  const brand = getBrandByKey(brandKey) as Brand
+  return brand.models.some((model: Option) => model.id === modelKey)
+}
+
+export function isBrandOSMatch(brandKey: string, osKey: string): boolean {
+  const osVersions = getOSVersionsByBrand(brandKey) as Option[]
+  return osVersions.some((os) => os.id === osKey)
 }

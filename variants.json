@@ -338,39 +338,39 @@
   ],
   "memories": [
     {
-      "id": "GB4",
+      "id": "gb4",
       "value": "4GB"
     },
     {
-      "id": "GB8",
+      "id": "gb8",
       "value": "8GB"
     },
     {
-      "id": "GB16",
+      "id": "gb16",
       "value": "16GB"
     },
     {
-      "id": "GB32",
+      "id": "gb32",
       "value": "32GB"
     },
     {
-      "id": "GB64",
+      "id": "gb64",
       "value": "64GB"
     },
     {
-      "id": "GB128",
+      "id": "gb128",
       "value": "128GB"
     },
     {
-      "id": "GB256",
+      "id": "gb256",
       "value": "256GB"
     },
     {
-      "id": "GB512",
+      "id": "gb512",
       "value": "512GB"
     },
     {
-      "id": "TB1",
+      "id": "tb1",
       "value": "1TB"
     }
   ],

@@ -19,7 +19,7 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "@types/node",
-
+      "@types/uuid",
       "vue-toastification/nuxt"
     ],
     "resolveJsonModule": true

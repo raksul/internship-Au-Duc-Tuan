@@ -1,9 +1,9 @@
 <template>
-  <div class="number-input">
+  <div class="number-input-container">
     <label class="label">{{ label }}</label>
     <input
-      class="input"
-      :value="initValue"
+      class="number-input"
+      :value="value"
       type="number"
       :class="{ invalid: !isValid }"
       min="0"
@@ -20,7 +20,7 @@ export default {
       type: String,
       default: '',
     },
-    initValue: {
+    value: {
       type: Number,
       default: 0,
     },
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style scoped>
-.number-input {
+.number-input-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -60,18 +60,24 @@ export default {
 .label {
   flex-basis: 40%;
 }
-.input {
+.number-input {
   flex-basis: 60%;
   font-size: 16px;
   padding: 7px 20px;
   border: 1px solid black;
   border-radius: 10px;
 }
-.input:focus {
+.number-input:focus {
   outline: none;
   border: 2px solid #3fc2b2;
 }
-.input.invalid {
+.number-input.invalid {
   border: 2px solid #e91e63;
+}
+
+@media screen and (max-width: 768px) {
+  .number-input-container .number-input {
+    flex-basis: 100%;
+  }
 }
 </style>

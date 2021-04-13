@@ -24,7 +24,14 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
-
+:root {
+  --bg-body: #1a1a2e;
+  --bg-btn-primary: #44cec0;
+  --bg-btn-danger: #e91e63;
+  --bg-btn-secondary: #3aa3ff;
+  --bg-btn-default: #3aa3ff;
+  --color-btn: #fff;
+}
 body {
   margin: 0;
   font-size: 16px;
@@ -68,11 +75,11 @@ a {
 }
 
 .row {
+  margin: 20px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
 }
 .col-md-1 {
   width: 10%;
@@ -86,6 +93,7 @@ a {
 
 /* For responsive */
 @media screen and (max-width: 768px) {
+  /* Listing page */
   .product-card-img {
     display: none;
   }

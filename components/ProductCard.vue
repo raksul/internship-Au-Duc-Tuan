@@ -26,8 +26,8 @@ import {
   getModelByKey,
   getColorByKey,
   getMemoryByKey,
-} from '~/utilities/VariantsUtil'
-import Formatter from '~/utilities/Formatter'
+} from '~/utilities/variantsUtil'
+import { formatMoney } from '~/utilities/utility'
 import { Product, Image } from '~/types'
 
 export default {
@@ -52,7 +52,7 @@ export default {
       return getMemoryByKey(this.product.memory)?.value || ''
     },
     price(): string {
-      return Formatter.formatMoney(this.product.price)
+      return formatMoney(this.product.price)
     },
     image(): Image {
       return this.product.images ? this.product.images[0] : ({} as Image)

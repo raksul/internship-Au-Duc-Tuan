@@ -176,10 +176,10 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.autocomplete .label {
+.label {
   flex-basis: 40%;
 }
-.autocomplete .input {
+.input {
   flex-basis: 60%;
 }
 .autocomplete-input {
@@ -219,5 +219,13 @@ export default {
 .autocomplete-result:hover {
   background-color: #3fc2b2;
   color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .autocomplete .input {
+    flex-basis: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 }
 </style>

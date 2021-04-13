@@ -30,7 +30,7 @@ import {
   getModelByKey,
   getColorByKey,
   getMemoryByKey,
-} from '~/utilities/VariantsUtil'
+} from '~/utilities/variantsUtil'
 
 export default {
   data() {
@@ -86,7 +86,7 @@ export default {
   align-items: center;
 }
 .product-header {
-  padding: 15px 15px;
+  padding: 10px 15px;
   width: 95%;
   display: flex;
   justify-content: space-between;

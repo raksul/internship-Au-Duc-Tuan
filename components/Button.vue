@@ -29,17 +29,9 @@ export default {
 }
 </script>
 
-<style>
-:root {
-  --bg-body: #1a1a2e;
-  --bg-btn-primary: #44cec0;
-  --bg-btn-danger: #e91e63;
-  --bg-btn-secondary: #3aa3ff;
-  --bg-btn-default: #3aa3ff;
-  --color-btn: #fff;
-}
+<style scoped>
 .btn-container {
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   align-items: center;
 }
