@@ -9,9 +9,10 @@
       />
     </div>
     <ProductEditForm
-      v-model="productDetails"
-      :product="this.$store.state.products.product"
-      ref="productEditForm"
+      v-model="formData"
+      :product="product"
+      :showError="showError"
+      @toggle="toggle"
     />
     <div class="btn-container">
       <nuxt-link to="/"><Button icon="times" type="primary" /></nuxt-link>
@@ -21,13 +22,15 @@
 </template>
 
 <script lang="ts">
-import { ProductEditForm } from '~/types'
+import { FormData } from '~/types'
 export default {
   data(): {
-    productDetails: ProductEditForm
+    formData: FormData
+    showError: boolean
   } {
     return {
-      productDetails: {} as ProductEditForm,
+      formData: {} as FormData,
+      showError: false,
     }
   },
   async fetch() {
@@ -36,11 +39,11 @@ export default {
   },
   methods: {
     async updateProduct() {
-      if (this.$refs.productEditForm.validate()) {
+      if (this.formData.isValid) {
         try {
           await this.$store.dispatch(
             'products/updateProduct',
-            this.productDetails
+            this.formData.productDetails
           )
           this.$toast.success('Updated Successfully!')
           this.$router.push('/')
@@ -48,6 +51,8 @@ export default {
           console.log(err)
           this.$toast.error(err)
         }
+      } else {
+        this.showError = !this.showError
       }
     },
 
@@ -62,6 +67,15 @@ export default {
       } catch (err) {
         this.$toast.error(err)
       }
+    },
+
+    toggle() {
+      this.showError = false
+    },
+  },
+  computed: {
+    product() {
+      return this.$store.state.products.product
     },
   },
 }

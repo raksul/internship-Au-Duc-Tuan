@@ -100,9 +100,14 @@
 
 <script lang="ts">
 import { v4 as uuidv4 } from 'uuid'
-import ObjectUtil from '~/utilities/ObjectUtil'
-import Validator from '~/utilities/Validator'
-import { Option, Product, ProductEditForm } from '~/types'
+import {
+  isObjectEmpty,
+  isBrandModelMatch,
+  isBrandOSMatch,
+  isNumber,
+  convertToBase64,
+} from '~/utilities/utility'
+import { Option, Product, ProductEdit } from '~/types'
 import {
   getBrands,
   getMemories,
@@ -114,7 +119,7 @@ import {
   getColorByKey,
   getMemoryByKey,
   getOSVersionByKey,
-} from '~/utilities/VariantsUtil'
+} from '~/utilities/variantsUtil'
 export default {
   props: {
     product: {
@@ -122,6 +127,10 @@ export default {
       default() {
         return {} as Product
       },
+    },
+    showError: {
+      type: Boolean,
+      default: false,
     },
   },
   data(): {
@@ -133,7 +142,9 @@ export default {
     os: Option
     year: number
     price: number
-    productDetails: ProductEditForm
+    productDetails: ProductEdit
+    isValid: boolean
+    errorMsg: string
   } {
     return {
       uploadedImages: [] as Option[],
@@ -144,24 +155,13 @@ export default {
       os: {} as Option,
       year: {} as number,
       price: {} as number,
-      productDetails: {} as ProductEditForm,
+      productDetails: {} as ProductEdit,
+      isValid: true,
+      errorMsg: '',
     }
   },
-  watch: {
-    details() {
-      this.productDetails.brand = this.brand?.id
-      this.productDetails.model = this.model?.id
-      this.productDetails.memory = this.memory?.id
-      this.productDetails.color = this.color?.id
-      this.productDetails.os = this.os?.id
-      this.productDetails.year = this.year
-      this.productDetails.price = this.price
-      this.productDetails.uploadImages = this.uploadedImages
-      this.$emit('input', this.productDetails)
-    },
-  },
   created() {
-    if (!Validator.isObjectEmpty(this.product)) {
+    if (!isObjectEmpty(this.product)) {
       this.brand = getBrandByKey(this.product.brand) as Option
       this.model = getModelByKey(this.product.model) as Option
       this.color = getColorByKey(this.product.color) as Option
@@ -215,13 +215,37 @@ export default {
       return getColors()
     },
   },
+  watch: {
+    showError() {
+      if (this.showError) {
+        this.$toast.error(this.errorMsg, {
+          onClose: () => this.$emit('toggle', true),
+        })
+      }
+    },
+    details() {
+      this.productDetails.brand = this.brand?.id
+      this.productDetails.model = this.model?.id
+      this.productDetails.memory = this.memory?.id
+      this.productDetails.color = this.color?.id
+      this.productDetails.os = this.os?.id
+      this.productDetails.year = this.year
+      this.productDetails.price = this.price
+      this.productDetails.uploadImages = this.uploadedImages
+      this.isValid = this.validate()
+      this.$emit('input', {
+        productDetails: this.productDetails,
+        isValid: this.isValid,
+      })
+    },
+  },
   methods: {
     // loop through uploaded image(s) and convert them to base64
     async handleImages(e) {
       e.target.files.forEach(async (file: Blob) => {
         this.uploadedImages.push({
           id: uuidv4(),
-          value: await ObjectUtil.convertToBase64(file),
+          value: await convertToBase64(file),
         })
       })
     },
@@ -242,48 +266,36 @@ export default {
         !this.productDetails.os
       ) {
         // inform the user to check inputs again
-        this.$toast.error('Please check your input again!')
+        this.errorMsg = 'Please check your input again!'
         return false
       }
       if (
-        !Validator.isBrandModelMatch(
-          this.productDetails.brand,
-          this.productDetails.model
-        )
+        !isBrandModelMatch(this.productDetails.brand, this.productDetails.model)
       ) {
         // inform the user to check inputs again
-        this.$toast.error(
-          `${getBrandByKey(this.productDetails.brand)?.value} doesn't support ${
-            getModelByKey(this.productDetails.model)?.value
-          }`
-        )
+        this.errorMsg = `${
+          getBrandByKey(this.productDetails.brand)?.value
+        } doesn't support ${getModelByKey(this.productDetails.model)?.value}`
+        return false
+      }
+      if (!isBrandOSMatch(this.productDetails.brand, this.productDetails.os)) {
+        // inform the user to check inputs again
+        this.errorMsg = `${
+          getBrandByKey(this.productDetails.brand)?.value
+        } doesn't support ${getOSVersionByKey(this.productDetails.os)?.value}`
         return false
       }
       if (
-        !Validator.isBrandOSMatch(
-          this.productDetails.brand,
-          this.productDetails.os
-        )
+        !isNumber(this.productDetails.year) ||
+        !isNumber(this.productDetails.price)
       ) {
         // inform the user to check inputs again
-        this.$toast.error(
-          `${getBrandByKey(this.productDetails.brand)?.value} doesn't support ${
-            getOSVersionByKey(this.productDetails.os)?.value
-          }`
-        )
-        return false
-      }
-      if (
-        !Validator.isNumber(this.productDetails.year) ||
-        !Validator.isNumber(this.productDetails.price)
-      ) {
-        // inform the user to check inputs again
-        this.$toast.error('Make sure Price and Year are numeric!')
+        this.errorMsg = 'Make sure Price and Year are numeric!'
         return false
       }
       if (this.productDetails.uploadImages.length === 0) {
         // product should have at least 1 picture for the visual of listing page
-        this.$toast.error('Product should have at least 1 image!')
+        this.errorMsg = 'Product should have at least 1 image!'
         return false
       }
       return true

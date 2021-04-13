@@ -1,4 +1,4 @@
-import { Product, Option, ProductEditForm } from '~/types'
+import { Product, Option, ProductEdit } from '~/types'
 import { v4 as uuidv4 } from 'uuid'
 import ProductService from '~/services/ProductService'
 import ImageService from '~/services/ImageService'
@@ -22,6 +22,13 @@ export const mutations = {
     state.products[
       state.products.findIndex((item: Product) => item.id === product.id)
     ] = product
+    let updatedProduct = state.products.find(
+      (item: Product) => item.id === product.id
+    )
+    console.log(updatedProduct)
+    updatedProduct = product
+    let temp = state.products.find((item: Product) => item.id === product.id)
+    console.log(temp)
   },
   DELETE_PRODUCT(state, product: Product) {
     state.products = state.products.filter(
@@ -63,33 +70,30 @@ export const actions = {
     }
   },
 
-  addProduct({ commit }, productDetails: ProductEditForm) {
+  addProduct({ commit }, productDetails: ProductEdit) {
     const productId = uuidv4()
+    const currentTime = new Date().toISOString()
     const product = {
       id: productId,
-      brand: productDetails.brand,
-      model: productDetails.model,
-      memory: productDetails.memory,
-      color: productDetails.color,
-      os: productDetails.os,
-      year: productDetails.year,
-      price: productDetails.price,
+      ...productDetails,
       isPublished: true,
       isSold: false,
       isDeleted: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: currentTime,
+      updatedAt: currentTime,
     }
-    return ProductService.addProduct(product)
+    const { uploadImages, ...addedProduct } = product
+    console.log(addedProduct)
+    return ProductService.addProduct(addedProduct)
       .then(() => {
-        commit('ADD_PRODUCT', product)
+        commit('ADD_PRODUCT', addedProduct)
         productDetails.uploadImages.forEach(async (image: Option) => {
           const addedImage = {
             id: image.id,
             src: image.value,
             productId: productId,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
+            createdAt: currentTime,
+            updatedAt: currentTime,
           }
           await ImageService.addImage(addedImage)
         })
@@ -99,27 +103,20 @@ export const actions = {
       })
   },
 
-  updateProduct({ state, commit }, productDetails: ProductEditForm) {
-    const product = {
-      id: state.product.id,
-      brand: productDetails.brand,
-      model: productDetails.model,
-      memory: productDetails.memory,
-      color: productDetails.color,
-      os: productDetails.os,
-      year: productDetails.year,
-      price: productDetails.price,
-      images: state.product.images,
-      isPublished: true,
-      isSold: false,
-      isDeleted: false,
-      createdAt: state.product.createdAt,
-      updatedAt: new Date().toISOString(),
-    }
-    const { images, ...restProps } = product
-    return ProductService.updateProduct(restProps).then((res) => {
-      commit('SET_PRODUCT', product)
-      commit('UPDATE_PRODUCT', product)
+  updateProduct({ state, commit }, productDetails: ProductEdit) {
+    const { images, ...updatedProduct } = state.product
+    console.log(updatedProduct)
+    updatedProduct.brand = productDetails.brand
+    updatedProduct.model = productDetails.model
+    updatedProduct.memory = productDetails.memory
+    updatedProduct.color = productDetails.color
+    updatedProduct.os = productDetails.os
+    updatedProduct.year = productDetails.year
+    updatedProduct.price = productDetails.price
+    updatedProduct.updatedAt = new Date().toISOString()
+    return ProductService.updateProduct(updatedProduct).then((res) => {
+      commit('SET_PRODUCT', updatedProduct)
+      commit('UPDATE_PRODUCT', updatedProduct)
     })
   },
 

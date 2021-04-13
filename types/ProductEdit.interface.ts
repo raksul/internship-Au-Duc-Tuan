@@ -1,6 +1,6 @@
 import { Option } from '~/types/Option.interface'
 
-export interface ProductEditForm {
+export interface ProductEdit {
   brand: string
   model: string
   memory: string

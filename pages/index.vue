@@ -30,7 +30,7 @@ import {
   getModelByKey,
   getColorByKey,
   getMemoryByKey,
-} from '~/utilities/VariantsUtil'
+} from '~/utilities/variantsUtil'
 
 export default {
   data() {
