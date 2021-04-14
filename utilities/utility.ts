@@ -1,6 +1,3 @@
-import { Option, Brand } from '~/types/'
-import { getBrandByKey, getOSVersionsByBrand } from '~/utilities/variantsUtil'
-
 export function formatMoney(price: number): string {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -24,11 +21,13 @@ export function convertToBase64(imageData: Blob) {
 
 export function isObjectEmpty(value: Object): boolean {
   return (
-    Object.prototype.toString.call(value) === '[object Object]' &&
-    JSON.stringify(value) === '{}'
+    (Object.prototype.toString.call(value) === '[object Object]' &&
+      JSON.stringify(value) === '{}') ||
+    value === null ||
+    value === undefined
   )
 }
 
 export function isNumber(value: any): boolean {
-  return !isNaN(value) && value !== ''
+  return !isNaN(value) && value !== '' && value !== null
 }
